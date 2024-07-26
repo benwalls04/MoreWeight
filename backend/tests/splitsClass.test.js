@@ -48,11 +48,34 @@ test('PASS: secondary worked after primary', () => {
 
 // IS VALID SCHEDULE 
 
+/*
+test('FAIL: 5 freq, 1 leg day on no bias', () => {
+  expect(splitsClass.isValidSchedule(["legs", "chest shoulders triceps", "back biceps", "chest shoulders triceps", "back biceps", "shoulders", "rest"], [.5, .5, .5, .5, .5, .5])).toBe(false);
+})
+
+test('FAIL: not enough small muscle freq', () => {
+  expect(splitsClass.isValidSchedule(["chest shoulders triceps", "back biceps", "legs", "chest", "back", "legs", "rest"], [.5, .5, .5, .5, 1, .5])).toBe(false);
+})
+
+test('PASS: one per week small muscle no bias', () => {
+  expect(splitsClass.isValidSchedule(["chest shoulders triceps", "back biceps", "legs", "chest", "back", "legs", "rest"], [.5, .5, .5, .5, .5, .5])).toBe(false);
+})
+*/
+
 // GET TITLE 
 
 // PLACE DAYS 
 
 // GENERATE SCHEDULES 
+
+test('INSPECT', () => {
+  let obj = new splitsClass();
+  obj.generateSplits(["lift", "lift", "lift", "rest", "rest", "rest", "rest"], [])
+  console.log(obj.a);
+  console.log(obj.b);
+  console.log(obj.u);
+  console.log(obj.p);
+})
 
 // ROTATE 
 

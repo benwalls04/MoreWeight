@@ -2,7 +2,7 @@ const staticData = require('./staticData');
 
 class SplitsClass {
   constructor() {
-    this.selection = 'p1'
+    this.selection = [];
     this.a = {
       1: [], 
       2: [], 
@@ -24,42 +24,8 @@ class SplitsClass {
     }
   }
 
-  getLiftDays(muscleBias){
-    const daysUnsorted = staticData.workoutDays
-  
-    let daysSorted = []; 
-    for (let i = 0; i < 4; i++){
-      for (let j = 0; j < daysUnsorted.length; j++){
-        let hasPlusGroup = false;
-        let hasMinusGroup = false;
-        let day = daysUnsorted[j];
-  
-        muscleBias.forEach((bias, index) => {
-          const group = GROUP_NAMES[index];
-          if (bias > .5 && day.includes(group)){
-            hasPlusGroup = true;
-          } 
-          if (bias < .5 && day.includes(group)){
-            hasMinusGroup = true;
-          }
-        })
-  
-        if ((i === 0 && hasPlusGroup && !hasMinusGroup) ||
-        (i === 1 && (hasPlusGroup !== hasMinusGroup)) ||
-        (i === 2 && !hasPlusGroup && hasMinusGroup) || i === 3 && !daysSorted.includes(day)) {
-          if (!daysSorted.includes(day)){
-            daysSorted.push(day);
-          }
-        }
-      }
-    } 
-  
-    return daysSorted;
-  }
-
-  static checkDayPlacement(schedule, checkedDay, index){
+  static checkDayPlacement(schedule, checkedDay, index, cycle){
     const GROUP_NAMES = staticData.groupNames;
-    const WEEKDAYS = 7;
 
     let pass = true;
 
@@ -77,30 +43,29 @@ class SplitsClass {
       const restNeeded = i < 3? bigRest: smallRest;
 
       if (checkedDay.includes(group)){
-        pass = SplitsClass.daySpacingCheck(schedule, restNeeded, index, group);           
+        pass = SplitsClass.daySpacingCheck(schedule, restNeeded, index, group, cycle);           
       }
     }
   
   return pass;
   }
 
-  static daySpacingCheck(schedule, restNeeded, index, group){
+  static daySpacingCheck(schedule, restNeeded, index, group, cycle){
     const GROUP_NAMES = staticData.groupNames;
-    const WEEKDAYS = 7;
 
     const secondaries = group === "chest"? ["shoulders", "triceps"]: group === "back"? ["biceps"]: [];
     const primaries = (group === "shoulders" || group === "triceps")? ["chest"]: group === "biceps"? ["back"]: []
 
     let pass = true;
-    if (primaries.length > 0 && primaries.some(group => schedule[(index + 1) % WEEKDAYS].includes(group))){
+    if (primaries.length > 0 && primaries.some(group => schedule[(index + 1) % cycle].includes(group))){
       pass = false;
     }
-    if (secondaries.length > 0 && secondaries.some(group => schedule[(index + 6) % WEEKDAYS].includes(group))){
+    if (secondaries.length > 0 && secondaries.some(group => schedule[(index + 6) % cycle].includes(group))){
       pass = false;
     }
-    for (let i = 1; pass && i < WEEKDAYS; i++){
-      let checkIndex = (index + i) % WEEKDAYS;
-      if (((i <= restNeeded) || (WEEKDAYS - i) <= restNeeded) && schedule[checkIndex].includes(group)) {
+    for (let i = 1; pass && i < cycle; i++){
+      let checkIndex = (index + i) % cycle;
+      if (((i <= restNeeded) || (cycle - i) <= restNeeded) && schedule[checkIndex].includes(group)) {
         pass = false;
       }
     }
@@ -108,15 +73,24 @@ class SplitsClass {
   return pass;
   }
 
-  isValidSchedule(schedule, muscleBias){
+  isValidSchedule(schedule, icons, cycle, frequency, bias){
+    const GROUP_NAMES = staticData.groupNames;
+
     let isValid = true;
   
     // check to make sure the schedule is full with no duplicates 
     let isFull = !schedule.some(entry => entry.includes("lift"));
   
-    let isDuplicate = Splits.some(existingArray =>
-      existingArray.every((value , index ) => value === schedule[index])
-    );
+    let isDuplicate = false;
+    icons.forEach((icon) => {
+      const type = icon[0];
+      const num = icon[1];
+      if (this[type][num].some(existingArray =>
+        existingArray.every((value, index ) => value === schedule[index])
+      )) {
+        isDuplicate = true;
+      };
+    })
   
     if (isDuplicate || !isFull){
       isValid = false;
@@ -127,7 +101,7 @@ class SplitsClass {
       let muscleFreq = [];
       for (let i = 0; i < GROUP_NAMES.length; i++){
         let group = GROUP_NAMES[i];
-        muscleFreq[i] = getMuscleFreq(schedule, group);
+        muscleFreq[i] = SplitsClass.getMuscleFreq(schedule, group, cycle);
       }
   
     // choose the required frequency depending on the number of lifts per week 
@@ -141,13 +115,23 @@ class SplitsClass {
     // check if each muscle group hits frequency requirments 
       for (let i = 0; i < GROUP_NAMES.length && isValid; i++){ 
         const initMinFreq = minFreq;
-  
-        if (muscleBias[i] <= .25){
+
+        if (i > 3){
           minFreq = 1;
-        }
-  
-        if (muscleBias[i] >= .75 && frequency > 4){
-          minFreq = 2;
+          
+          if (frequency > 4 & bias[i] >= .75){
+            minFreq = 2;
+          }
+
+        } else {
+          if (bias[i] <= .25){
+            minFreq = 1;
+          }
+    
+          if (bias[i] >= .75 && frequency > 4){
+            minFreq = 2;
+          }
+    
         }
   
         if (muscleFreq[i] < minFreq){
@@ -161,10 +145,10 @@ class SplitsClass {
     return isValid;
   }
 
-  getMuscleFreq(schedule, group){
+  static getMuscleFreq(schedule, group, cycle){
     let counter = 0;
   
-    for (let i = 0; i < WEEKDAYS; i++){
+    for (let i = 0; i < cycle; i++){
       if (schedule[i].includes(group)){
         counter++;
       }
@@ -173,29 +157,33 @@ class SplitsClass {
     return counter;
   }
 
-  placeDays(schedule, toPlace, presetIcon){
+  static placeDays(schedule, toPlace, icons, splits, cycle, bias, frequency){
+    const liftDays = staticData.workoutDays;
+
     let index = schedule.indexOf("lift"); 
 
     if (toPlace > 0){
       for (let i = 0; i < liftDays.length; i++){
-        let scheduleCopy = schedule.slice(0, WEEKDAYS);
+        let scheduleCopy = schedule.slice(0, cycle);
   
         // try placing each day
-        if (checkDayPlacement(scheduleCopy, liftDays[i], index)){
+        if (SplitsClass.checkDayPlacement(scheduleCopy, liftDays[i], index, cycle)){
           scheduleCopy[index] = liftDays[i];
-          placeDays(scheduleCopy, toPlace - 1, presetIcon);
+          SplitsClass.placeDays(scheduleCopy, toPlace - 1, icons, splits, cycle, bias, frequency);
         }
       }
     } else {
-      if (isValidSchedule(schedule)){
-        Splits.push(schedule);
-        Titles.push(getTitle(presetIcon))
-        Bases.push(presetIcon);
+      if (splits.isValidSchedule(schedule, icons, cycle, frequency, bias)){
+        icons.forEach(icon => {
+          const type = icon[0]
+          const num = icon[1]
+          splits[type][num].push(schedule);
+        })
       }
     }
   }
 
-  getTitle(presetIcon){
+  static getTitle(icons){
     let title = "";
     if (presetIcon.length === 0){
       title += "untitled split"; 
@@ -218,55 +206,51 @@ class SplitsClass {
     return title;
   }
 
-  generateSplits(schedule, presetIcons){
-    // place all possible base splits
-    for (let day = 0; day < WEEKDAYS; day++){
-      if (schedule[day] !== "rest"){
-        for (let i = 0; i < BASE_SPLITS.length; i++){
-          let base = BASE_SPLITS[i][0];
-          const loopCap = frequency === 7? 1: base.length
-          for (let j = 0; j < loopCap; j++){
-            // copy schedule frame 
-            let scheduleCopy = schedule.slice(0, WEEKDAYS);
+  generateSplits(schedule, icons, bias, cycle, frequency){
+    const baseSplits = staticData.baseSplits;
 
-            if (frequency < 7){
-              base.unshift(base.pop());
-            }
-            // rotate the base and try to place each day
+    // place all possible base splits
+    for (let day = 0; day < cycle; day++){
+      if (schedule[day] !== "rest"){
+        for (const baseIcon in baseSplits){
+          baseSplits[baseIcon].forEach(base => {
+            
+            // copy schedule frame 
+            let scheduleCopy = [...schedule];
+
             let placedCount = 0; let m = 0; let canPlace = true;
-            while (canPlace && placedCount < base.length && m < WEEKDAYS){
-              if (scheduleCopy[(day + m) % WEEKDAYS] === "lift"){
-                canPlace = checkDayPlacement(scheduleCopy, base[placedCount], (day + m) % WEEKDAYS)
+            while (canPlace && placedCount < base.length && m < cycle){
+              if (scheduleCopy[(day + m) % cycle] === "lift"){
+                canPlace = SplitsClass.checkDayPlacement(scheduleCopy, base[placedCount], (day + m) % cycle, cycle)
                 if (canPlace){
-                  scheduleCopy[(day + m) % WEEKDAYS] = base[placedCount];
+                  scheduleCopy[(day + m) % cycle] = base[placedCount];
                   placedCount++;
                 } 
               }
               m++;
             }
-
+            
             // keep track of the type of split 
-            let presetIcons2 = [...presetIcons];
-            if (canPlace === true){
-              presetIcons2.push(BASE_SPLITS[i][1]);
+            let newIcons = [...icons];
+            if (canPlace === true && !newIcons.includes(baseIcon)){
+              newIcons.push(baseIcon);
             }
 
             let toPlace = scheduleCopy.filter(entry => entry === "lift").length;
 
             // if there is space for another base, recall method 
             if (toPlace >= 3 && placedCount > 0){
-              generateSplits(scheduleCopy, presetIcons2);
+              this.generateSplits(scheduleCopy, newIcons, bias, cycle, frequency);
             } else {
-              placeDays(scheduleCopy, toPlace, presetIcons2);
+              SplitsClass.placeDays(scheduleCopy, toPlace, newIcons, this, cycle, bias, frequency);
             }
-          }
+          }) 
         }
       }
     }
   }
 
-  static rotate(split, dir) {
-    const WEEKDAYS = 7;
+  static rotate(split, dir, cycle) {
     let valid = true;
   
     // Set rest days in new array
@@ -290,10 +274,10 @@ class SplitsClass {
     }
   
     // Place rotated days
-    for (let i = 0; i < WEEKDAYS; i++) {
+    for (let i = 0; i < cycle; i++) {
       if (split[i] !== "rest") {
         const day = newOrder.shift();
-        if (!SplitsClass.checkDayPlacement(newSplit, day, i)) {
+        if (!SplitsClass.checkDayPlacement(newSplit, day, i, cycle)) {
           valid = false;
         }
         newSplit[i] = day;
@@ -303,7 +287,7 @@ class SplitsClass {
     return [valid, newSplit];
   }
 
-  getSimilarity(a, b){
+  static getSimilarity(a, b){
 
     const aCopy = a.filter(entry => entry !== 'rest');
     const bCopy = b.filter(entry => entry !== 'rest');
@@ -351,7 +335,7 @@ class SplitsClass {
     return newBase;
   }
 
-  kMeansCluster(splits, k){
+  static kMeansCluster(splits, k){
     const list = [];
 
     for (let i = 0; i < 5; i++){

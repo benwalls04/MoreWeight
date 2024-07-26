@@ -1712,54 +1712,61 @@ repRange: [
   [12, 20]
 ],
 baseSplits: {
-  2: {
-    u1: [["chest back biceps triceps shoulders", "legs"]], 
-    u2: [["chest back biceps triceps", "legs shoulders"]], 
-  }, 
-  3: {
-    p1: [
-        ["chest shoulders triceps", "back biceps", "legs"], 
-        ["chest shoulders triceps", "legs", "back biceps"]
-      ], 
-    p2: [
-        ["chest triceps", "back biceps", "legs shoulders"], 
-        ["chest triceps", "legs shoulders", "back biceps"]
-      ], 
-    a1: [
-      ["chest back", "shoulders biceps triceps", "legs"], 
-      ["chest back", "legs", "shoulders biceps triceps"]
-    ],
-    a2: [
-      ["chest back", "legs shoulders", "biceps triceps"], 
-      ["chest back", "legs shoulders", "biceps triceps"]
-    ],
-  }, 
-  4: {
-    p3: [
-      ["chest triceps", "back biceps", "shoulders", "legs"], 
-      ["chest triceps", "legs", "shoulders", "back biceps"], 
-      ["chest triceps", "shoulders", "back biceps", "legs"], 
-      ["chest triceps", "shoulders", "legs", "back biceps"],
-    ],  
-    b1: [
-      ["chest triceps", "back", "shoulders biceps", "legs"], 
-      ["chest triceps", "shoulders biceps", "legs", "back"],
-    ],
-    b2: [
-      ["chest", "back biceps", "shoulders triceps", "legs"],
-      ["chest", "legs", "shoulders triceps", "back biceps"],
-      ["chest", "shoulders triceps", "back biceps", "legs"],
-      ["chest", "shoulders triceps", "legs", "back biceps"],
+  u1: [["chest back biceps triceps shoulders", "legs"]], 
+  u2: [["chest back biceps triceps", "legs shoulders"]],  
+  p1: [
+      ["chest shoulders triceps", "back biceps", "legs"], 
+      ["chest shoulders triceps", "legs", "back biceps"]
     ], 
-    b3: [
-      ["chest", "back", "legs", "shoulders biceps triceps"], 
-      ["chest", "back", "shoulders biceps triceps", "legs"],
+  p2: [
+      ["chest triceps", "back biceps", "legs shoulders"], 
+      ["chest triceps", "legs shoulders", "back biceps"]
     ], 
-    a3: [
-      ["chest back", "biceps triceps", "shoulders", "legs"],
-      ["chest back", "shoulders", "biceps triceps", "legs"],
-    ]
-  }, 
+  a1: [
+    ["chest back", "shoulders biceps triceps", "legs"], 
+    ["chest back", "legs", "shoulders biceps triceps"], 
+  ],
+  a2: [
+    ["chest back", "legs shoulders", "biceps triceps"], 
+    ["chest back", "biceps triceps", "legs shoulders"]
+  ], 
+  p3: [
+    ["chest triceps", "back biceps", "shoulders", "legs"], 
+    ["chest triceps", "legs", "shoulders", "back biceps"], 
+    ["chest triceps", "shoulders", "back biceps", "legs"], 
+    ["chest triceps", "shoulders", "legs", "back biceps"],
+    ["chest triceps", "back biceps", "legs", "shoulders"], 
+    ["chest triceps", "legs", "back biceps", "shoulders"],
+  ],  
+  b1: [
+    ["chest triceps", "back", "shoulders biceps", "legs"], 
+    ["chest triceps", "shoulders biceps", "legs", "back"],
+    ["chest triceps", "back", "legs", "shoulders biceps"], 
+    ["chest triceps", "legs", "back", "shoulders biceps"],
+    ["chest triceps", "back", "shoulders biceps", "legs"], 
+  ],
+  b2: [
+    ["chest", "back biceps", "shoulders triceps", "legs"],
+    ["chest", "legs", "shoulders triceps", "back biceps"],
+    ["chest", "shoulders triceps", "back biceps", "legs"],
+    ["chest", "shoulders triceps", "legs", "back biceps"],
+    ["chest", "legs", "back biceps", "shoulders triceps"],
+    ["chest" , "back biceps", "legs", "shoulders triceps"],
+  ], 
+  b3: [
+    ["chest", "back", "legs", "shoulders biceps triceps"], 
+    ["chest", "back", "shoulders biceps triceps", "legs"],
+    ["chest", "legs", "back", "shoulders biceps triceps"], 
+    ["chest", "shoulders biceps triceps", "legs", "back"],
+  ], 
+  a3: [
+    ["chest back", "biceps triceps", "shoulders", "legs"],
+    ["chest back", "shoulders", "biceps triceps", "legs"],
+    ["chest back", "legs", "biceps triceps", "shoulders"],
+    ["chest back", "biceps triceps", "legs", "shoulders"],
+    ["chest back", "legs", "shoulders", "biceps triceps"],
+    ["chest back", "biceps triceps", "shoulders", "legs"],
+  ],
 }, 
 liftTypeSeq: {
   20: {
