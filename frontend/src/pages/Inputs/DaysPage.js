@@ -4,7 +4,7 @@ import SelectMany from '../../components/SelectMany.js';
 import ProgressBar from '../../components/ProgressBar.js';
 import ErrorText from '../../components/ErrorText.js';
 
-function DaysPage({updateInputs, index, routes, handleRestart}) {
+function DaysPage({setInputs, inputs, index, routes, handleRestart}) {
   const navigate = useNavigate();
 
   const [showError, setShowError] = useState(false);
@@ -15,8 +15,16 @@ function DaysPage({updateInputs, index, routes, handleRestart}) {
       setShowError(true);
       return;
     } else {
-      updateInputs(choices, index); 
+      let schedule = ["rest", "rest", "rest", "rest", "rest", "rest", "rest"];
+      choices.forEach((choice, index) => {
+        if (choice) {
+          schedule[index] = "lift";
+        }
+      })
+      let newInputs = inputs;
+      newInputs.schedule = schedule;
       navigate(routes[index + 1]);
+      setInputs(newInputs)
     }
   }
 

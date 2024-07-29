@@ -4,7 +4,7 @@ import SelectOne from '../../components/SelectOne.js';
 import ProgressBar from '../../components/ProgressBar.js';
 import ErrorText from '../../components/ErrorText.js';
 
-function VerticalPull({updateInputs, index, routes, handleRestart}) {
+function VerticalPull({inputs, setInputs, index, routes, handleRestart}) {
   const navigate = useNavigate();
 
   const [showError, setShowError] = useState(true);
@@ -12,18 +12,20 @@ function VerticalPull({updateInputs, index, routes, handleRestart}) {
 
   const handleNext = () => {
     if (!showError) {
-      updateInputs(choice, index); 
-      navigate(routes[index + 1]);
+      let newInputs = {...inputs};
+      newInputs["vertical-pull"] = choice.toLowerCase();
+      setInputs(newInputs);
+      navigate('/knee-flexion');
     }
   }
 
-  const options = ["Pull Ups", "Lat Pulldown"];
+  const options = ["Pull Ups", "Lat Pulldown", "Kneeling Cable Row", "Machine Pulldown"];
   const [choice, setChoice] = useState(new Array(options.length).fill(false));
   return (
     <>
     <div>
       <div className="div-container">
-        <h3> Which movement do you prefer? </h3>
+        <h4> Which movement do you prefer? </h4>
         <SelectOne options={options} setChoice={setChoice} id={"movement-button"} setShow={setShowError}></SelectOne>
       </div>
     </div>

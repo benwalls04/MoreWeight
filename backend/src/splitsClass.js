@@ -309,32 +309,6 @@ class SplitsClass {
     return union / difference;
   }
 
-  getSampleText(base){
-    if (base.length > 0){
-      if (base[0].length === 2){
-        return baseToText.get(base[0]);
-      } else if (base.length > 1){
-        return baseToText.get(base[1][0]);
-      } else {
-        return "";
-      }
-    } else {
-      return "";
-    }
-  }
-
-  decrementBase(base){
-    let newBase = [];
-    if (!isNaN(parseInt(base[0][0]))){
-      newBase = base.slice(1, base.length);
-    } else {
-      newBase = base;
-      newBase[0] = newBase[0].slice(1, newBase[0].length);
-    }
-
-    return newBase;
-  }
-
   static kMeansCluster(splits, k){
     const list = [];
 
@@ -349,11 +323,11 @@ class SplitsClass {
         // randomly select centers
         for (let j = 0; j < k; j++){
           let index = Math.floor(Math.random() * splits.length);
-          let tryCenter = splits[index][0];
+          let tryCenter = splits[index];
 
           while (centers.some(center => center.every(entry => tryCenter === entry))){
             index = Math.floor(Math.random() * splits.length);
-            tryCenter = splits[index][0];
+            tryCenter = splits[index];
           }
 
           centers.push(tryCenter);
@@ -362,7 +336,7 @@ class SplitsClass {
         splits.forEach(split => {
           const similarities = [];
           centers.forEach(center => {
-            similarities.push(getSimilarity(split[0], center));
+            similarities.push(SplitsClass.getSimilarity(split, center));
           })
 
           if (similarities[0] === similarities[1]){
@@ -374,10 +348,18 @@ class SplitsClass {
             clusters[1].push(split);
           }
         })
+
+        clusters.forEach((cluster, index) => {
+          let centerIndex = cluster.findIndex(element => element === centers[index]);
+          if (centerIndex > 0){
+            cluster.splice(centerIndex, 1);
+          }
+          cluster.unshift(centers[index])
+        })
         
       }
       list.push({
-        similarity: getCenterSimilarity(centers), 
+        similarity: SplitsClass.getCenterSimilarity(centers), 
         clusters: clusters
       })
     }
@@ -390,20 +372,19 @@ class SplitsClass {
     }
 
     // return the splits without their icons
-    return best.clusters.map(cluster => cluster.map(entry => ({split: entry[0], base: entry[1], score: entry[2], oldBase: entry[3]})));
+    return best.clusters;
+  }
 
-    function getCenterSimilarity(centers){
-      let variance = 0;
-      for (let i = 0; i < centers.length; i++){
-        for (let j = 0; j < centers.length; j++){
-          if (i !== j){
-            variance += getSimilarity(centers[i], centers[j]);
-          }
+  static getCenterSimilarity(centers){
+    let variance = 0;
+    for (let i = 0; i < centers.length; i++){
+      for (let j = 0; j < centers.length; j++){
+        if (i !== j){
+          variance += SplitsClass.getSimilarity(centers[i], centers[j]);
         }
       }
-      return variance;
     }
-
+    return variance;
   }
 
 }

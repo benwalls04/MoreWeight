@@ -4,7 +4,7 @@ import SelectOne from '../../components/SelectOne.js';
 import ErrorText from '../../components/ErrorText.js';
 import ProgressBar from '../../components/ProgressBar.js';
 
-function SetsPage({updateInputs, index, routes, setNumberOfSets, handleRestart}) {
+function SetsPage({inputs, setInputs, index, routes, setNumberOfSets, handleRestart}) {
   const navigate = useNavigate();
 
   const [showError, setShowError] = useState(true);
@@ -12,9 +12,10 @@ function SetsPage({updateInputs, index, routes, setNumberOfSets, handleRestart})
 
   const handleNext = () => {
     if (!showError) {
-      updateInputs(choice, index); 
-      navigate(routes[index + 1]);
-      setNumberOfSets(parseInt(choice))
+      let newInputs = {...inputs};
+      newInputs.sets = parseInt(choice);
+      setInputs(newInputs); 
+      navigate('/time');
     }
   }
 

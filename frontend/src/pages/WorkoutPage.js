@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import FooterMenu from '../components/FooterMenu'
-import liftData from '../utils/liftData';
+import liftData from '../utils/staticData';
 import Dropdown from '../components/Dropdown';
 import SetPage from './SetPage';
 import SubButtons from '../components/SubButtons'

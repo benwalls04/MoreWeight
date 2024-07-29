@@ -13,7 +13,7 @@ function WelcomePage() {
         <button className="button" id="welcome-button" onClick={() => navigate('/login')}>
           Returning User
         </button>
-        <button className="button" id="welcome-button" onClick={() => navigate('/days')}>
+        <button className="button" id="welcome-button" onClick={() => navigate('/experience')}>
           New User
         </button>
         </div>

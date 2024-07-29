@@ -4,7 +4,7 @@ import SelectOne from '../../components/SelectOne.js';
 import ProgressBar from '../../components/ProgressBar.js';
 import ErrorText from '../../components/ErrorText.js';
 
-function VerticalPress({updateInputs, index, routes, handleRestart}) {
+function VerticalPress({inputs, setInputs, index, routes, handleRestart}) {
   const navigate = useNavigate();
 
   const [showError, setShowError] = useState(true);
@@ -12,17 +12,19 @@ function VerticalPress({updateInputs, index, routes, handleRestart}) {
 
   const handleNext = () => {
     if (!showError) {
-      updateInputs(choice, index); 
-      navigate(routes[index + 1]);
+      let newInputs = {...inputs};
+      newInputs["vertical-press"] = choice.toLowerCase();
+      setInputs(newInputs);
+      navigate('/horizontal-pull')
     }
   }
-  const options = ["Military Press", "Dumbell Overhead Press"];
+  const options = ["Military Press", "Dumbell Overhead Press", "Smith Machine Overhead Press", "Machine Overhead Press"];
   const [choice, setChoice] = useState(new Array(options.length).fill(false));
   return (
     <>
     <div>
       <div className="div-container">
-        <h3> Which movement do you prefer? </h3>
+        <h4> Which movement do you prefer? </h4>
         <SelectOne options={options} setChoice={setChoice} id={"movement-button"} setShow={setShowError}></SelectOne>
       </div>
     </div>

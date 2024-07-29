@@ -2,12 +2,30 @@ import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import SelectMany from '../../components/SelectMany.js';
 import ProgressBar from '../../components/ProgressBar.js';
+import axios from 'axios';
 
-function InjuriesPage({updateInputs, index, routes, handleRestart}) {
+function InjuriesPage({setInputs, inputs, index, routes, handleRestart}) {
   const navigate = useNavigate();
 
-  const handleNext = () => {
-    updateInputs(choices, index); 
+  const handleNext = async () => {
+    let bias = inputs.bias;
+    choices.forEach((choice, index) => {
+      if (choice && bias[index] === .5) {
+        bias[index] = .25;
+      }
+    })
+    let newInputs = inputs;
+    newInputs.bias = bias;
+    newInputs.splits = {};
+    setInputs(newInputs);
+    
+    const response = await axios.get('http://localhost:3001/splits', { params: newInputs}).then((response) => {
+      newInputs.splits = response.data;
+      setInputs(newInputs);
+    });
+
+    navigate(routes[index + 1]);
+  
     navigate(routes[index + 1]);
   }
 

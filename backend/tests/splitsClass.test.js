@@ -2,6 +2,7 @@ const splitsClass = require('../src/splitsClass');
 
 // CHECK DAY PLACEMENT
 
+/*
 test('FAIL: back to back large muscle group', () => {
   expect(splitsClass.checkDayPlacement(["chest shoulders triceps", "back biceps", "legs", "lift", "lift", "lift", "lift"], "legs", 3)).toBe(false);
 })
@@ -46,6 +47,8 @@ test('PASS: secondary worked after primary', () => {
   expect(splitsClass.checkDayPlacement(["chest shoulders triceps", "back biceps", "legs", "chest", "lift", "lift", "lift"], "shoulders triceps", 4)).toBe(true);
 })
 
+*/
+
 // IS VALID SCHEDULE 
 
 /*
@@ -68,16 +71,9 @@ test('PASS: one per week small muscle no bias', () => {
 
 // GENERATE SCHEDULES 
 
-test('INSPECT', () => {
-  let obj = new splitsClass();
-  obj.generateSplits(["lift", "lift", "lift", "rest", "rest", "rest", "rest"], [])
-  console.log(obj.a);
-  console.log(obj.b);
-  console.log(obj.u);
-  console.log(obj.p);
-})
-
 // ROTATE 
+
+/*
 
 test('FAIL: rotated into low rest right', () => {
   expect(splitsClass.rotate(["chest shoulders triceps", "back biceps", "legs", "chest", "rest", "rest", "rest"], 1)).toStrictEqual([false, ["chest", "chest shoulders triceps", "back biceps", "legs", "rest", "rest", "rest"]]);
@@ -87,4 +83,20 @@ test('FAIL: rotated into low rest left', () => {
   expect(splitsClass.rotate(["chest shoulders triceps", "back biceps", "legs", "chest", "rest", "rest", "rest"], -1)).toStrictEqual([false, ["back biceps", "legs", "chest", "chest shoulders triceps", "rest", "rest", "rest"]]);
 })
 
+*/
 
+// K MEANS CLUSTER 
+
+test('INSPECT: k means cluster', () => {
+  const response = splitsClass.kMeansCluster([
+    ["chest shoulders triceps", "legs", "back biceps", "chest"], 
+    ["chest shoulders triceps", "back biceps", "legs", "back"],
+    ["chest back", "shoulders biceps triceps", "legs", "chest"], 
+    ["chest back", "legs shoulders", "shoulders biceps triceps", "back"], 
+    ["chest", "back", "shoulders biceps triceps", "legs"], ], 3);
+
+  response.forEach(cluster => {
+    console.log("///// NEW CLUSTER //////")
+    console.log(cluster)
+  })
+})

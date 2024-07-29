@@ -1,6 +1,6 @@
 import DayButtons from "../components/DayButtons";
 import WorkoutInfo from "../components/WorkoutInfo";
-import liftData from "../utils/liftData";
+import liftData from "../utils/staticData";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";

@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const Grid = require('gridfs-stream');
 require('dotenv').config();
 const { GridFSBucket } = require('mongodb');
 const port = process.env.PORT || 3001;
@@ -38,17 +37,11 @@ app.use('/get-last', getLastRouter);
 const featuresRouter = require('./routes/SubmitFeatures');
 app.use('/submit-features', featuresRouter);
 
-mongoose.connect(process.env.MONGO_URL)
+const staticRouter = require('./routes/Static');
+app.use('/static', staticRouter);
 
-const conn = mongoose.connection;
-
-conn.once('open', () => {
-  app.locals.conn = conn;
-  const bucket = new GridFSBucket(conn.db, {
-    bucketName: 'fs'
-  });
-  app.locals.gfs = bucket;
-});
+mongoose.connect('mongodb+srv://benwalls2004:Bg053104!@cluster0.rlvzg1f.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
 
 app.listen(port, () => {
+  console.log(`Server is running on port: ${port}`);
 });

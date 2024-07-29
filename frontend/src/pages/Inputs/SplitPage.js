@@ -4,21 +4,25 @@ import ProgressBar from '../../components/ProgressBar';
 import ErrorText from '../../components/ErrorText';
 import axios from "axios";
 
-function SplitPage({ inputData, updateInputs, updateOutputs, outputIndex, index, routes, handleRestart}) {
+function SplitPage({ inputs, setInputs, index, routes, handleRestart}) {
 
   const [choice, setChoice] = useState(-1);
-  const [choices, setChoices] = useState(inputData.base);
+  const [choices, setChoices] = useState(inputs.splits.selection);
 
   const [showError, setShowError] = useState(false);
   const [errorText, setErrorText] = useState("Please select one of the options to continue.");
+
+  const [splits, setSplits] = useState(inputs.splits);
 
   const navigate = useNavigate();
 
   const partition = async () => {
     if (bottomId === "allowed-button") {
-      const response = await axios.post('http://moreweight-api-v1.us-east-1.elasticbeanstalk.com/partition', { splits: choices[choice].splits });
-      updateInputs(response.data, 8);
-      setChoices(inputData.base);
+      const response = await axios.post('http://localhost:3001/partition', { splits: choices[choice]});
+      setChoices(response.data);
+      let newSplits = {...splits};
+      splits.selection = response.data;
+      setSplits(newSplits);
       setChoice(-1);
       setIds(new Array(choices.length).fill("split-entry"));
       setBottomID("restricted-button");
@@ -29,8 +33,11 @@ function SplitPage({ inputData, updateInputs, updateOutputs, outputIndex, index,
 
   const handleNext = () => {
     if (choice > -1) {
-      updateOutputs(choices[choice].splits[0].split, outputIndex); 
-      navigate(routes[index + 1]);
+      const newInputs = {...inputs};
+      newInputs.splits = splits;
+      newInputs.splits.selection = choices[choice][0];
+      setInputs(newInputs);
+      navigate('/style');
     } else {
       setShowError(true);
     }
@@ -45,7 +52,7 @@ function SplitPage({ inputData, updateInputs, updateOutputs, outputIndex, index,
     setIds(newIds);
     setChoice(index);
 
-    if (choices[index].splits.length > 4){
+    if (choices[index].length > 4){
       setBottomID("allowed-button");
     } else {
       setBottomID("restricted-button");
@@ -60,11 +67,10 @@ function SplitPage({ inputData, updateInputs, updateOutputs, outputIndex, index,
       <div className="div-container">
         <h3>Which routine do you prefer?</h3>
         <div id="split-grid">
-          {choices
-            .map((base, i) => (
+          {choices.map((choice, i) => (
             <button key={i} id={ids[i]} onClick={() => handleClick(i)}>
               <div id="day-grid">
-                {base.splits[0].split.map((day, j) => (
+                {choice[0].map((day, j) => (
                   <div id="day-grid-row" key={j}>
                     <div id="day-grid-entry" className="small-text-left">day {j + 1}</div>
                     <div id="day-grid-entry" className="small-text-left">{day}</div>

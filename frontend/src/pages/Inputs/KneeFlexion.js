@@ -4,7 +4,7 @@ import SelectOne from '../../components/SelectOne.js';
 import ProgressBar from '../../components/ProgressBar.js';
 import ErrorText from '../../components/ErrorText.js';
 
-function KneeFlexion({updateInputs, index, routes, handleRestart}) {
+function KneeFlexion({inputs, setInputs, index, routes, handleRestart}) {
   const navigate = useNavigate();
 
   const [showError, setShowError] = useState(true);
@@ -12,18 +12,20 @@ function KneeFlexion({updateInputs, index, routes, handleRestart}) {
 
   const handleNext = () => {
     if (!showError) {
-      updateInputs(choice, index); 
-      navigate(routes[index + 1]);
+      let newInputs = {...inputs};
+      newInputs["knee-flexion"] = choice.toLowerCase();
+      setInputs(newInputs);
+      navigate('/hip-extension');
     }
   }
 
-  const options = ["Barbell Squat", "Hack Squat"];
+  const options = ["Barbell Squat", "Hack Squat", "Front Squat", "Leg Press"];
   const [choice, setChoice] = useState(new Array(options.length).fill(false));
   return (
     <>
     <div>
       <div className="div-container">
-        <h3> Which movement do you prefer? </h3>
+        <h4> Which movement do you prefer? </h4>
         <SelectOne options={options} setChoice={setChoice} id={"movement-button"} setShow={setShowError}></SelectOne>
       </div>
     </div>

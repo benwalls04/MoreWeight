@@ -1,10 +1,13 @@
 const express = require('express')
 const router = express.Router() 
-const partitionSplits = require('../src/partitionSplits');
+let splitsClass = require('../src/splitsClass');
 
 router.post("/", (req, res) => {
-  const result = partitionSplits(req.body.splits);
-  res.json(result);
+
+  let splits = req.body.splits;
+  let clusters = splitsClass.kMeansCluster(splits, 2);
+
+  res.json(clusters);
 })
 
 module.exports = router

@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router() 
-const getSplits = require('../utils/getSplits');
+const getSplits = require('../src/getSplits');
 
 router.get("/", (req, res) => {
   const result = getSplits(req.query);

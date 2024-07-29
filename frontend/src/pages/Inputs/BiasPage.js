@@ -3,11 +3,14 @@ import { useNavigate } from "react-router-dom";
 import SelectMany from '../../components/SelectMany.js';
 import ProgressBar from '../../components/ProgressBar.js';
 
-function BiasPage({updateInputs, index, routes, handleRestart}) {
+function BiasPage({setInputs, inputs, index, routes, handleRestart}) {
   const navigate = useNavigate();
 
   const handleNext = () => {
-    updateInputs(choices, index); 
+    let bias = choices.map(choice => choice ? .75 : .5);
+    let newInputs = inputs;
+    newInputs.bias = bias;
+    setInputs(newInputs);
     navigate(routes[index + 1]);
   }
 

@@ -1,6 +1,6 @@
 const Queue = require('./Queue')
 const { erf, sqrt, exp, pi, setMultiplicityDependencies } = require('mathjs');
-const liftData = require('./liftData');
+const liftData = require('./staticData');
 
 function getRoutines(inputData, Split){
   // constants 

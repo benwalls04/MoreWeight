@@ -4,12 +4,14 @@ import SelectOne from '../../components/SelectOne.js';
 import ProgressBar from '../../components/ProgressBar.js';
 import Slider from '../../components/Slider.js';
 
-function LegsPage({updateInputs, index, routes, handleRestart}) {
+function LegsPage({inputs, setInputs, index, routes, handleRestart}) {
   const navigate = useNavigate();
 
   const handleNext = () => {
-    updateInputs(value, index); 
-    navigate(routes[index + 1]);
+    let newInputs = {...inputs};
+    newInputs.legs = parseInt(value);
+    setInputs(newInputs);
+    navigate('/horizontal-press');
   }
 
   const [value, setValue] = useState(50);

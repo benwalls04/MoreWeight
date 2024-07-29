@@ -4,7 +4,7 @@ import SelectOne from '../../components/SelectOne.js';
 import ErrorText from '../../components/ErrorText.js';
 import ProgressBar from '../../components/ProgressBar.js';
 
-function ExperiencePage({updateInputs, index, routes, setExpIcon, handleRestart}) {
+function ExperiencePage({setInputs, inputs, index, routes, setExperience, handleRestart}) {
   const navigate = useNavigate();
 
   const [showError, setShowError] = useState(true);
@@ -12,20 +12,23 @@ function ExperiencePage({updateInputs, index, routes, setExpIcon, handleRestart}
 
   const handleNext = () => {
     if (!showError) {
-      updateInputs(choice, index); 
+      const expIcon = choice === "0-2 years" ? 'b' : choice === "2-4 years" ? 'i' : 'a';
+      let newInputs = inputs;
+      newInputs.exp = expIcon;
       navigate(routes[index + 1]);
-      setExpIcon(choice === "0" || choice === "1"? 'b': choice === "2" || choice === "3"? 'i': 'a')
+      setInputs(newInputs)
+      setExperience(expIcon);
     }
   }
 
-  const options = ["0", "1", "2", "3", "4", "5+"];
+  const options = ["0-2 years", "2-4 years", "4+ years"];
   const [choice, setChoice] = useState(new Array(options.length).fill(false));
 
   return (
     <>
     <div>
       <div className="div-container">
-        <h1> How many years have you been lifting? </h1>
+        <h1> What is your experience level? </h1>
         <SelectOne options={options} setChoice={setChoice} setShow={setShowError}></SelectOne>
       </div>
     </div>

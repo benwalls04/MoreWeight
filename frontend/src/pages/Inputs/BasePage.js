@@ -1,31 +1,41 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import ProgressBar from '../../components/ProgressBar';
-import ErrorText from '../../components/ErrorText';
+import staticData from '../../utils/staticData';
 import axios from "axios";
 
-function BasePage({ outputData, updateInputs, index, routes, handleRestart }) {
+
+function BasePage({setInputs, inputs, index, routes, handleRestart }) {
+
+  const sampleLines = staticData.splitSamples;
+  const sampleTitles = staticData.splitTitles;
 
   const navigate = useNavigate();
-  const [splits, setSplits] = useState(outputData.splits);
+  const [splits, setSplits] = useState(inputs.splits);
 
   const handleNext = async () => {
     if (choiceIndex > -1){
-      const response = await axios.post('http://moreweight-api-v1.us-east-1.elasticbeanstalk.com/partition', { splits: splits[choiceIndex].splits });
-      updateInputs(response.data, index);
-      if (response.data[0].base.length > 0){
-        setSplits(response.data);
-      } else {
-        navigate(routes[index + 1]);
-      }
+      const newSplits = {...splits};
+        let [key, value] = Object.entries(splits.selection[choiceIndex])[0];
+        newSplits.selection = value;
+        setSplits(newSplits);
+      if (Array.isArray(newSplits.selection[0])){
+          navigate("/loading")
+          let newInputs = {... inputs}
+          const response = await axios.post('http://localhost:3001/partition', { splits: newSplits.selection });
+          newSplits.selection = response.data;
+          newInputs.splits = newSplits;
+          setInputs(newInputs);
+          navigate("/split");
+        } 
     }
   };
 
   const [choiceIndex, setChoiceIndex] = useState(-1);
-  const [ids, setIds] = useState(new Array(splits.length).fill("split-entry"))
+  const [ids, setIds] = useState(new Array(Object.entries(splits.selection).length).fill("split-entry"))
 
   const handleClick = (index, title) => {
-    const newIds = new Array(splits.length).fill("split-entry");
+    const newIds = new Array(Object.entries(splits.selection).length).fill("split-entry");
     newIds[index] = "split-entry-select";
     setIds(newIds);
     setChoiceIndex(index);
@@ -37,19 +47,21 @@ function BasePage({ outputData, updateInputs, index, routes, handleRestart }) {
       <div className="div-container">
       <h3>Which routine base do you prefer?</h3>
       <div id="split-grid">
-        {Object.values(splits).map((splitTable, index) => (
-          <button key={index} id={ids[index]} onClick={() => handleClick(index)}>
-            <h4 id={"split-header"}>
-              {'title' in splitTable? splitTable.title: "Option " + (index + 1)}
-            </h4>
-            <div id="split-textbox">
-              Example Split: 
-              {getSampleLines(splitTable.sample).map((line, index) => {
-                return <div className="small-text-left" key={index}>- {line}</div>
-              })}
-            </div>
-          </button>
-        ))}
+        {splits.selection.map((table, index) => {
+          const [key, value] = Object.entries(table)[0];
+
+          return (
+            <button key={index} id={ids[index]} onClick={() => handleClick(index)}>
+              <h4>{sampleTitles[key]}</h4>
+              <div id="split-textbox">
+                Example Split: 
+                {getSampleLines(key).map((line, index) => (
+                  <div className="small-text-left" key={index}>- {line}</div>
+                ))}
+              </div>
+            </button>
+          );
+        })}
       </div>
     </div>
   </div>
@@ -60,7 +72,12 @@ function BasePage({ outputData, updateInputs, index, routes, handleRestart }) {
   </>
   );
 
-  function getSampleLines(text) {
+  function getSampleLines(key) {
+    if (!sampleLines[key]){
+      return [];
+    }
+
+    const text = sampleLines[key];
     let lines = [];
     let index = 0;
     while (index < text.length){

@@ -97,7 +97,7 @@ const staticData = {
         "i": [8, 9, 9, 10],
         "a": [9, 9, 10, 11]
       }, 
-      "variants": ["lat pulldown", "wide grip lat pull down", "narrow grip lat pulldown"], 
+      "variants": ["lat pulldown", "wide grip lat pulldown", "narrow grip lat pulldown"], 
     }, 
     "single hand lat pulldown": {
       "primary": "back", 
@@ -119,7 +119,7 @@ const staticData = {
         "i": [8, 9, 9, 10],
         "a": [9, 9, 10, 11]
       }, 
-      "variants": ["underhand lat pull down"],
+      "variants": ["underhand lat pulldown"],
     }, 
     "pull ups": {
       "primary": "back", 
@@ -132,7 +132,7 @@ const staticData = {
       }, 
       "variants": ["pull ups", "underhand pull ups", "wide grip pull ups"],
     }, 
-    "seated row": {
+    "seated cable row": {
       "primary": "back", 
       "secondary": ["biceps"], 
       "liftTypes": [3, 2], 
@@ -141,7 +141,7 @@ const staticData = {
         "i": [8, 9, 9, 10],
         "a": [9, 9, 10, 11]
       }, 
-      "variants": ["seated row", "narrow grip seated row", "wide grip seated row"],
+      "variants": ["seated cable row", "narrow grip seated cable row", "wide grip seated cable row"],
     }, 
     "machine row": {
       "primary": "back", 
@@ -606,7 +606,7 @@ const staticData = {
       "variants": ["machine tricep extension"]
     }
   }, 
-  begginerMovements: ["barbell bench press", "dumbell bench press", "machine chest press", "pec-dec fly", "lat pulldown", "seated row", "machine row", "reverse pec-dec fly", "barbell squat", "hack squat", "leg press", "machine leg press", "leg extension", "seated leg curl", "lying leg curl", "dumbell overhead press", "dumbell front raise", "dumbell lateral raise", "dumbell curl", "cable curl", "preacher curl", "tricep pushdown", "machine tricep extension"], 
+  begginerMovements: ["barbell bench press", "dumbell bench press", "machine chest press", "pec-dec fly", "lat pulldown", "seated cable row", "machine row", "reverse pec-dec fly", "barbell squat", "hack squat", "leg press", "machine leg press", "leg extension", "seated leg curl", "lying leg curl", "dumbell overhead press", "dumbell front raise", "dumbell lateral raise", "dumbell curl", "cable curl", "preacher curl", "tricep pushdown", "machine tricep extension"], 
   accesories: {
     "dumbell lateral raise": {
       "primary": "side deltoids",
@@ -838,7 +838,7 @@ const staticData = {
       "variants": [],
       "notes": ""
     },
-    "wide grip lat pull down": {
+    "wide grip lat pulldown": {
       "group": "back", 
       "movement": "lat pulldown",
       "region": "upper back", 
@@ -859,14 +859,14 @@ const staticData = {
       "variants": ["wide bar", "triangle grip", "mag grip"], 
       "notes": ""
     },
-    "single hand lat pull down": {
+    "single hand lat pulldown": {
       "group": "back", 
       "movement": "single hand lat pulldown",
       "region": "lats", 
       "variants": [], 
       "notes": ""
     },
-    "underhand lat pull down": {
+    "underhand lat pulldown": {
       "group": "back", 
       "movement": "underhand lat pulldown",
       "region": "lats", 
@@ -894,23 +894,23 @@ const staticData = {
       "variants": [], 
       "notes": ""
     },
-    "wide grip seated row": {
+    "wide grip seated cable row": {
       "group": "back", 
-      "movement": "seated row",
+      "movement": "seated cable row",
       "region": "upper back", 
       "variants": ["wide bar", "mag grip", "round handle"], 
       "notes": ""
     },
-    "seated row": {
+    "seated cable row": {
       "group": "back", 
-      "movement": "seated row",
+      "movement": "seated cable row",
       "region": "neutral", 
       "variants": ["triangle grip", "mag grip", "neutral handle", "wide bar"],
       "notes": ""
     },
-    "narrow grip seated row": {
+    "narrow grip seated cable row": {
       "group": "back", 
-      "movement": "seated row",
+      "movement": "seated cable row",
       "region": "lats", 
       "variants": ["triangle grip", "wide bar"], 
       "notes": ""
@@ -1538,7 +1538,7 @@ const staticData = {
       "regions": ["upper back", "lats"],
       "upperStim": [110, 120, 130, 140, 150, 160], 
       "lowerStim": [60, 70, 80, 90, 110, 130], 
-      "compounds": ["lat pulldown", "pull ups", "seated row", "machine row", "t-bar row", "barbell row", "single-arm cable row"],
+      "compounds": ["lat pulldown", "pull ups", "seated cable row", "machine row", "t-bar row", "barbell row", "single-arm cable row"],
       "isolations": ["lat pullover", "reverse pec-dec fly", "face pulls", "single arm lat pullover"],
       "neutral": {
         compound: ["neutral", "neutral", "neutral"],
@@ -1848,6 +1848,217 @@ const staticData = {
     a3: "chest back.biceps triceps.shoulders.legs",
     u1: "chest back shoulders biceps triceps.legs", 
     u2: "chest back biceps triceps.legs shoulders",
+  }, 
+  splitTitles: {
+    "": "",
+    u: "upper lower",
+    b: "body part split", 
+    a: "arnold split",
+    p: "push pull legs", 
+    b1: "body part split 1",
+    b2: "body part split 2",
+    b3: "body part split 3", 
+    p1: "push pull legs 1", 
+    p2: "push pull legs 2", 
+    p3: "push pull legs 3", 
+    a1: "arnold split 1", 
+    a2: "arnold split 2", 
+    a3: "arnold split 3",
+    u1: "upper lower 1", 
+    u2: "upper lower 2",
+  },
+  sequences: {
+    chest: {
+      b: {
+        seq: [
+          {type: 'horizontal-press-0', lowerRep: 6, upperRep: 10}, 
+          {type: 'horizontal-press-2', lowerRep: 8, upperRep: 12},  
+          {type: 'horizontal-press-2', lowerRep: 8, upperRep: 12}, 
+          {type: 'horizontal-press-2', lowerRep: 8, upperRep: 12}, 
+          {type: 'horizontal-press-2', lowerRep: 8, upperRep: 12}, 
+          {type: 'fly', lowerRep: 10, upperRep: 14}, 
+          {type: 'fly', lowerRep: 10, upperRep: 14},   
+        ], 
+        order: [0, 5, 6, 1, 2, 3, 4], 
+        min: [3, 2, 2]
+      },
+      p: {
+        seq: [
+          {type: 'horizontal-press-0', lowerRep: 2, upperRep: 6}, 
+          {type: 'horizontal-press-1', lowerRep: 4, upperRep: 8},  
+          {type: 'horizontal-press-2', lowerRep: 6, upperRep: 10}, 
+          {type: 'horizontal-press-2', lowerRep: 6, upperRep: 10}, 
+          {type: 'horizontal-press-2', lowerRep: 6, upperRep: 10}, 
+          {type: 'fly', lowerRep: 8, upperRep: 12}, 
+          {type: 'fly', lowerRep: 8, upperRep: 12}, 
+        ], 
+        order: [0, 1, 5, 2, 3, 6, 4], 
+      },
+      n: {
+        seq: [
+          {type: 'horizontal-press-0', lowerRep: 4, upperRep: 8}, 
+          {type: 'horizontal-press-1', lowerRep: 6, upperRep: 10},  
+          {type: 'horizontal-press-2', lowerRep: 8, upperRep: 12}, 
+          {type: 'horizontal-press-2', lowerRep: 8, upperRep: 12}, 
+          {type: 'horizontal-press-2', lowerRep: 8, upperRep: 12}, 
+          {type: 'fly', lowerRep: 8, upperRep: 12}, 
+          {type: 'fly', lowerRep: 8, upperRep: 12}, 
+        ], 
+        order: [0, 2, 5, 1, 6, 3, 4], 
+      }
+    }, 
+    back: {
+      b: {
+        seq: [
+          {type: 'vertical-pull-0', lowerRep: 8, upperRep: 12}, 
+          {type: 'horizontal-pull-0', lowerRep: 8, upperRep: 12},  
+          {type: 'vertical-pull-2', lowerRep: 8, upperRep: 12}, 
+          {type: 'horizontal-pull-2', lowerRep: 8, upperRep: 12}, 
+          {type: 'back-iso', lowerRep: 10, upperRep: 14}, 
+          {type: 'back-iso', lowerRep: 10, upperRep: 14},  
+          {type: 'back-iso', lowerRep: 10, upperRep: 14}, 
+        ], 
+        order: [0, 1, 4, 5, 6, 2, 3], 
+      },
+      p: {
+        seq: [
+          {type: 'horizontal-pull-1', lowerRep: 4, upperRep: 8}, 
+          {type: 'vertical-pull-0', lowerRep: 6, upperRep: 10}, 
+          {type: 'horizontal-pull-0', lowerRep: 6, upperRep: 10},  
+          {type: 'vertical-pull-1', lowerRep: 4, upperRep: 8}, 
+          {type: 'back-iso', lowerRep: 8, upperRep: 12}, 
+          {type: 'back-iso', lowerRep: 8, upperRep: 12},  
+          {type: 'back-iso', lowerRep: 8, upperRep: 12}, 
+        ], 
+        order: [1, 2, 0, 4, 5, 3, 6], 
+      },
+      n: {
+        seq: [
+          {type: 'vertical-pull-0', lowerRep: 6, upperRep: 10}, 
+          {type: 'horizontal-pull-0', lowerRep: 6, upperRep: 10},  
+          {type: 'vertical-pull-2', lowerRep: 8, upperRep: 12}, 
+          {type: 'horizontal-pull-2', lowerRep: 8, upperRep: 12}, 
+          {type: 'back-iso', lowerRep: 8, upperRep: 12}, 
+          {type: 'back-iso', lowerRep: 8, upperRep: 12},  
+          {type: 'back-iso', lowerRep: 8, upperRep: 12}, 
+        ], 
+        order: [0, 1, 4, 5, 2, 3, 6], 
+      }
+    },
+    legs: {
+      b: {
+        seq: [
+          {type: 'knee-flexion-0', lowerRep: 8, upperRep: 12}, 
+          {type: 'hip-extension-0', lowerRep: 8, upperRep: 12},  
+          {type: 'knee-flexion-2', lowerRep: 8, upperRep: 12}, 
+          {type: 'hip-extension-2', lowerRep: 8, upperRep: 12}, 
+          {type: 'leg-iso', lowerRep: 10, upperRep: 14}, 
+          {type: 'leg-iso', lowerRep: 10, upperRep: 14},
+          {type: 'leg-iso', lowerRep: 10, upperRep: 14},   
+          {type: 'leg-iso', lowerRep: 10, upperRep: 14},   
+        ], 
+        order: [4, 5, 0, 1, 6, 2, 3, 7], 
+      },
+      p: {
+        seq: [
+          {type: 'knee-flexion-0', lowerRep: 2, upperRep: 6}, 
+          {type: 'hip-extension-0', lowerRep: 6, upperRep: 10},  
+          {type: 'knee-flexion-1', lowerRep: 6, upperRep: 10}, 
+          {type: 'hip-extension-2', lowerRep: 6, upperRep: 10}, 
+          {type: 'leg-iso', lowerRep: 10, upperRep: 14}, 
+          {type: 'leg-iso', lowerRep: 10, upperRep: 14}, 
+          {type: 'leg-iso', lowerRep: 10, upperRep: 14},  
+          {type: 'leg-iso', lowerRep: 10, upperRep: 14},   
+        ], 
+        order: [0, 1, 4, 5, 2, 3, 6, 7],  
+      },
+      n: {
+        seq: [
+          {type: 'knee-flexion-0', lowerRep: 6, upperRep: 10}, 
+          {type: 'hip-extension-0', lowerRep: 6, upperRep: 10},  
+          {type: 'knee-flexion-1', lowerRep: 8, upperRep: 12}, 
+          {type: 'hip-extension-2', lowerRep: 8, upperRep: 12}, 
+          {type: 'leg-iso', lowerRep: 8, upperRep: 12}, 
+          {type: 'leg-iso', lowerRep: 8, upperRep: 12},  
+          {type: 'leg-iso', lowerRep: 10, upperRep: 14},  
+          {type: 'leg-iso', lowerRep: 10, upperRep: 14},  
+        ], 
+        order: [0, 1, 4, 5, 6, 2, 3, 7],  
+      }
+    },
+    shoulders: {
+      seq: [
+        {type: 'vertical-press-0', lowerRep: 6, upperRep: 10}, 
+        {type: 'vertical-press-1', lowerRep: 6, upperRep: 10},  
+        {type: 'shoulder-iso', lowerRep: 8, upperRep: 12}, 
+        {type: 'shoulder-iso', lowerRep: 8, upperRep: 12},  
+        {type: 'shoulder-iso', lowerRep: 8, upperRep: 12},  
+      ], 
+      order: [0, 2, 3, 1, 4],
+    },
+    biceps: {
+      seq: [
+        {type: 'curl', lowerRep: 8, upperRep: 12}, 
+        {type: 'curl', lowerRep: 8, upperRep: 12},  
+        {type: 'curl', lowerRep: 8, upperRep: 12}, 
+        {type: 'curl', lowerRep: 8, upperRep: 12},  
+      ], 
+      order: [0, 1, 2, 3],
+    }, 
+    triceps: {
+      seq: [
+        {type: 'extension', lowerRep: 8, upperRep: 12}, 
+        {type: 'extension', lowerRep: 8, upperRep: 12},  
+        {type: 'extension', lowerRep: 8, upperRep: 12}, 
+        {type: 'extension', lowerRep: 8, upperRep: 12},  
+      ], 
+      order: [0, 1, 2, 3],
+    }
+  },
+  movementOrder: {
+    "horizontal-press-1": ["dumbell bench press", "barbell bench press", "machine bench press"], 
+    "horizontal-press-2": ["dumbell bench press", "machine chest press", "smith machine bench press", "weighted dips", "machine bench press", "cable press"], 
+    "vertical-press-1": ["dumbell overhead press", "smith machine overhead press", "machine overhead press", "military press"], 
+    "horizontal-pull-1": ["t-bar row", "barbell row"],
+    "horizontal-pull-2": ["seated cable row", "machine row", "t-bar row", "dumbell row", "barbell row"],
+    "vertical-pull-1": ["lat pulldown", "pull ups"],
+    "vertical-pull-2": ["lat pulldown", "pull ups", "machine pulldown", "kneeling cable row"],
+    "knee-flexion-1": ["barbell squat", "hack squat", "leg press", "front squat"],
+    "knee-flexion-2": ["leg press", "bulgarian split squat", "smith machine squat"],
+    "hip-extension-1": ["deadlift"],
+    "hip-extension-2": ["barbell romanian deadlift", "barbell hip thrust", "dumbell romanian deadlift"],
+    "curl": ["cable curl", "dumbell hammer curl", "incline dumbell curl", "preacher curl"], 
+    "extension": ["tricep pushdown", "overhead tricep extension", "skullcrusher", "machine tricep extension"], 
+    "fly": ["pec-dec fly", "cable fly"], 
+    "back-iso": ["lat pullover", "reverse pec-dec fly", "cable rear delt fly"], 
+    "leg-iso": ["leg extension", "leg curl", "adductor machine", "abductor machine"], 
+    "shoulder-iso": ["dumbell lateral raise", "cable lateral raise", "cable front raise"], 
+    "side deltoid": ["dumbell lateral raise", "cable lateral raise", "machine lateral raise"], 
+    "rear deltoid": ["cable rear delt fly", "reverse pec-dec fly", "dumbell rear delt fly",],
+    "traps": ["barbell shrugs", "machine shrugs", "dumbell shrugs", "cable shrugs"],
+    "forearms": ["straight bar forearm curl", "cable forearm curl"],
+    "calves": ["machine calf raise", "smith machine calf raise", "dumbell calf raise", "barbell calf raise"],
+    "abs": ["weighted leg raise", "weighted situps", "cable crunch", "dumbell side bend"],
+  }, 
+  movements2: {
+    "dumbell bench press": {
+
+    }, 
+    "barbell bench press": {
+
+    },
+    "smith machine bench press": {
+
+    },
+    "machine chest press": {
+
+    },
+    "weighted dips": {
+
+    },
+    "cable press": {
+
+    },
   }
   
   }

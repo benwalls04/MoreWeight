@@ -4,7 +4,7 @@ import SelectOne from '../../components/SelectOne.js';
 import ProgressBar from '../../components/ProgressBar.js';
 import ErrorText from '../../components/ErrorText.js';
 
-function TimePage({updateInputs, index, routes, handleRestart}) {
+function TimePage({inputs, setInputs, index, routes, handleRestart}) {
   const navigate = useNavigate();
 
   const [showError, setShowError] = useState(true);
@@ -12,8 +12,10 @@ function TimePage({updateInputs, index, routes, handleRestart}) {
 
   const handleNext = () => {
     if (!showError) {
-      updateInputs(choice, index); 
-      navigate(routes[index + 1]);
+      let newInputs = {...inputs};
+      newInputs.time = parseInt(choice.substring(0, choice.indexOf(" ")));
+      setInputs(newInputs); 
+      navigate('/accessories');
     }
   }
 
