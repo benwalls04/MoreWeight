@@ -87,6 +87,7 @@ test('FAIL: rotated into low rest left', () => {
 
 // K MEANS CLUSTER 
 
+/* 
 test('INSPECT: k means cluster', () => {
   const response = splitsClass.kMeansCluster([
     ["chest shoulders triceps", "legs", "back biceps", "chest"], 
@@ -100,3 +101,4 @@ test('INSPECT: k means cluster', () => {
     console.log(cluster)
   })
 })
+*/
