@@ -9,7 +9,7 @@ function StylePage({inputs, setInputs, index, routes, handleRestart}) {
 
   const handleNext = () => {
     let newInputs = {...inputs};
-    newInputs.style = value;
+    newInputs.style = parseInt(value);
     setInputs(newInputs); 
     navigate('/sets');
   }

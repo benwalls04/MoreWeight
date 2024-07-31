@@ -12,6 +12,7 @@ const staticData = {
         n: 'Flat bench.', 
         u: 'Incline bench.',
       }, 
+      biasOrder: ['n', 'n', 'u']
     }, 
     "dumbell bench press": {
       "primary": "chest", 
@@ -26,6 +27,7 @@ const staticData = {
         u: 'Incline bench.',
         l: 'Decline bench.',
       }, 
+      biasOrder: ['u', 'n', 'l']
     }, 
     "smith machine bench press": {
       "primary": "chest", 
@@ -39,7 +41,8 @@ const staticData = {
         n: 'Flat bench.', 
         u: 'Incline bench.', 
         l: 'Decline bench.', 
-      }
+      }, 
+      biasOrder: ['u', 'n', 'l']
     }, 
     "machine chest press": {
       "primary": "chest", 
@@ -54,6 +57,7 @@ const staticData = {
         u: 'Low-to-high arm path', 
         l: 'High-to-low arm path', 
       }, 
+      biasOrder: ['u', 'n', 'l']
     }, 
     "weighted dips": {
       "primary": "chest", 
@@ -66,6 +70,7 @@ const staticData = {
       "variants": {
         l: '',
       }, 
+      biasOrder: ['l', 'l', 'l']
     }, 
     "cable fly": {
       "primary": "chest", 
@@ -80,6 +85,7 @@ const staticData = {
         u: 'Low-to-high arm path.',
         l: 'High-to-low arm path.',
       }, 
+      biasOrder: ['l', 'n', 'u']
     }, 
     "pec-dec fly": {
       "primary": "chest", 
@@ -92,6 +98,7 @@ const staticData = {
       "variants": {
         n: ''
       }, 
+      biasOrder: ['n', 'n', 'n']
     }, 
     "cable press": {
       "primary": "chest", 
@@ -106,6 +113,7 @@ const staticData = {
         u: 'Low-to-high arm path.',
         l: 'High-to-low arm path.',
       },
+      biasOrder: ['l', 'n', 'u']
     }, 
     "lat pulldown": {
       "primary": "back", 
@@ -120,6 +128,7 @@ const staticData = {
         l: 'Narrow grip. Resist leaning back.', 
         u: 'Wide grip. Maintain a slight lean back.',
       }, 
+      biasOrder: ['n', 'l', 'u']
     }, 
     "pull ups": {
       "primary": "back", 
@@ -133,6 +142,7 @@ const staticData = {
         n: 'Neutral grip.',
         l: 'Narrow underhand grip.',
       },
+      biasOrder: ['n', 'n', 'l']
     }, 
     "seated cable row": {
       "primary": "back", 
@@ -147,6 +157,7 @@ const staticData = {
         u: 'Wide overhand grip. Try for a wide arm path close to 90 degrees. Allow for a controlled backward lean when pulling the weight.', 
         l: 'Narrow grip. Imagine pulling your elbows into your hips. Maintain a slight forward lean.',
       },
+      biasOrder: ['u', 'l', 'n']
     }, 
     "machine row": {
       "primary": "back", 
@@ -161,6 +172,7 @@ const staticData = {
         l: 'Imagine pulling your elbows into your hips', 
         u: 'Try for a wide arm path close to 90 degrees', 
       },
+      biasOrder: ['l', 'n', 'u']
     }, 
     "t-bar row": {
       "primary": "back", 
@@ -175,6 +187,7 @@ const staticData = {
         l: 'Narrow grip. Imagine pulling your elbows into your hips', 
         u: 'Wide overhand grip. Try for a wide arm path close to 90 degrees', 
       },
+      biasOrder: ['u', 'n', 'l']
     }, 
     "barbell row": {
       "primary": "back", 
@@ -187,8 +200,9 @@ const staticData = {
       "variants": {
         n: 'Neutral grip. Try for a 45 degree arm path', 
         l: 'Narrow grip. Imagine pulling your elbows into your hips', 
-        u: 'Wide overhand grip. Try for a wide arm path close to 90 degrees',
+        u: 'Wide overhand grip. Try for a wide arm path close to 90 degrees'
       }, 
+      biasOrder: ['n', 'l', 'u']
     },  
     "lat pullover": {
       "primary": "back", 
@@ -201,6 +215,7 @@ const staticData = {
       "variants": {
         l: ''
       },
+      biasOrder: ['l', 'l', 'l']
     }, 
     "reverse pec-dec fly": {
       "primary": "back", 
@@ -213,6 +228,7 @@ const staticData = {
       "variants": {
         u: ''
       },
+      biasOrder: ['u', 'u', 'u']
     }, 
     "face pulls": {
       "primary": "back",
@@ -225,6 +241,7 @@ const staticData = {
       "variants": {
         u: ''
       },
+      biasOrder: ['u', 'u', 'u']
     }, 
     "barbell squat": {
       "primary": "legs", 
@@ -237,6 +254,7 @@ const staticData = {
       "variants": {
         q: ''
       },
+      biasOrder: ['q', 'q', 'q']
     }, 
     "hack squat": {
       "primary": "legs", 
@@ -249,6 +267,7 @@ const staticData = {
       "variants": {
         q: ''
       },
+      biasOrder: ['q', 'q', 'q']
     }, 
     "smith machine squat": {
       "primary": "legs", 
@@ -261,6 +280,7 @@ const staticData = {
       "variants": {
         q: ''
       },
+      biasOrder: ['q', 'q', 'q']
     }, 
     "bulgarian split squat": {
       "primary": "legs", 
@@ -276,6 +296,7 @@ const staticData = {
         n: 'Keep front foot at 90 degrees with the knee.', 
         h: 'Keep front foot shy of 90 degrees with the knee.'
       },
+      biasOrder: ['h', 'n', 'q']
     }, 
     "front squat": {
       "primary": "legs",
@@ -288,6 +309,7 @@ const staticData = {
       "variants": {
         q: ''
       },
+      biasOrder: ['q', 'q', 'q']
     }, 
     "barbell romanian deadlift": {
       "primary": "legs", 
@@ -300,6 +322,7 @@ const staticData = {
       "variants": {
         h: ''
       },
+      biasOrder: ['h', 'h', 'h']
     }, 
     "dumbell romanian deadlift": {
       "primary": "legs", 
@@ -312,6 +335,7 @@ const staticData = {
       "variants": {
         h: ''
       },
+      biasOrder: ['h', 'h', 'h']
     }, 
     "deadlift": {
       "primary": "legs", 
@@ -323,7 +347,8 @@ const staticData = {
       }, 
       "variants": {
         h: ''
-      },
+      }, 
+      biasOrder: ['h', 'h', 'h']
     }, 
     "leg press": {
       "primary": "legs", 
@@ -337,6 +362,7 @@ const staticData = {
         q: 'Place feet low on the platform', 
         n: 'Place feet high on the platform', 
       },
+      biasOrder: ['n', 'q', 'q']
     }, 
     "barbell hip thrust": {
       "primary": "legs",
@@ -349,6 +375,7 @@ const staticData = {
       "variants": {
         h: ''
       },
+      biasOrder: ['h', 'h', 'h']
     }, 
     "leg extension": {
       "primary": "legs", 
@@ -361,6 +388,7 @@ const staticData = {
       "variants": {
         q: ''
       },
+      biasOrder: ['q', 'q', 'q']
     }, 
     "leg curl": {
       "primary": "legs", 
@@ -373,10 +401,11 @@ const staticData = {
       "variants": {
         h: ''
       },
+      biasOrder: ['h', 'h', 'h']
     }, 
     "military press": {
       "primary": "shoulders", 
-      "secondary": [], 
+      "secondary": ["triceps"], 
       "sequences": {
         "b": [7, 7, 8, 8],
         "i": [8, 8, 9, 9],
@@ -385,10 +414,11 @@ const staticData = {
       "variants": {
         n: ''
       },
+      biasOrder: ['n', 'n', 'n']
     }, 
     "dumbell overhead press": {
       "primary": "shoulders", 
-      "secondary": [], 
+      "secondary": ["triceps"], 
       "sequences": {
         "b": [7, 7, 8, 8],
         "i": [8, 8, 9, 9],
@@ -397,10 +427,11 @@ const staticData = {
       "variants": {
         n: ''
       },
+      biasOrder: ['n', 'n', 'n']
     }, 
     "smith machine overhead press": {
       "primary": "shoulders", 
-      "secondary": [], 
+      "secondary": ["triceps"], 
       "sequences": {
         "b": [7, 8, 9, 9],
         "i": [8, 9, 9, 10],
@@ -409,6 +440,7 @@ const staticData = {
       "variants": {
         n: ''
       },
+      biasOrder: ['n', 'n', 'n']
     }, 
     "cable front raise": {
       "primary": "shoulders", 
@@ -420,7 +452,8 @@ const staticData = {
       }, 
       "variants": {
         f: ''
-      }
+      }, 
+      biasOrder: ['n', 'n', 'n']
     }, 
     "dumbell front raise": {
       "primary": "shoulders", 
@@ -432,7 +465,8 @@ const staticData = {
       }, 
       "variants": {
         f: ''
-      }
+      }, 
+      biasOrder: ['n', 'n', 'n']
     }, 
     "cable lateral raise": {
       "primary": "shoulders", 
@@ -444,7 +478,8 @@ const staticData = {
       }, 
       "variants": {
         s: ''
-      }
+      }, 
+      biasOrder: ['n', 'n', 'n']
     }, 
     "dumbell lateral raise": {
       "primary": "shoulders", 
@@ -456,7 +491,8 @@ const staticData = {
       }, 
       "variants": {
         s: ''
-      }
+      }, 
+      biasOrder: ['n', 'n', 'n']
     }, 
     "machine lateral raise": {
       "primary": "shoulders", 
@@ -468,7 +504,8 @@ const staticData = {
       }, 
       "variants": {
         s: ''
-      }
+      }, 
+      biasOrder: ['n', 'n', 'n']
     }, 
     "dumbell curl": {
       "primary": "biceps", 
@@ -478,6 +515,8 @@ const staticData = {
         "i": [8, 9, 9, 10],
         "a": [9, 9, 10, 11]
       }, 
+      biasOrder: ['n', 'n', 'n']
+
     }, 
     "dumbell hammer curl": {
       "primary": "biceps",
@@ -487,6 +526,18 @@ const staticData = {
         "i": [8, 9, 9, 10],
         "a": [9, 9, 10, 11]
       },
+      biasOrder: ['n', 'n', 'n']
+
+    }, 
+    "incline dumbell curl": {
+      "primary": "biceps",
+      "secondary": [],
+      "sequences": {
+        "b": [7, 8, 9, 9],
+        "i": [8, 9, 9, 10],
+        "a": [9, 9, 10, 11]
+      },
+      biasOrder: ['n', 'n', 'n']
     }, 
     "cable curl": {
       "primary": "biceps", 
@@ -496,6 +547,7 @@ const staticData = {
         "i": [8, 9, 9, 10],
         "a": [9, 9, 10, 11]
       }, 
+      biasOrder: ['n', 'n', 'n']
     }, 
     "preacher curl": {
       "primary": "biceps", 
@@ -504,7 +556,8 @@ const staticData = {
         "b": [7, 8, 9, 9],
         "i": [8, 9, 9, 10],
         "a": [9, 9, 10, 11]
-      }, 
+      },
+      biasOrder: ['n', 'n', 'n'] 
     }, 
     "incline curl": {
       "primary": "biceps", 
@@ -514,6 +567,7 @@ const staticData = {
         "i": [8, 9, 9, 10],
         "a": [9, 9, 10, 11]
       }, 
+      biasOrder: ['n', 'n', 'n']
     }, 
     "concentration curl": {
       "primary": "biceps", 
@@ -523,6 +577,7 @@ const staticData = {
         "i": [8, 9, 9, 10],
         "a": [9, 9, 10, 11]
       }, 
+      biasOrder: ['n', 'n', 'n']
     }, 
     "barbell curl": {
       "primary": "biceps", 
@@ -532,6 +587,7 @@ const staticData = {
         "i": [8, 9, 9, 10],
         "a": [9, 9, 10, 11]
       }, 
+      biasOrder: ['n', 'n', 'n']
     }, 
     "machine curl": {
       "primary": "biceps",
@@ -540,8 +596,8 @@ const staticData = {
         "b": [7, 8, 9, 9],
         "i": [8, 9, 9, 10],
         "a": [9, 9, 10, 11]
-      },
-      "variants": ["machine curl"]
+      }, 
+      biasOrder: ['n', 'n', 'n']
     }, 
     "skullcrusher": {
       "primary": "triceps", 
@@ -551,6 +607,7 @@ const staticData = {
         "i": [8, 8, 9, 9],
         "a": [9, 9, 9, 9]
       }, 
+      biasOrder: ['n', 'n', 'n']
     }, 
     "tricep pushdown": {
       "primary": "triceps", 
@@ -560,8 +617,9 @@ const staticData = {
         "i": [8, 9, 9, 10],
         "a": [9, 9, 10, 11]
       }, 
+      biasOrder: ['n', 'n', 'n']
     }, 
-    "overhead tricep extension": {
+    "cable overhead extension": {
       "primary": "triceps", 
       "secondary": [], 
       "sequences": {
@@ -569,8 +627,9 @@ const staticData = {
         "i": [8, 8, 9, 9],
         "a": [9, 9, 9, 9]
       }, 
+      biasOrder: ['n', 'n', 'n']
     },
-    "cross body tricep extension": {
+    "crossbody extension": {
       "primary": "triceps", 
       "secondary": [], 
       "sequences": {
@@ -578,6 +637,7 @@ const staticData = {
         "i": [8, 9, 9, 10],
         "a": [9, 9, 10, 10]
       }, 
+      biasOrder: ['n', 'n', 'n']
     },
     "machine tricep extension": {
       "primary": "triceps",
@@ -587,6 +647,7 @@ const staticData = {
         "i": [8, 9, 9, 10],
         "a": [9, 9, 10, 11]
       },
+      biasOrder: ['n', 'n', 'n']
     }
   }, 
   begginerMovements: ["barbell bench press", "dumbell bench press", "machine chest press", "pec-dec fly", "lat pulldown", "seated cable row", "machine row", "reverse pec-dec fly", "barbell squat", "hack squat", "leg press", "machine leg press", "leg extension", "seated leg curl", "lying leg curl", "dumbell overhead press", "dumbell front raise", "dumbell lateral raise", "dumbell curl", "cable curl", "preacher curl", "tricep pushdown", "machine tricep extension"], 
@@ -814,7 +875,7 @@ const staticData = {
       "upperStim": [30, 40, 50, 60, 70, 80], 
       "lowerStim": [20, 30, 40, 50, 60, 70],
       "compounds": [],
-      "isolations": ["tricep pushdown", "overhead tricep extension", "skullcrusher", "cross body tricep extension", "machine tricep extension"], 
+      "isolations": ["tricep pushdown", "cable overhead extension", "skullcrusher", "crossbody extension", "machine tricep extension"], 
       "neutral": {
         compound: [],
         isolation: ["neutral"],
@@ -944,11 +1005,11 @@ const staticData = {
     ],
   },
   stimVars: {
-    2: {
+    10: {
       "k": 1.2,
       "RPE0": 7.5
     }, 
-    4: {
+    8: {
       "k": 1.1, 
       "RPE0": 7.0
     }, 
@@ -956,11 +1017,11 @@ const staticData = {
       "k": 1.0, 
       "RPE0": 6.5
     }, 
-    8: {
+    4: {
       "k": 0.9, 
       "RPE0": .6
     }, 
-    10: {
+    2: {
       "k": .8, 
       "RPE0": 5.5
     }, 
@@ -1137,7 +1198,7 @@ const staticData = {
     },
     biceps: {
       seq: [
-        {type: 'curl', lowerRep: 8, upperRep: 12}, 
+        {type: 'curl-0', lowerRep: 8, upperRep: 12}, 
         {type: 'curl', lowerRep: 8, upperRep: 12},  
         {type: 'curl', lowerRep: 8, upperRep: 12}, 
         {type: 'curl', lowerRep: 8, upperRep: 12},  
@@ -1146,7 +1207,7 @@ const staticData = {
     }, 
     triceps: {
       seq: [
-        {type: 'extension', lowerRep: 8, upperRep: 12}, 
+        {type: 'extension-0', lowerRep: 8, upperRep: 12}, 
         {type: 'extension', lowerRep: 8, upperRep: 12},  
         {type: 'extension', lowerRep: 8, upperRep: 12}, 
         {type: 'extension', lowerRep: 8, upperRep: 12},  
@@ -1166,8 +1227,8 @@ const staticData = {
     "knee-flexion-2": ["leg press", "bulgarian split squat", "smith machine squat"],
     "hip-extension-1": ["deadlift"],
     "hip-extension-2": ["barbell romanian deadlift", "barbell hip thrust", "dumbell romanian deadlift"],
-    "curl": ["cable curl", "dumbell hammer curl", "incline dumbell curl", "preacher curl", "dumbell curl", "barbell curl", "machine curl", "concentration curl"], 
-    "extension": ["tricep pushdown", "overhead tricep extension", "skullcrusher", "machine tricep extension", "cross body tricep extension"], 
+    "curl": ["dumbell hammer curl", "cable curl", "incline dumbell curl", "preacher curl", "dumbell curl", "barbell curl", "machine curl", "concentration curl"], 
+    "extension": ["tricep pushdown", "cable overhead extension", "skullcrusher", "machine tricep extension", "crossbody extension"], 
     "fly": ["pec-dec fly", "cable fly"], 
     "back-iso": ["lat pullover", "reverse pec-dec fly", "face pulls"], 
     "leg-iso": ["leg extension", "leg curl", "adductor machine", "abductor machine"], 

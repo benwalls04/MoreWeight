@@ -4,7 +4,7 @@ import SelectOne from '../../components/SelectOne.js';
 import ProgressBar from '../../components/ProgressBar.js';
 import ErrorText from '../../components/ErrorText.js';
 
-function HipExtension({inputs, setInputs, index, routes, handleRestart}) {
+function Curl({inputs, setInputs, index, routes, handleRestart}) {
   const navigate = useNavigate();
 
   const [showError, setShowError] = useState(true);
@@ -13,13 +13,13 @@ function HipExtension({inputs, setInputs, index, routes, handleRestart}) {
   const handleNext = () => {
     if (!showError) {
       let newInputs = {...inputs};
-      newInputs["hip-extension"] = choice.toLowerCase();
+      newInputs["curl"] = choice.toLowerCase();
       setInputs(newInputs);
-      navigate('/curl');
+      navigate('/extension');
     }
   }
 
-  const options = ["Deadlift", "Barbell Romanian Deadlift", "Dumbell Romanian Deadlift", "Barbell Hip Thrust"];
+  const options = ["Dumbell Curl", "Cable Curl", "Dumbell Hammer Curl", "Preacher Curl"];
   const [choice, setChoice] = useState(new Array(options.length).fill(false));
   return (
     <>
@@ -35,4 +35,4 @@ function HipExtension({inputs, setInputs, index, routes, handleRestart}) {
   )
 }
 
-export default HipExtension;
+export default Curl;

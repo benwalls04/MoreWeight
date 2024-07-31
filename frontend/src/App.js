@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import BasePage from './pages/Inputs/BasePage';
 import SplitPage from './pages/Inputs/SplitPage';
-import RoutinePage from "./pages/RoutinePage";
 import WorkoutPage from "./pages/WorkoutPage";
 import TrackPage from "./pages/TrackPage";
 import ProfilePage from "./pages/ProfilePage";
@@ -20,15 +19,14 @@ import AccessoriesPage from './pages/Inputs/AccesoriesPage';
 import ChestPage from './pages/Inputs/ChestPage';
 import BackPage from './pages/Inputs/BackPage';
 import LegsPage from './pages/Inputs/LegsPage';
-import ShouldersPage from './pages/Inputs/ShouldersPage';
-import BicepsPage from './pages/Inputs/BicepsPage';
-import TricepsPage from './pages/Inputs/TricepsPage';
 import HorizontalPress from './pages/Inputs/HorizontalPress';
 import VerticalPress from './pages/Inputs/VerticalPress';
 import HorizontalPull from './pages/Inputs/HorizontalPull';
 import VerticalPull from './pages/Inputs/VerticalPull';
 import KneeFlexion from './pages/Inputs/KneeFlexion';
 import HipExtension from './pages/Inputs/HipExtension';
+import Curl from './pages/Inputs/Curl';
+import Extension from './pages/Inputs/Extension';
 import SignUp from './pages/SignUp';
 import LoginPage from './pages/LoginPage';
 import WelcomePage from './pages/WelcomePage';
@@ -149,6 +147,12 @@ function App() {
         }></Route>
         <Route path='/hip-extension' element={
             <HipExtension setInputs={setInputData} inputs={inputData} index={21} routes={inputRoutes} handleRestart={handleRestart}></HipExtension>
+        }></Route>
+        <Route path='/curl' element={
+            <Curl setInputs={setInputData} inputs={inputData} index={22} routes={inputRoutes} handleRestart={handleRestart}></Curl>
+        }></Route>
+        <Route path='/extension' element={
+            <Extension setInputs={setInputData} inputs={inputData} index={23} routes={inputRoutes} handleRestart={handleRestart}></Extension>
         }></Route>
         <Route path='/loading' element={
           <LoadingPage handleRestart={handleRestart}></LoadingPage>
