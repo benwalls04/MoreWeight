@@ -1,12 +1,12 @@
 import Dropdown from "./Dropdown";
 import { useState, useEffect } from "react";
-
+import staticData from "../utils/staticData";
 
 const WorkoutInfo = ({
   title,
   accessories,
   movements, 
-  movement, 
+  movementObj, 
   sets,
   showDropdown,
   changeDropdowns,
@@ -16,52 +16,22 @@ const WorkoutInfo = ({
   moveUp,
   moveDown,
   changeMovement,
-  liftData,
 }) => {
-    
+
+  const movementInfo = staticData.movements;
+  const movement = movementObj.movement;
+  const lowerRep = movementObj.lowerRep;
+  const upperRep = movementObj.upperRep;
+
   const getSubOptions = (text, movement) => {
-    let region = movement === 'new movement'? 'neutral': liftData[2][movement].region;
-    let group = movement === 'new movement'? '': liftData[2][movement].group;
+    let group = movement === 'new movement'? '': movementInfo[movement].primary;
 
     let options = [];
-    for (let name in liftData[2]) {
-      if (!movements.includes(name) && title.includes(liftData[2][name].group) && name.includes(text)){
+    for (let name in movementInfo) {
+      if (!movements.some(entry => entry.movement === name) && (title.includes(movementInfo[name].primary) || accessories.includes(movementInfo[name].primary) && name.includes(text))){
         options.push(name)
       }
     }
-
-    for (let name in liftData[10]){
-      liftData[10][name].variants.forEach(variant => {
-        if (!movements.includes(variant) && accessories.includes(liftData[10][name].primary) && name.includes(text)){
-          options.push(variant);
-        }
-      })
-    }
-
-    let priorityOptions = []; let secondaryOptions = []; let lastOptions = [];
-    options.forEach(option => {
-      const variantInfo = liftData[2][option];
-
-      if (movement in liftData[10]){
-        if (option in liftData[10] && liftData[10][movement].primary === liftData[10][option].primary){
-          priorityOptions.push(option);
-        } else {
-          lastOptions.push(option);
-        }
-      } else if (option in liftData[10]){
-        lastOptions.push(option);
-      } else {
-        if (variantInfo.group === group && variantInfo.region === region){
-          priorityOptions.push(option);
-        } else if (variantInfo.group === group){
-          secondaryOptions.push(option);
-        } else {
-          lastOptions.push(option);
-        }
-      }
-    })
-
-    options = priorityOptions.concat(secondaryOptions.concat(lastOptions));
 
     return options;
   }
@@ -77,22 +47,43 @@ const WorkoutInfo = ({
     }, 100);
   }
 
-  const group = movement === "new movement"? '': liftData[2][movement].group;
-  const region = movement === "new movement"? 'neutral': liftData[2][movement].region;
+  const group = movement === "new movement"? '': movementInfo[movement].primary;
+  const bias = movement === "new movement"? 'neutral': movementObj.bias;
   const tags = [];
   if (group !== ''){
     tags.push(group);
   }
-  if (region !== "neutral") {
-    tags.push(region);
+  if (bias !== 'n' && movement !== 'new movement') {
+    let regionNotes = movementInfo[movement].variants[bias];
+
+    if (regionNotes.length > 0){
+      tags.push(regionNotes);
+    }
+
+    let regionText = ''; 
+    if (group === 'chest' && bias === 'u') {
+      regionText = 'upper chest';
+    }   
+    if (group === 'chest' && bias === 'l') {
+      regionText = 'lower chest';
+    }   
+    if (group === 'back' && bias === 'u') {
+      regionText = 'upper back';
+    }   
+    if (group === 'back' && bias === 'l') {
+      regionText = 'lats';
+    }   
+    if (group === 'legs' && bias === 'q') {
+      regionText = 'quads';
+    }   
+    if (group === 'legs' && bias === 'h') {
+      regionText = 'hamstrings';
+    }   
+    tags.push(regionText);
   }
 
   let icon = showDropdown? "-": "+";
   let iconClass = showDropdown? "close-button": "expand-button";
-
-  const liftType = sets[0].liftType;
-  const lowerBound = liftType === 1 ? 2 : liftType === 2 ? 4 : liftType === 3 ? 6 : liftType === 4 ? 8 : 10;
-  const upperBound = liftType === 1 ? 6 : liftType === 2 ? 8 : liftType === 3 ? 10 : liftType === 4 ? 12 : 14;
 
   const [subOptions, setSubOptions] = useState(getSubOptions('', movement));
   const [showSubs, setShowSubs] = useState(false);
@@ -100,7 +91,7 @@ const WorkoutInfo = ({
   useEffect(() => {
     setSubText(movement);
   }, [movement]);
-  useEffect(() => (setSubOptions(getSubOptions('', movement, liftType))), [movement, liftType]);
+  useEffect(() => (setSubOptions(getSubOptions('', movement))), [movement]);
 
   return (
     <>
@@ -114,12 +105,12 @@ const WorkoutInfo = ({
             </input>
         </div>
         <div style={{fontSize: '12px', marginTop: '8px', paddingLeft: '10px'}}>
-          {lowerBound} - {upperBound} reps
+          {lowerRep} - {upperRep} reps
         </div>
       </div>
       <div id="sub-dropdown" style={{display: showSubs === false? 'none': 'grid'}}>
         {subOptions.map((option) => (
-          <button id="sub-option" onClick={() => changeMovement(option, movement, setShowSubs, setSubText)}>
+          <button id="sub-option" onClick={() => changeMovement(option, movementObj, setShowSubs, setSubText)}>
             {option}
           </button>
         ))}
@@ -137,7 +128,7 @@ const WorkoutInfo = ({
       <Dropdown
         show={showDropdown}
         sets={sets}
-        reps={lowerBound + "-" + upperBound}
+        reps={lowerRep + "-" + upperRep}
         updateSets={updateSets}
         movement={movement}
       />

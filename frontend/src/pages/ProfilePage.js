@@ -38,8 +38,8 @@ function ProfilePage({username, routine, setSelections, selections, inputs}) {
         </div>
         <div id="info-grid"> 
           <div>
-            <div className="center-div"> Years trained </div>
-            <div className="center-div"> {inputs.exp || inputs.experience} </div>
+            <div className="center-div"> Experience Level </div>
+            <div className="center-div"> {inputs.exp === 'b'? 'Beggginer': inputs.exp === 'i'? 'Intermediate': 'Advanced'} </div>
           </div>
           <div>
             <div className="center-div"> Training goal </div>
@@ -66,7 +66,7 @@ function ProfilePage({username, routine, setSelections, selections, inputs}) {
             <img className="icon" src="media/footer-icons/pencil-icon.png" style={{marginLeft: '0px'}}></img>
           </button>
         </div>
-        <RoutineInfo routine={routine.days} weekdays={weekdays} show={icon === '+' || features? false: true}></RoutineInfo>
+        <RoutineInfo routine={routine} weekdays={weekdays} show={icon === '+' || features? false: true}></RoutineInfo>
         <Features selections={selections} setSelections={setSelections} show={features} username={username}></Features>
       </div>
       <FooterMenu index={0} />

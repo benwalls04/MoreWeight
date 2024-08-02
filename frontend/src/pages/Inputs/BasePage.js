@@ -5,13 +5,17 @@ import staticData from '../../utils/staticData';
 import axios from "axios";
 
 
-function BasePage({setInputs, inputs, index, routes, handleRestart }) {
+function BasePage({setInputs, inputs, index, routes }) {
 
   const sampleLines = staticData.splitSamples;
   const sampleTitles = staticData.splitTitles;
 
   const navigate = useNavigate();
   const [splits, setSplits] = useState(inputs.splits);
+
+  const handleBack = () => {
+    navigate('/bias')
+  }
 
   const handleNext = async () => {
     if (choiceIndex > -1){
@@ -25,6 +29,7 @@ function BasePage({setInputs, inputs, index, routes, handleRestart }) {
           const response = await axios.post('http://localhost:3001/partition', { splits: newSplits.selection });
           newSplits.selection = response.data;
           newInputs.splits = newSplits;
+          newInputs.base = sampleTitles[key];
           setInputs(newInputs);
           navigate("/split");
         } 
@@ -45,16 +50,17 @@ function BasePage({setInputs, inputs, index, routes, handleRestart }) {
     <>
     <div>
       <div className="div-container">
-      <h3>Which routine base do you prefer?</h3>
+        <div className="center-div">
+          <h3>Which split type do you prefer?</h3>
+        </div>
       <div id="split-grid">
         {splits.selection.map((table, index) => {
           const [key, value] = Object.entries(table)[0];
-
           return (
             <button key={index} id={ids[index]} onClick={() => handleClick(index)}>
               <h4>{sampleTitles[key]}</h4>
               <div id="split-textbox">
-                Example Split: 
+                Includes: 
                 {getSampleLines(key).map((line, index) => (
                   <div className="small-text-left" key={index}>- {line}</div>
                 ))}
@@ -66,9 +72,9 @@ function BasePage({setInputs, inputs, index, routes, handleRestart }) {
     </div>
   </div>
   <div id="bottom-text" className="small-text-left">
-    Focus on the type of routine you want. The specific days may vary 
+    Focus on the type of split you want. The specific days may vary 
   </div>
-  <ProgressBar index={index} routes={routes} handleNext={handleNext} handleRestart={handleRestart}></ProgressBar>
+  <ProgressBar index={index} routes={routes} handleNext={handleNext} handleBack={handleBack}></ProgressBar>
   </>
   );
 

@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import ErrorText from '../components/ErrorText';
 import axios from "axios";
 
-function SignUp({inputData, outputData, setRoutine, username, setUsername}) {
+function SignUp({inputData, setRoutine, username, setUsername}) {
+  
   const navigate = useNavigate();
 
   const [showError, setShowError] = useState(false);
@@ -14,7 +15,7 @@ function SignUp({inputData, outputData, setRoutine, username, setUsername}) {
     e.preventDefault();
     if (validInput(username) && validInput(password)){
       try {
-        await axios.post('http://moreweight-api-v1.us-east-1.elasticbeanstalk.com/new-user', {split: outputData.split, inputs: inputData, username: username, password: password}).then(response => {
+        await axios.post('http://localhost:3001/new-user', {inputs: inputData, username: username, password: password}).then(response => {
           setRoutine(response.data);
           setUsername(username);
           navigate('/edit');

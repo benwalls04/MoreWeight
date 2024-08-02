@@ -4,14 +4,21 @@ import SelectOne from '../../components/SelectOne.js';
 import ProgressBar from '../../components/ProgressBar.js';
 import ErrorText from '../../components/ErrorText.js';
 
-function TimePage({inputs, setInputs, index, routes, handleRestart}) {
+function TimePage({inputs, setInputs, index, routes}) {
   const navigate = useNavigate();
 
-  const [showError, setShowError] = useState(true);
+  const [showError, setShowError] = useState(false);
   const errorText = "Please choose one of the options to continue";
 
+  const handleBack = () => {
+    navigate('/sets');
+  }
+
   const handleNext = () => {
-    if (!showError) {
+    if (Array.isArray(choice) && choice.every(entry => !entry)) {
+      setShowError(true);
+    }
+    else {
       let newInputs = {...inputs};
       newInputs.time = parseInt(choice.substring(0, choice.indexOf(" ")));
       setInputs(newInputs); 
@@ -29,7 +36,7 @@ function TimePage({inputs, setInputs, index, routes, handleRestart}) {
         <SelectOne options={options} setChoice={setChoice} setShow = {setShowError}></SelectOne>
       </div>
     </div>
-    <ProgressBar index={index} routes={routes} handleNext={handleNext} handleRestart={handleRestart}></ProgressBar>
+    <ProgressBar index={index} routes={routes} handleNext={handleNext} handleBack={handleBack}></ProgressBar>
     <ErrorText show={showError} text={errorText}></ErrorText>
     </>
   )

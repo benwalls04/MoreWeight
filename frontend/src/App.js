@@ -32,8 +32,7 @@ import LoginPage from './pages/LoginPage';
 import WelcomePage from './pages/WelcomePage';
 import EditPage from './pages/EditPage';
 import LoadingPage from './pages/LoadingPage';
-
-import liftData from "./utils/staticData";
+import Confirm from './pages/Confirm';
 
 function App() {
   const [inputData, setInputData] = useState({}); 
@@ -42,6 +41,8 @@ function App() {
   const [numberOfSets, setNumberOfSets] = useState(0);
 
   const [routine, setRoutine] = useState([]);
+  const [initSelection, setInitSelection] = useState([]); 
+  const [lastSplits, setLastSplits] = useState([]);
   const [log, setLog] = useState([]);
   const [recents, setRecents] = useState([]);
   const [username, setUsername] = useState('');
@@ -92,73 +93,72 @@ function App() {
           <WelcomePage></WelcomePage>
         }></Route>
         <Route path='/experience' element={
-            <ExpPage setInputs={setInputData} inputs={inputData} index={0} routes={inputRoutes} setExperience={setExperience} handleRestart={handleRestart}></ExpPage>
+            <ExpPage setInputs={setInputData} inputs={inputData} index={0} routes={inputRoutes} setExperience={setExperience} ></ExpPage>
         }></Route>
         <Route path='/days' element={
-            <DaysPage setInputs={setInputData} inputs={inputData} index={1} routes={inputRoutes} handleRestart={handleRestart}></DaysPage>
+            <DaysPage setInputs={setInputData} inputs={inputData} index={1} routes={inputRoutes} ></DaysPage>
         }></Route>
         <Route path='/bias' element={
-            <BiasPage setInputs={setInputData} inputs={inputData} index={2} routes={inputRoutes} handleRestart={handleRestart}></BiasPage>
-        }></Route>
-        <Route path='/injuries' element={
-            <InjuriesPage setInputs={setInputData} inputs={inputData} index={3} routes={inputRoutes} handleRestart={handleRestart}></InjuriesPage>
+            <BiasPage setInputs={setInputData} inputs={inputData} index={2} routes={inputRoutes}  setInitSelection={setInitSelection}></BiasPage>
         }></Route>
         <Route path='/base' element={
-            <BasePage setInputs={setInputData} inputs={inputData} index={4} routes={inputRoutes} handleRestart={handleRestart}></BasePage>
+            <BasePage setInputs={setInputData} inputs={inputData} index={4} routes={inputRoutes} ></BasePage>
         }></Route>
         <Route path='/split' element={
-            <SplitPage setInputs={setInputData} inputs={inputData} routes={inputRoutes} inputData={inputData} index={5} handleRestart={handleRestart}></SplitPage>
+            <SplitPage setInputs={setInputData} inputs={inputData} routes={inputRoutes} inputData={inputData} index={5}  initSelection={initSelection} lastSplits={lastSplits} setLastSplits={setLastSplits}></SplitPage>
         }></Route>
         <Route path='/style' element={
-            <StylePage setInputs={setInputData} inputs={inputData} index={6} routes={inputRoutes} handleRestart={handleRestart}></StylePage>
+            <StylePage setInputs={setInputData} inputs={inputData} index={6} routes={inputRoutes}  lastSplits={lastSplits} setLastSplits={setLastSplits}></StylePage>
         }></Route>
         <Route path='/sets' element={
-            <SetsPage setInputs={setInputData} inputs={inputData} index={7} routes={inputRoutes} setNumberOfSets={setNumberOfSets} handleRestart={handleRestart}></SetsPage>
+            <SetsPage setInputs={setInputData} inputs={inputData} index={7} routes={inputRoutes} ></SetsPage>
         }></Route>
         <Route path='/time' element={
-            <TimePage setInputs={setInputData} inputs={inputData} index={8} routes={inputRoutes} handleRestart={handleRestart}></TimePage>
+            <TimePage setInputs={setInputData} inputs={inputData} index={8} routes={inputRoutes} ></TimePage>
         }></Route>
         <Route path='/accessories' element={
-            <AccessoriesPage setInputs={setInputData} inputs={inputData} index={9} routes={inputRoutes} handleRestart={handleRestart}></AccessoriesPage>
+            <AccessoriesPage setInputs={setInputData} inputs={inputData} index={9} routes={inputRoutes} ></AccessoriesPage>
         }></Route>
         <Route path='/chest' element={
-            <ChestPage setInputs={setInputData} inputs={inputData} index={10} routes={inputRoutes} handleRestart={handleRestart}></ChestPage>
+            <ChestPage setInputs={setInputData} inputs={inputData} index={10} routes={inputRoutes} ></ChestPage>
         }></Route>
         <Route path='/back' element={
-            <BackPage setInputs={setInputData} inputs={inputData} index={11} routes={inputRoutes} handleRestart={handleRestart}></BackPage>
+            <BackPage setInputs={setInputData} inputs={inputData} index={11} routes={inputRoutes} ></BackPage>
         }></Route>
         <Route path='/legs' element={
-            <LegsPage setInputs={setInputData} inputs={inputData} index={12} routes={inputRoutes} handleRestart={handleRestart}></LegsPage>
+            <LegsPage setInputs={setInputData} inputs={inputData} index={12} routes={inputRoutes} ></LegsPage>
         }></Route>
         <Route path='/horizontal-press' element={
-            <HorizontalPress setInputs={setInputData} inputs={inputData} index={16} routes={inputRoutes} handleRestart={handleRestart}></HorizontalPress>
+            <HorizontalPress setInputs={setInputData} inputs={inputData} index={16} routes={inputRoutes} ></HorizontalPress>
         }></Route>
         <Route path='/vertical-press' element={
-            <VerticalPress setInputs={setInputData} inputs={inputData} index={17} routes={inputRoutes} handleRestart={handleRestart}></VerticalPress>
+            <VerticalPress setInputs={setInputData} inputs={inputData} index={17} routes={inputRoutes} ></VerticalPress>
         }></Route>
         <Route path='/horizontal-pull' element={
-            <HorizontalPull setInputs={setInputData} inputs={inputData} index={18} routes={inputRoutes} handleRestart={handleRestart}></HorizontalPull>
+            <HorizontalPull setInputs={setInputData} inputs={inputData} index={18} routes={inputRoutes} ></HorizontalPull>
         }></Route>
         <Route path='/vertical-pull' element={
-            <VerticalPull setInputs={setInputData} inputs={inputData} index={19} routes={inputRoutes} handleRestart={handleRestart}></VerticalPull>
+            <VerticalPull setInputs={setInputData} inputs={inputData} index={19} routes={inputRoutes} ></VerticalPull>
         }></Route>
         <Route path='/knee-flexion' element={
-            <KneeFlexion setInputs={setInputData} inputs={inputData} index={20} routes={inputRoutes} handleRestart={handleRestart}></KneeFlexion>
+            <KneeFlexion setInputs={setInputData} inputs={inputData} index={20} routes={inputRoutes} ></KneeFlexion>
         }></Route>
         <Route path='/hip-extension' element={
-            <HipExtension setInputs={setInputData} inputs={inputData} index={21} routes={inputRoutes} handleRestart={handleRestart}></HipExtension>
+            <HipExtension setInputs={setInputData} inputs={inputData} index={21} routes={inputRoutes} ></HipExtension>
         }></Route>
         <Route path='/curl' element={
-            <Curl setInputs={setInputData} inputs={inputData} index={22} routes={inputRoutes} handleRestart={handleRestart}></Curl>
+            <Curl setInputs={setInputData} inputs={inputData} index={22} routes={inputRoutes} ></Curl>
         }></Route>
         <Route path='/extension' element={
-            <Extension setInputs={setInputData} inputs={inputData} index={23} routes={inputRoutes} handleRestart={handleRestart}></Extension>
+            <Extension setInputs={setInputData} inputs={inputData} index={23} routes={inputRoutes} ></Extension>
         }></Route>
         <Route path='/loading' element={
-          <LoadingPage handleRestart={handleRestart}></LoadingPage>
+          <LoadingPage ></LoadingPage>
         }>
-          
         </Route>
+        <Route path='/confirm' element={
+          <Confirm></Confirm>
+        }></Route>
 
         <Route path='/sign-up' element={
             <SignUp inputData={inputData} setRoutine={setRoutine} setUsername={setUsername} username={username}></SignUp>
@@ -168,13 +168,13 @@ function App() {
         }></Route>
 
         <Route path="/edit" element={
-          <EditPage routine={routine} setRoutine={setRoutine} username={username} expIcon={experience} numberOfSets={numberOfSets} setLog={setLog} setRecents={setRecents}></EditPage>
+          <EditPage routineObj={routine} setRoutine={setRoutine} username={username} expIcon={experience} numberOfSets={numberOfSets} setLog={setLog} setRecents={setRecents}></EditPage>
         }></Route>
         <Route path="/workout" element={
-        <WorkoutPage username={username} routine={routine.days} begin={begin} setBegin={setBegin} nextSet={nextSet} setNextSet={setNextSet} setLog={setLog} setLastRest={setLastRest} numberOfSets={numberOfSets} time={time} finished={finished} setFinished={setFinished} expIcon={experience} setRecents={setRecents} setNumber={setNumber} setSetNumber={setSetNumber} index={setIndex} setIndex={setSetIndex} recents={recents}
+        <WorkoutPage username={username} routineObj={routine} begin={begin} setBegin={setBegin} nextSet={nextSet} setNextSet={setNextSet} setLog={setLog} setLastRest={setLastRest} numberOfSets={numberOfSets} time={time} finished={finished} setFinished={setFinished} expIcon={experience} setRecents={setRecents} setNumber={setNumber} setSetNumber={setSetNumber} index={setIndex} setIndex={setSetIndex} recents={recents}
         />} />
         <Route path="/track" element={
-        <TrackPage recents={recents} log={log} liftData={liftData} 
+        <TrackPage recents={recents} log={log} 
         />} />
         <Route path="/profile" element={
             <ProfilePage routine={routine} username={username} selections={selections} setSelections={setSelections} inputs={inputData}></ProfilePage>} 

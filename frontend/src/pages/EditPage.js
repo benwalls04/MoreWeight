@@ -1,17 +1,23 @@
 import DayButtons from "../components/DayButtons";
 import WorkoutInfo from "../components/WorkoutInfo";
-import liftData from "../utils/staticData";
+import staticData from "../utils/staticData";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const EditPage = ({ routine, setRoutine, username, expIcon, numberOfSets, setLog, setRecents}) => {
+const EditPage = ({ routineObj, setRoutine, username, expIcon, numberOfSets, setLog, setRecents}) => {
+
+  console.log(routineObj)
+
+  const routine = routineObj.routine;
+  const movementInfo = staticData.movements;
+  const restTimes = staticData.restTimes;
   
   const navigate = useNavigate();
 
-  const weekdays = routine.days.length === 7? ["M", "T", "W", "Th", "F", "S", "Su"] : [];
-  if (routine.days.length !== 7){
-    for (let i = 0; i < routine.days.length; i++){
+  const weekdays = routine.length === 7? ["M", "T", "W", "Th", "F", "S", "Su"] : [];
+  if (routine.length !== 7){
+    for (let i = 0; i < routine.length; i++){
       weekdays.push("day " + (i + 1));
     }
   }
@@ -19,7 +25,7 @@ const EditPage = ({ routine, setRoutine, username, expIcon, numberOfSets, setLog
   function initDropdowns() {
     const arr = [];
     for (let i = 0; i < 7; i++) {
-      arr[i] = new Array(routine.days[i].movements.length).fill(false);
+      arr[i] = new Array(routine[i].movements.length).fill(false);
     }
     return arr;
   }
@@ -36,7 +42,7 @@ const EditPage = ({ routine, setRoutine, username, expIcon, numberOfSets, setLog
   };
 
   const changeDropdowns = (movement) => {
-    const workoutIndex = routine.days[dayIndex].movements.indexOf(movement)
+    const workoutIndex = routine[dayIndex].movements.findIndex(entry => entry.movement === movement)
     let newDropdowns = [...dropdowns];
     const oldVal = newDropdowns[dayIndex][workoutIndex];
     newDropdowns[dayIndex][workoutIndex] = !oldVal;
@@ -63,104 +69,119 @@ const EditPage = ({ routine, setRoutine, username, expIcon, numberOfSets, setLog
 
   const removeMovement = (movement) => {
     setRoutine(prevRoutine => {
-      const updatedRoutine = { ...prevRoutine };
-      updatedRoutine.days[dayIndex].allSets = updatedRoutine.days[dayIndex].allSets.filter(set => set.variant !== movement);
-      updatedRoutine.days[dayIndex].movements = updatedRoutine.days[dayIndex].movements.filter(mov => mov !== movement);
+      const updatedRoutine = {...prevRoutine};
+      updatedRoutine.routine[dayIndex].sets = updatedRoutine.routine[dayIndex].sets.filter(set => set.movement !== movement);
+      updatedRoutine.routine[dayIndex].movements = updatedRoutine.routine[dayIndex].movements.filter(mov => mov.movement !== movement);
       return updatedRoutine;
     });
   }
 
   const addMovement = (movement) => {
-    const updatedRoutine = { ...routine };
-    let movements = updatedRoutine.days[dayIndex].movements;
-    let allSets = updatedRoutine.days[dayIndex].allSets;
+    const updatedRoutine = {...routineObj};
+    let movements = updatedRoutine.routine[dayIndex].movements;
+    let sets = updatedRoutine.routine[dayIndex].sets;
 
-    movements.splice(movements.indexOf(movement) + 1, 0, "new movement");
-    updatedRoutine.days[dayIndex].movements = movements;
+    movements.splice(movements.findIndex(entry => entry.movement === movement) + 1, 0, {
+      movement: "new movement", 
+      bias: 'n',
+      RPE: [0, 0, 0],
+      lowerRep: 0, 
+      upperRep: 0,
+      stimulus: 0, 
+    });
+    updatedRoutine.routine[dayIndex].movements = movements;
 
-    const lastIndex = findLastIndex(allSets, "variant", movement);
+    const lastIndex = findLastIndex(sets, "movement", movement);
     for (let i = 0; i < numberOfSets; i++){
-      allSets.splice(lastIndex + 1, 0, { variant: "new movement", liftType: 1, RPE: 0, rest: 0 });
+      sets.splice(lastIndex + 1, 0, { movement: "new movement", lowerRep: 0, upperRep: 0, RPE: 0, rest: 0, num: i + 1});
     }
-    updatedRoutine.days[dayIndex].allSets = allSets;
+    updatedRoutine.routine[dayIndex].sets = sets;
     
     setRoutine(updatedRoutine);
   }
 
   const moveUp = (movement) => {
-    const updatedRoutine = { ...routine };
-    let movements = updatedRoutine.days[dayIndex].movements;
-    let allSets = updatedRoutine.days[dayIndex].allSets;
+    const updatedRoutine = {...routineObj};
+    let movements = updatedRoutine.routine[dayIndex].movements;
+    let sets = updatedRoutine.routine[dayIndex].sets;
 
-    const index = movements.indexOf(movement);
+    const index = movements.findIndex(entry => entry.movement === movement);
     if (index > 0){
       let temp = movements[index]
       movements[index] = movements[index - 1];
       movements[index - 1] = temp;
 
-      const allSetsIndex = allSets.findIndex(set => set.variant === movement)
-      const removed = allSets.splice(allSetsIndex, numberOfSets);
+      const allSetsIndex = sets.findIndex(set => set.variant === movement)
+      const removed = sets.splice(allSetsIndex, numberOfSets);
       removed.forEach((set, indx) => {
-        allSets.splice(allSetsIndex - numberOfSets + indx, 0, set)
+        sets.splice(allSetsIndex - numberOfSets + indx, 0, set)
       })
     }
-    updatedRoutine.days[dayIndex].movements = movements;
-    updatedRoutine.days[dayIndex].allSets = allSets;
+    updatedRoutine.routine[dayIndex].movements = movements;
+    updatedRoutine.routine[dayIndex].sets = sets;
 
     setRoutine(updatedRoutine)
   }
 
   const moveDown = (movement) => {
-    const updatedRoutine = { ...routine };
-    let movements = updatedRoutine.days[dayIndex].movements;
-    let allSets = updatedRoutine.days[dayIndex].allSets;
+    const updatedRoutine = {...routineObj};
+    let movements = updatedRoutine.routine[dayIndex].movements;
+    let sets = updatedRoutine.routine[dayIndex].sets;
 
-    const index = movements.indexOf(movement);
+    const index = movements.findIndex(entry => entry.movement === movement);
     if (index < movements.length - 1){
       let temp = movements[index]
       movements[index] = movements[index + 1];
       movements[index + 1] = temp;
 
-      const allSetsIndex = allSets.findIndex(set => set.variant === movement)
-      const removed = allSets.splice(allSetsIndex, numberOfSets);
+      const allSetsIndex = sets.findIndex(set => set.movement === movement)
+      const removed = sets.splice(allSetsIndex, numberOfSets);
       removed.forEach((set, indx) => {
-        allSets.splice(allSetsIndex + numberOfSets + indx, 0, set)
+        sets.splice(allSetsIndex + numberOfSets + indx, 0, set)
       })
     }
-    updatedRoutine.days[dayIndex].movements = movements;
-    updatedRoutine.days[dayIndex].allSets = allSets;
+
+    updatedRoutine.routine[dayIndex].movements = movements;
+    updatedRoutine.routine[dayIndex].sets = sets;
 
     setRoutine(updatedRoutine)
   }
 
   const changeMovement = (newMovement, oldMovement, setShowSubs, setSubText) => {
-    const updatedRoutine = { ...routine };
-    let movements = updatedRoutine.days[dayIndex].movements;
-    let allSets = updatedRoutine.days[dayIndex].allSets;
-
-    // update movements array
-    movements[movements.indexOf(oldMovement)] = newMovement;
-    updatedRoutine.days[dayIndex].movements = movements;
+    const updatedRoutine = {...routineObj};
+    let movements = updatedRoutine.routine[dayIndex].movements;
+    let sets = updatedRoutine.routine[dayIndex].sets;
 
     // get info for the new movement 
-    const firstIndex =  findFirstIndex(allSets, "variant", oldMovement);
-    const oldLiftType = allSets[firstIndex].liftType;
+    const RPESeq = movementInfo[newMovement].sequences[updatedRoutine.expIcon];
+    const lowerRep = oldMovement.movement === "new movement"? 8 : oldMovement.lowerRep;
+    const upperRep = oldMovement.movement === "new movement"? 12: oldMovement.upperRep;
 
-    const movementInfo = liftData[2][newMovement].movement in liftData[3]? liftData[3][liftData[2][newMovement].movement] : liftData[10][liftData[2][newMovement].movement];
-    const newLiftType = movementInfo.liftTypes.includes(oldLiftType)? oldLiftType: movementInfo.liftTypes[0];
-    const RPESeq = movementInfo.sequences[expIcon];
+    // update movements array
+    // FIXME: stimulus is not accurate 
+    movements[movements.findIndex(entry => entry.movement === oldMovement.movement)] = {
+      movement: newMovement, 
+      bias: movementInfo[newMovement].biasOrder.includes(oldMovement.bias)? oldMovement.bias : movementInfo[newMovement].biasOrder.includes('n')? 'n': movementInfo[newMovement].biasOrder[0],
+      RPE: RPESeq, 
+      lowerRep: lowerRep,
+      upperRep: upperRep,
+      stimilus: oldMovement.stimulus, 
+    };
+    updatedRoutine.routine[dayIndex].movements = movements;
 
     // update allSets array
+    // FIXME: last rest is not updated individually 
+    const firstIndex = findFirstIndex(sets, "movement", oldMovement.movement);
     let count = 0;
-    for (let i = firstIndex; i < allSets.length; i++){
-      if (allSets[i].variant === oldMovement){
-        allSets[i] = {
-          variant: newMovement, liftType: newLiftType, RPE: RPESeq[count], rest: liftData[0][newLiftType - 1][RPESeq[count] - 7]
+    for (let i = firstIndex; i < sets.length; i++){
+      if (sets[i].movement === oldMovement.movement){
+        sets[i] = {
+          movement: newMovement, RPE: RPESeq[count], rest: restTimes[lowerRep / 2 - 1][RPESeq[count] - 7], num: count + 1
         }
         count++;
       }
     }
-    updatedRoutine.days[dayIndex].allSets = allSets;
+    updatedRoutine.routine[dayIndex].sets = sets;
 
     setShowSubs(false);
     setSubText(newMovement);
@@ -169,22 +190,22 @@ const EditPage = ({ routine, setRoutine, username, expIcon, numberOfSets, setLog
 
   const updateSets = (updatedSets, setIndex, movement) => {
     setRoutine(prevRoutine => {
-      let allSets = routine.days[dayIndex].allSets;
+      let sets = routine[dayIndex].sets;
       let count = 0; let allSetsIndex = 0;
-      for (let i = 0; count <= setIndex && i < allSets.length; i++){
-        if (allSets[i].variant === movement){
+      for (let i = 0; count <= setIndex && i < sets.length; i++){
+        if (sets[i].movement === movement){
           count++;
           allSetsIndex = i;
         }
       }
       const updatedRoutine = { ...prevRoutine };
-      updatedRoutine.days[dayIndex].allSets[allSetsIndex] = updatedSets; 
+      updatedRoutine[dayIndex].sets[allSetsIndex] = updatedSets; 
       return updatedRoutine; 
     });
   }
 
   const handleSubmit = async () => {
-    await axios.post('http://moreweight-api-v1.us-east-1.elasticbeanstalk.com/set-routine', {routine: routine, username: username}).then(response => {
+    await axios.post('http://localhost:3001/set-routine', {routine: {title: routineObj.title, routine: routine}, username: username}).then(response => {
       setLog(response.data.movements);
       setRecents(response.data.recents);
       navigate('/profile');
@@ -197,18 +218,18 @@ const EditPage = ({ routine, setRoutine, username, expIcon, numberOfSets, setLog
     <div className='page-body'>
       <DayButtons ids={ids} changeDayIndex={changeDayIndex} weekdays={weekdays}></DayButtons>
       <div className="center-div">
-        <h2> {routine.days[dayIndex].title} </h2>
+        <h2> {routine[dayIndex].title} </h2>
       </div>
-      {routine.days[dayIndex].movements.map((movement, index) => (
+      {routine[dayIndex].movements.map((movement, index) => (
         <WorkoutInfo
-          title={routine.days[dayIndex].title}
-          accessories={routine.days[dayIndex].accessories}
-          movements={routine.days[dayIndex].movements}
-          movement={movement}
-          sets = {Object.values(routine.days[dayIndex].allSets).filter(set => set.variant === movement)}
+          title={routine[dayIndex].title}
+          accessories={routine[dayIndex].accessories}
+          movements={routine[dayIndex].movements}
+          movementObj={movement}
+          sets = {Object.values(routine[dayIndex].sets).filter(set => set.movement === movement.movement)}
           showDropdown={
             dropdowns[dayIndex][
-              routine.days[dayIndex].movements.indexOf(movement)
+              routine[dayIndex].movements.indexOf(movement)
             ]
           }
           changeDropdowns={changeDropdowns}
@@ -218,7 +239,6 @@ const EditPage = ({ routine, setRoutine, username, expIcon, numberOfSets, setLog
           moveUp={moveUp}
           moveDown={moveDown}
           changeMovement={changeMovement}
-          liftData={liftData}
         />
       ))}
       <button id="submit-footer" className="button" onClick={handleSubmit}> Done Editing </button>

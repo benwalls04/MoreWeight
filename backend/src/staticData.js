@@ -174,6 +174,35 @@ const staticData = {
       },
       biasOrder: ['l', 'n', 'u']
     }, 
+    "machine pulldown": {
+      "primary": "back",
+      "secondary": ["biceps"],
+      "sequences": {
+        "b": [7, 8, 9, 9],
+        "i": [8, 9, 9, 10],
+        "a": [9, 9, 10, 11]
+      },
+      "variants": {
+        n: 'Neutral grip. Try for a 45 degree arm path',
+        l: 'Narrow grip. Resist leaning back',
+        u: 'Wide grip. Maintain a slight lean back'
+      },
+      biasOrder: ['n', 'l', 'u']
+    }, 
+    "kneeling cable row": {
+      "primary": "back",
+      "secondary": ["biceps"],
+      "sequences": {
+        "b": [7, 8, 9, 9],
+        "i": [8, 9, 9, 10],
+        "a": [9, 9, 10, 11]
+      },
+      "variants": {
+        n: '45 degree arm path',
+        l: 'Imagine pulling elbow to hips',
+      },
+      biasOrder: ['l', 'n', 'n']
+    }, 
     "t-bar row": {
       "primary": "back", 
       "secondary": ["biceps"], 
@@ -403,6 +432,32 @@ const staticData = {
       },
       biasOrder: ['h', 'h', 'h']
     }, 
+    "adductor machine": {
+      "primary": "legs",
+      "secondary": [],
+      "sequences": {
+        "b": [7, 8, 9, 9],
+        "i": [8, 9, 9, 10],
+        "a": [9, 9, 10, 10]
+      },
+      "variants": {
+        n: ''
+      }, 
+      biasOrder: ['n', 'n', 'n']
+    }, 
+    "abductor machine": {
+      "primary": "legs",
+      "secondary": [],
+      "sequences": {
+        "b": [7, 8, 9, 9],
+        "i": [8, 9, 9, 10],
+        "a": [9, 9, 10, 10]
+      },
+      "variants": {
+        n: ''
+      }, 
+      biasOrder: ['n', 'n', 'n']
+    }, 
     "military press": {
       "primary": "shoulders", 
       "secondary": ["triceps"], 
@@ -430,6 +485,19 @@ const staticData = {
       biasOrder: ['n', 'n', 'n']
     }, 
     "smith machine overhead press": {
+      "primary": "shoulders", 
+      "secondary": ["triceps"], 
+      "sequences": {
+        "b": [7, 8, 9, 9],
+        "i": [8, 9, 9, 10],
+        "a": [9, 9, 10, 10]
+      }, 
+      "variants": {
+        n: ''
+      },
+      biasOrder: ['n', 'n', 'n']
+    }, 
+    "machine overhead press": {
       "primary": "shoulders", 
       "secondary": ["triceps"], 
       "sequences": {
@@ -648,251 +716,204 @@ const staticData = {
         "a": [9, 9, 10, 11]
       },
       biasOrder: ['n', 'n', 'n']
-    }
-  }, 
-  begginerMovements: ["barbell bench press", "dumbell bench press", "machine chest press", "pec-dec fly", "lat pulldown", "seated cable row", "machine row", "reverse pec-dec fly", "barbell squat", "hack squat", "leg press", "machine leg press", "leg extension", "seated leg curl", "lying leg curl", "dumbell overhead press", "dumbell front raise", "dumbell lateral raise", "dumbell curl", "cable curl", "preacher curl", "tricep pushdown", "machine tricep extension"], 
-  accesories: {
-    "dumbell lateral raise": {
-      "primary": "side deltoids",
-      "secondary": [],
-      "liftTypes": [5],
-      "sequences": {
-        "b": [7, 8, 9, 9],
-        "i": [8, 9, 9, 10],
-        "a": [9, 9, 10, 10]
-      },
-      "variants": ["dumbell lateral raise"]
-    }, 
-    "cable lateral raise": {
-      "primary": "side deltoids",
-      "secondary": [],
-      "liftTypes": [5],
-      "sequences": {
-        "b": [7, 8, 9, 9],
-        "i": [8, 9, 9, 10],
-        "a": [9, 9, 10, 10]
-      },
-      "variants": ["cable lateral raise"]
     }, 
     "machine lateral raise": {
       "primary": "side deltoids",
       "secondary": [],
-      "liftTypes": [5],
       "sequences": {
         "b": [7, 8, 9, 9],
         "i": [8, 9, 9, 10],
         "a": [9, 9, 10, 10]
       },
-      "variants": ["machine lateral raise"]
     }, 
-    "shrugs": {
+    "machine shrugs": {
       "primary": "traps",
       "secondary": [],
-      "liftTypes": [5],
       "sequences": {
         "b": [7, 8, 9, 9],
         "i": [8, 9, 9, 10],
         "a": [9, 9, 10, 10]
       },
-      "variants": ["machine shrugs", "smith machine shrugs", "barbell shrugs", "dumbell shrugs"]
     }, 
-    "rear delt fly": {
+    "smith machine shrugs": {
+      "primary": "traps",
+      "secondary": [],
+      "sequences": {
+        "b": [7, 8, 9, 9],
+        "i": [8, 9, 9, 10],
+        "a": [9, 9, 10, 10]
+      },
+    }, 
+    "barbell shrugs": {
+      "primary": "traps",
+      "secondary": [],
+      "sequences": {
+        "b": [7, 8, 9, 9],
+        "i": [8, 9, 9, 10],
+        "a": [9, 9, 10, 10]
+      },
+    }, 
+    "dumbell shrugs": {
+      "primary": "traps",
+      "secondary": [],
+      "sequences": {
+        "b": [7, 8, 9, 9],
+        "i": [8, 9, 9, 10],
+        "a": [9, 9, 10, 10]
+      },
+    }, 
+    "cable rear delt fly": {
       "primary": "rear deltoids",
       "secondary": [],
-      "liftTypes": [5],
       "sequences": {
         "b": [7, 8, 9, 9],
         "i": [8, 9, 9, 10],
         "a": [9, 9, 10, 10]
       },
-      "variants": ["cable rear delt fly", "dumbell rear delt fly"]
     }, 
-    "forearm curl": {
+    "dumbell rear delt fly": {
+      "primary": "rear deltoids",
+      "secondary": [],
+      "sequences": {
+        "b": [7, 8, 9, 9],
+        "i": [8, 9, 9, 10],
+        "a": [9, 9, 10, 10]
+      },
+    }, 
+    "barbell forearm curl": {
       "primary": "forearms",
       "secondary": [],
-      "liftTypes": [5],
       "sequences": {
         "b": [7, 8, 9, 9],
         "i": [8, 9, 9, 10],
         "a": [9, 9, 10, 10]
       },
-      "variants": ["straight bar forearm curl", "cable forearm curl", "dumbell forearm curl"]
     }, 
-    "calf raise": {
+    "cable forearm curl": {
+      "primary": "forearms",
+      "secondary": [],
+      "sequences": {
+        "b": [7, 8, 9, 9],
+        "i": [8, 9, 9, 10],
+        "a": [9, 9, 10, 10]
+      },
+    }, 
+    "machine calf raise": {
       "primary": "calves",
       "secondary": [],
-      "liftTypes": [5],
       "sequences": {
         "b": [7, 8, 9, 9],
         "i": [8, 9, 9, 10],
         "a": [9, 9, 10, 10]
       },
-      "variants": ["machine calf raise", "smith machine calf raise", "dumbell calf raise", "barbell calf raise"]
     }, 
-    "abs": {
+    "smith machine calf raise": {
+      "primary": "calves",
+      "secondary": [],
+      "sequences": {
+        "b": [7, 8, 9, 9],
+        "i": [8, 9, 9, 10],
+        "a": [9, 9, 10, 10]
+      },
+    }, 
+    "barbell calf raise": {
+      "primary": "calves",
+      "secondary": [],
+      "sequences": {
+        "b": [7, 8, 9, 9],
+        "i": [8, 9, 9, 10],
+        "a": [9, 9, 10, 10]
+      },
+    }, 
+    "dumbell calf raise": {
+      "primary": "calves",
+      "secondary": [],
+      "sequences": {
+        "b": [7, 8, 9, 9],
+        "i": [8, 9, 9, 10],
+        "a": [9, 9, 10, 10]
+      },
+    }, 
+    "cable crunch": {
       "primary": "abs",
       "secondary": [],
-      "liftTypes": [5],
       "sequences": {
         "b": [8, 8, 8, 8],
         "i": [8, 8, 8, 8],
         "a": [8, 8, 8, 8]
       },
-      "variants": ["cable crunch", "dumbell side bend", "weighted leg raise", "weighted situps"]
     }, 
-  },  
+    "dumbell side bend": {
+      "primary": "abs",
+      "secondary": [],
+      "sequences": {
+        "b": [8, 8, 8, 8],
+        "i": [8, 8, 8, 8],
+        "a": [8, 8, 8, 8]
+      },
+    }, 
+    "weighted leg raise": {
+      "primary": "abs",
+      "secondary": [],
+      "sequences": {
+        "b": [8, 8, 8, 8],
+        "i": [8, 8, 8, 8],
+        "a": [8, 8, 8, 8]
+      },
+    }, 
+    "weighted situps": {
+      "primary": "abs",
+      "secondary": [],
+      "sequences": {
+        "b": [8, 8, 8, 8],
+        "i": [8, 8, 8, 8],
+        "a": [8, 8, 8, 8]
+      },
+    }, 
+  }, 
+  begginerMovements: ["barbell bench press", "dumbell bench press", "machine chest press", "pec-dec fly", "lat pulldown", "seated cable row", "machine row", "reverse pec-dec fly", "barbell squat", "hack squat", "leg press", "machine leg press", "leg extension", "seated leg curl", "lying leg curl", "dumbell overhead press", "dumbell front raise", "dumbell lateral raise", "dumbell curl", "cable curl", "preacher curl", "tricep pushdown", "machine tricep extension"],   
   groups:{
     "chest": {
       "regions": ["upper chest", "lower chest"],
-      "upperStim": [110, 120, 130, 140, 150, 160], 
-      "lowerStim": [60, 70, 80, 90, 110, 130], 
+      "upperStim": [110, 130, 150], 
+      "lowerStim": [60, 80, 110], 
       "compounds": ["barbell bench press", "dumbell bench press", "smith machine press", "machine chest press", "weighted dips"],
       "isolations": ["cable fly", "pec-dec fly", "cable chest press"], 
-      "neutral": {
-        compound: ["neutral", "neutral", "neutral"],
-        isolation: ['neutral', 'neutral', 'neutral'] 
-      }, 
-      "upper chest": {
-        compound: ["upper chest", "neutral", "lower chest"],
-        isolation: ["upper chest", "neutral", "lower chest"]
-      }, 
-      "lower chest": {
-        compound: ["lower chest", "neutral", "upper chest"],
-        isolation: ["lower chest", "neutral", "upper chest"]
-      },  
-      "upper chest+": {
-        compound: ["upper chest", "upper chest", "neutral"],
-        isolation: ["upper chest", "upper chest", "neutral"],
-      }, 
-      "lower chest+": {
-        compound: ["neutral", "lower chest", "lower chest"],
-        isolation: ["neutral", "lower chest", "lower chest"],
-      }, 
-      "bias": "neutral"
     }, 
     "back": {
       "regions": ["upper back", "lats"],
-      "upperStim": [110, 120, 130, 140, 150, 160], 
-      "lowerStim": [60, 70, 80, 90, 110, 130], 
+      "upperStim": [110, 130, 150], 
+      "lowerStim": [60, 80, 110], 
       "compounds": ["lat pulldown", "pull ups", "seated cable row", "machine row", "t-bar row", "barbell row", "single-arm cable row"],
       "isolations": ["lat pullover", "reverse pec-dec fly", "face pulls", "single arm lat pullover"],
-      "neutral": {
-        compound: ["neutral", "neutral", "neutral"],
-        isolation: ['upper back', 'lats', 'upper back'] 
-      }, 
-      "lats": {
-        compound: ["lats", "neutral", "upper back"],
-        isolation: ['lats', 'upper back', 'lats'] 
-      }, 
-      "upper back": {
-        compound: ["upper back", "neutral", "lats"],
-        isolation: ['upper back', 'lats', 'upper back'] 
-      }, 
-      "upper back+": {
-        compound: ["upper back", "upper back", "neutral"],
-        isolation: ['upper back', 'upper back', 'lats'] 
-      }, 
-      "lats+": {
-        compound: ["lats", "lats", "neutral"],
-        isolation: ['lats', 'lats', 'upper back'] 
-      }, 
-      "bias": "neutral"
     }, 
     "legs": {
       "regions": ["quads", "hamstrings"],
-      "upperStim": [120, 140, 160, 180, 200, 220], 
-      "lowerStim": [70, 80, 90, 100, 110, 120], 
+      "upperStim": [140, 180, 220], 
+      "lowerStim": [90, 110, 130], 
       "compounds": ["hack squat", "barbell squat", "smith machine squat", "romanian deadlift", "leg press", "machine leg press", "deadlift", "bulgarian split squat", "front squat"],
       "isolations": ["leg extension", "seated leg curl", "lying leg curl", "single leg extension"], 
-      "hamstrings": {
-        compound: ["hamstrings", "quads", "hamstrings"],
-        isolation: ["hamstrings", "quads"],
-      }, 
-      "quads": {
-        compound: ["quads", "hamstrings", "quads"],
-        isolation: ["quads", "hamstrings"],
-      }, 
-      "hamstrings+": {
-        compound: ["hamstrings", "hamstrings", "quads"],
-        isolation: ["hamstrings", "quads"],
-      }, 
-      "quads+": {
-        compound: ["quads", "quads", "hamstrings"],
-        isolation: ["quads", "hamstrings"],
-      }, 
-      "neutral": {
-        compound: ["quads", "hamstrings", "hamstrings"],
-        isolation: ["quads", "hamstrings"],
-      }, 
-      "bias": "neutral"
     },
     "shoulders": {
       "regions": ["front delts", "side delts"],
-      "upperStim": [70, 90, 110, 120, 130, 140], 
-      "lowerStim": [25, 35, 45, 55, 65, 75], 
+      "upperStim": [70, 110, 130], 
+      "lowerStim": [25, 45, 65], 
       "compounds": ["dumbell overhead press", "smith machine overhead press", "military press"],
       "isolations": ["cable lateral raise", "cable front raise", "dumbell lateral raise", "dumbell front raise"], 
-      "neutral": {
-        compound: ["neutral", "neutral", "neutral"],
-        isolation: ["side delts", "front delts"],
-      }, 
-      "front delts": {
-        compound: ["front delts"],
-        isolation: ["front delts", "side delts"],
-      },  
-      "side delts": {
-        compound: ["neutral"],
-        isolation: ["side delts"],
-      },
-      "bias": "neutral"
     }, 
     "biceps": {
       "regions": ["short head", "long head", "brachialis"],
-      "upperStim": [50, 60, 70, 80, 90, 100], 
-      "lowerStim": [20, 30, 40, 50, 60, 70],
+      "upperStim": [50, 70, 90], 
+      "lowerStim": [20, 40, 60],
       "compounds": [],
       "isolations": ["incline curl", "preacher curl", "dumbell curl", "cable curl", "concentration curl", "barbell curl", "machine curl", "machine preacher curl"], 
-      "neutral": {
-        compound: [],
-        isolation: ["neutral", "brachialis", "neutral"],
-      },
-      "short head": {
-        compound: [],
-        isolation: ["short head", "neutral", "brachialis"],
-      },
-      "long head": {
-        compound: [],
-        isolation: ["long head", "neutral", "brachialis"],
-      },
-      "brachialis": {
-        compound: [],
-        isolation: ["brachialis", "neutral"],
-      },
-      "bias": "neutral"
     }, 
     "triceps": {
       "regions": ["long head", "medial head", "lateral head"],
-      "upperStim": [30, 40, 50, 60, 70, 80], 
-      "lowerStim": [20, 30, 40, 50, 60, 70],
+      "upperStim": [50, 70, 90], 
+      "lowerStim": [20, 40, 60],
       "compounds": [],
       "isolations": ["tricep pushdown", "cable overhead extension", "skullcrusher", "crossbody extension", "machine tricep extension"], 
-      "neutral": {
-        compound: [],
-        isolation: ["neutral"],
-      }, 
-      "long head": {
-        compound: [],
-        isolation: ["long head", "neutral"],
-      }, 
-      "lateral head": {
-        compound: [],
-        isolation: ["lateral head", "neutral"],
-      }, 
-      "medial head": {
-        compound: [],
-        isolation: ["medial head", "neutral"],
-      },  
-      "bias": "neutral"
     }, 
   }, 
   accesoryGroups: {
@@ -1052,21 +1073,21 @@ const staticData = {
   }, 
   splitTitles: {
     "": "",
-    u: "upper lower",
-    b: "body part split", 
-    a: "arnold split",
-    p: "push pull legs", 
-    b1: "body part split 1",
-    b2: "body part split 2",
-    b3: "body part split 3", 
-    p1: "push pull legs 1", 
-    p2: "push pull legs 2", 
-    p3: "push pull legs 3", 
-    a1: "arnold split 1", 
-    a2: "arnold split 2", 
-    a3: "arnold split 3",
-    u1: "upper lower 1", 
-    u2: "upper lower 2",
+    u: "Upper Lower",
+    b: "Body Part Split", 
+    a: "Arnold Split",
+    p: "Push Pull Legs", 
+    b1: "Body Part Split 1",
+    b2: "Body Part Split 2",
+    b3: "Body Part Split 3", 
+    p1: "Push Pull Legs 1", 
+    p2: "Push Pull Legs 2", 
+    p3: "Push Pull Legs 3", 
+    a1: "Arnold Split 1", 
+    a2: "Arnold Split 2", 
+    a3: "Arnold Split 3",
+    u1: "Upper Lower 1", 
+    u2: "Upper Lower 2",
   },
   sequences: {
     chest: {
@@ -1199,18 +1220,18 @@ const staticData = {
     biceps: {
       seq: [
         {type: 'curl-0', lowerRep: 8, upperRep: 12}, 
-        {type: 'curl', lowerRep: 8, upperRep: 12},  
-        {type: 'curl', lowerRep: 8, upperRep: 12}, 
-        {type: 'curl', lowerRep: 8, upperRep: 12},  
+        {type: 'curl-1', lowerRep: 8, upperRep: 12},  
+        {type: 'curl-1', lowerRep: 8, upperRep: 12}, 
+        {type: 'curl-1', lowerRep: 8, upperRep: 12},  
       ], 
       order: [0, 1, 2, 3],
     }, 
     triceps: {
       seq: [
         {type: 'extension-0', lowerRep: 8, upperRep: 12}, 
-        {type: 'extension', lowerRep: 8, upperRep: 12},  
-        {type: 'extension', lowerRep: 8, upperRep: 12}, 
-        {type: 'extension', lowerRep: 8, upperRep: 12},  
+        {type: 'extension-1', lowerRep: 8, upperRep: 12},  
+        {type: 'extension-1', lowerRep: 8, upperRep: 12}, 
+        {type: 'extension-1', lowerRep: 8, upperRep: 12},  
       ], 
       order: [0, 1, 2, 3],
     }
@@ -1223,20 +1244,20 @@ const staticData = {
     "horizontal-pull-2": ["seated cable row", "machine row", "t-bar row", "dumbell row", "barbell row"],
     "vertical-pull-1": ["lat pulldown", "pull ups"],
     "vertical-pull-2": ["lat pulldown", "pull ups", "machine pulldown", "kneeling cable row"],
-    "knee-flexion-1": ["barbell squat", "hack squat", "leg press", "front squat"],
+    "knee-flexion-1": ["leg press", "hack squat", "front squat","barbell squat",],
     "knee-flexion-2": ["leg press", "bulgarian split squat", "smith machine squat"],
     "hip-extension-1": ["deadlift"],
     "hip-extension-2": ["barbell romanian deadlift", "barbell hip thrust", "dumbell romanian deadlift"],
-    "curl": ["dumbell hammer curl", "cable curl", "incline dumbell curl", "preacher curl", "dumbell curl", "barbell curl", "machine curl", "concentration curl"], 
-    "extension": ["tricep pushdown", "cable overhead extension", "skullcrusher", "machine tricep extension", "crossbody extension"], 
+    "curl-1": ["dumbell hammer curl", "cable curl", "incline dumbell curl", "preacher curl", "dumbell curl", "barbell curl", "machine curl", "concentration curl"], 
+    "extension-1": ["tricep pushdown", "cable overhead extension", "skullcrusher", "machine tricep extension", "crossbody extension"], 
     "fly": ["pec-dec fly", "cable fly"], 
     "back-iso": ["lat pullover", "reverse pec-dec fly", "face pulls"], 
     "leg-iso": ["leg extension", "leg curl", "adductor machine", "abductor machine"], 
     "shoulder-iso": ["dumbell lateral raise", "cable lateral raise", "cable front raise", "machine lateral raise", "dumbell front raise"], 
-    "side deltoid": ["dumbell lateral raise", "cable lateral raise", "machine lateral raise"], 
-    "rear deltoid": ["cable rear delt fly", "reverse pec-dec fly", "face pulls", "dumbell rear delt fly"],
+    "side deltoids": ["dumbell lateral raise", "cable lateral raise", "machine lateral raise"], 
+    "rear deltoids": ["cable rear delt fly", "reverse pec-dec fly", "face pulls", "dumbell rear delt fly"],
     "traps": ["barbell shrugs", "machine shrugs", "dumbell shrugs", "cable shrugs"],
-    "forearms": ["straight bar forearm curl", "cable forearm curl"],
+    "forearms": ["barbell forearm curl", "cable forearm curl"],
     "calves": ["machine calf raise", "smith machine calf raise", "dumbell calf raise", "barbell calf raise"],
     "abs": ["weighted leg raise", "weighted situps", "cable crunch", "dumbell side bend"],
   }, 

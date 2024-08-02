@@ -10,10 +10,11 @@ router.post("/", async (req, res) => {
   const newSet = {weight: Number(weight), reps: Number(reps), RPE: Number(RPE)};
 
   let log = await Log.findOne({ username: username });
-  const recentEntry = log.recents.find(entry => entry.title === movement);
+  
+  const recentEntry = log.recents.find(entry => entry === movement);
 
   // Check if movement already exists in recents, remove if exists
-  log.recents = log.recents.filter(entry => entry.title !== movement);
+  log.recents = log.recents.filter(entry => entry !== movement);
 
   // Update movements array
   if (!log.movements.has(movement)) {
@@ -22,7 +23,7 @@ router.post("/", async (req, res) => {
   log.movements.get(movement).push(newSet);
 
   // Push the movement to recents at the start of the array
-  log.recents.unshift({ title: movement, ...newSet });
+  log.recents.unshift(movement);
 
   // Save the log
   await log.save();

@@ -19,6 +19,7 @@ function InjuriesPage({setInputs, inputs, index, routes, handleRestart}) {
     newInputs.splits = {};
     setInputs(newInputs);
     
+    navigate("/loading")
     const response = await axios.get('http://localhost:3001/splits', { params: newInputs}).then((response) => {
       newInputs.splits = response.data;
       setInputs(newInputs);

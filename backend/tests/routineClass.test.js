@@ -25,16 +25,12 @@ test('INSPECT: setMovements', () => {
 
   routine.setMovements(routineClass.getStimulus(split, 3, muscleBias, numSets), routineClass.getSequences('n', 'barbell bench press', 'military press', 'barbell row', 'lat pulldown', 'hack squat', 'deadlift', 'cable curl', 'machine tricep extension'), 'a', numSets, 'n');
 
-  routine.evenStimulus('n', 'a', numSets);
-
   routine.setVariants(50, 50, 50);
 
   routine.organizeSets();
 
   routine.getAllSets();
 
-  routine.routine.forEach(day => {
-    console.log(day.sets);
-  })
+  routine.fitTimeFrame();
 
 })

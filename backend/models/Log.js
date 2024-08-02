@@ -9,19 +9,11 @@ const SetSchema = new Schema({
   createdAt: { type: Date, default: Date.now }, 
 })
 
-const RecentSchema = new Schema({
-  title: { type: String, required: true },
-  imageId: { type: mongoose.Schema.Types.ObjectId, required: false, ref: 'fs.files' }, 
-});
-
 // Define the User schema with an object of routines
 const LogSchema = new Schema({
   username: { type: String, required: true },
   movements: { type: Map, of: [SetSchema], required: true }, 
-  recents: {
-    type: [RecentSchema],
-    required: true
-  }
+  recents: { type: Array, of: String, required: true },
 });
 
 // Create the model

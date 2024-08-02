@@ -1,55 +1,34 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useRef } from 'react';
+import staticData from '../utils/staticData';
 
+function SubButtons({allSets, setAllSets, setNumber, index, numberOfSets, getNextSet, expIcon, movementsArr}) {
 
-function SubButtons({allSets, setAllSets, setNumber, index, numberOfSets, getNextSet, liftData, expIcon}) {
-
+  const movementInfos = staticData.movements
   const dropdownRef = useRef(null);
-  const [movement, setMovement] = useState(allSets[index].variant);
-  const [movements, setMovements] = useState(allSets.map(set => set.variant));
+  const [movement, setMovement] = useState(allSets[index].movement);
+  const [movements, setMovements] = useState(allSets.map(set => set.movement));
+
 
   const updateRest = (allSets, index) => {
-    const set = allSets[index];
-    const nextSet = index < allSets.length - 1? allSets[index + 1] : null;
-    set.rest = nextSet === null || liftData[2][set.variant].group !== liftData[2][nextSet.variant].group ? 1 : liftData[0][set.liftType - 1][set.RPE - 7];
+    if (index < allSets.length - 1){
+      const set = allSets[index];
+      const nextSet = index < allSets.length - 1? allSets[index + 1] : null;
+      const lowerRep = set.lowerRep
+      set.rest = nextSet === null || movementInfos[set.movement].primary !== movementInfos[nextSet.movement].primary ? 1 : staticData.restTimes[lowerRep / 2 - 1][set.RPE - 7];
+    }
   }
 
   const getSubOptions = (movement) => {
-    let region = movement === 'new movement'? 'neutral': liftData[2][movement].region;
-    let group = movement === 'new movement'? '': liftData[2][movement].group;
+    let group = movement === 'new movement'? '': movementInfos[movement].primary;
 
     let options = [];
-    for (let name in liftData[2]) {
-      if (!movements.includes(name) && liftData[2][name].group === group){
+    for (let name in movementInfos) {
+      if (!movements.some(entry => entry.movement === name) && movementInfos[name].primary === group){
         options.push(name)
       }
-    }
-
-    for (let name in liftData[10]){
-      liftData[10][name].variants.forEach(variant => {
-        if (!movements.includes(variant) && liftData[2][variant].group === group){
-          options.push(variant);
-        }
-      })
-    }
-
-    let priorityOptions = []; let lastOptions = [];
-    options.forEach(option => {
-      const variantInfo = liftData[2][option];
-
-      if (movement in liftData[10]){
-        priorityOptions.push(option);
-      } else {
-        if (variantInfo.region === region){
-          priorityOptions.push(option);
-        } else {
-          lastOptions.push(option);
-        }
-      }
-    })
-
-    options = priorityOptions.concat(lastOptions);
+    }       
 
     return options;
   }
@@ -97,20 +76,42 @@ function SubButtons({allSets, setAllSets, setNumber, index, numberOfSets, getNex
 
   const handleSub = (option) => {
     let newAllSets = [...allSets];
-    const liftType = liftData[3][liftData[2][option].movement].liftTypes.includes(allSets[index].liftType)? allSets[index].liftType : liftData[3][liftData[2][option].movement].liftTypes[0];
-    const RPESeq = liftData[3][liftData[2][option].movement].sequences[expIcon].slice(4 - numberOfSets, 4);
+    
+    const RPESeq = movementInfos[option].sequences[expIcon].slice(4 - numberOfSets, 4);
+    const bias = movementInfos[option].biasOrder.includes(movement.bias)? movement.bias : movementInfos[option].biasOrder.includes('n')? 'n': movementInfos[option].biasOrder[0]; 
+
+    console.log(allSets)
+
     for (let i = 0; i < numberOfSets; i++){
-      const set = newAllSets[index + i];
-      set.variant = option;
+      let set = newAllSets[index + i];
+      set.bias = bias;
+      set.movement = option;
       set.RPE = RPESeq[i];
-      set.liftType = liftType;
-      set.rest = allSets[index + i].rest <= 1? 1 : liftData[0][set.liftType - 1][set.RPE - 7];
+      set.rest = allSets[index + i].rest <= 1? 1 : set.rest;
+      set.num = i + 1;
+      set.lowerRep = allSets[index + i].lowerRep;
+      set.upperRep = allSets[index + i].upperRep;
+      newAllSets[index + i] = set;
     }
+
+    console.log(newAllSets)
+
     updateRest(newAllSets, index);
     setShowSubs(false);
     setAllSets(newAllSets);
     setMovement(option);
-    setMovements(allSets.map(set => set.variant));
+    
+    //update movements differently 
+    setMovements(movements.map(entry => {
+      if (entry.movement === movement){
+        return {
+          movement: option, bias: bias, RPE: RPESeq, lowerRep: movement.lowerRep, upperRep: movement.upperRep, stimulus: movement.stimulus
+        }
+      } else {
+        return entry;
+      }
+    }
+    ));
   }
 
   const id = setNumber === 1 ? 'sub-btn' : 'sub-btn-restrict';
@@ -123,8 +124,8 @@ function SubButtons({allSets, setAllSets, setNumber, index, numberOfSets, getNex
       <button className="button" id={id} onClick={handleEnd}>Send to end</button>
       <button className="button" id='sub-btn' onClick={getNextSet}> Skip Set </button>
     </div>
-    <div ref={dropdownRef} style={{position:'relative'}}>
-      <div id="sub-dropdown" style={{display: showSubs === false? 'none': 'grid', position: 'fixed', left:'320px', top:'160px', width: '300px'}}>
+    <div ref={dropdownRef} className="center-grid "style={{position:'relative', width: '400px'}}>
+      <div id="sub-dropdown" style={{display: showSubs === false? 'none': 'grid', position: 'absolute', left:'12.5%', top:'0px', width: '75%'}}>
         {subOptions.map((option) => (
           <button id="sub-option" onClick={() => handleSub(option)}>
             {option}

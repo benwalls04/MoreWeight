@@ -4,8 +4,12 @@ import SelectOne from '../../components/SelectOne.js';
 import ProgressBar from '../../components/ProgressBar.js';
 import Slider from '../../components/Slider.js';
 
-function LegsPage({inputs, setInputs, index, routes, handleRestart}) {
+function LegsPage({inputs, setInputs, index, routes}) {
   const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate('/back');
+  }
 
   const handleNext = () => {
     let newInputs = {...inputs};
@@ -23,7 +27,7 @@ function LegsPage({inputs, setInputs, index, routes, handleRestart}) {
         <Slider minLabel="hamstrings" maxLabel="quads" value={value} setValue={setValue}></Slider>
       </div>
     </div>
-    <ProgressBar index={index} routes={routes} handleNext={handleNext} handleRestart={handleRestart}></ProgressBar>
+    <ProgressBar index={index} routes={routes} handleNext={handleNext} handleBack={handleBack}></ProgressBar>
     </>
   )
 }

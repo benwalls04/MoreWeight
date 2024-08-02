@@ -6,8 +6,9 @@ const Users = require('../models/Users')
 
 // insert to database 
 router.post("/", async (req, res) => {
-  const routine = req.body.routine;
+  const routineObj = req.body.routine;
   const username = req.body.username;
+  const routine = routineObj.routine;
 
   const existingLog = await Log.findOne({ username: username });
 
@@ -19,10 +20,11 @@ router.post("/", async (req, res) => {
 
   const dayIndex = new Date().getDay();
 
-  for (let i = 0; i < routine.days.length; i++){
-    const day = routine.days[(dayIndex + i) % 7];
-    day.movements.forEach((movement) => {
+  for (let i = 0; i < routine.length; i++){
+    const day = routine[(dayIndex + i) % 7];
+    day.movements.forEach((movementObj) => {
       // If an existing log is found, carry over the entries
+      const movement = movementObj.movement;
       if (!newLog.movements[movement]){
         if (existingLog && existingLog.movements[movement]) {
           newLog.movements[movement] = existingLog.movements[movement];
@@ -31,14 +33,14 @@ router.post("/", async (req, res) => {
         }
       }
 
-      if (!newLog.recents.find(entry => entry.title === movement)) {
-        newLog.recents.push({ title: movement, imageId: undefined });
+      if (!newLog.recents.includes(movement)) {
+        newLog.recents.push(movement);
       }
     });
   }
   
   const user = await Users.findOne({ username: username });
-  user.routine = routine;
+  user.routine = routineObj;
   user.save();
 
   await Log.create(newLog);

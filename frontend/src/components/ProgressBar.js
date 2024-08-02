@@ -1,15 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 
-function ProgressBar({ index, routes, handleNext, handleRestart}) {
+function ProgressBar({ index, routes, handleNext, handleBack}) {
   const [progress, setProgress] = useState(0); 
-
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    navigate('/');
-    handleRestart();
-  }
 
   useEffect(() => {
     setProgress((100 * index) / routes.length);
@@ -17,7 +10,7 @@ function ProgressBar({ index, routes, handleNext, handleRestart}) {
 
   return (
     <div id="progress-container">
-      <button id="progress-button" onClick={handleClick}>restart</button>
+      <button id="progress-button" onClick={handleBack}>back</button>
       <div id="progress-bar"  style={{ width: `${progress}%`}}></div>
       <button id="progress-button" onClick={handleNext}>next</button>
     </div>

@@ -1,15 +1,17 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import FooterMenu from '../components/FooterMenu'
-import liftData from '../utils/staticData';
+import staticData from '../utils/staticData';
 import Dropdown from '../components/Dropdown';
 import SetPage from './SetPage';
 import SubButtons from '../components/SubButtons'
 
-function WorkoutPage({username, routine, begin, setBegin, nextSet, setNextSet, setLog, lastRest, setLastRest, numberOfSets, time, finished, setFinished, expIcon, setRecents, setNumber, setSetNumber, index, setIndex, recents}) {
+function WorkoutPage({username, routineObj, begin, setBegin, nextSet, setNextSet, setLog, lastRest, setLastRest, numberOfSets, time, finished, setFinished, expIcon, setRecents, setNumber, setSetNumber, index, setIndex, recents}) {
 
   const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+
+  const routine = routineObj.routine;
 
   const today = new Date();
   const weekday = weekdays[today.getDay()];
@@ -17,7 +19,7 @@ function WorkoutPage({username, routine, begin, setBegin, nextSet, setNextSet, s
   const day = today.getDate();
   const workout = routine[(today.getDay() + 6) % 7];
   const movements = workout.movements;
-  const [allSets, setAllSets] = useState([...workout.allSets]);
+  const [allSets, setAllSets] = useState([...workout.sets]);
 
   const showButton = movements.length > 0;
 
@@ -29,13 +31,38 @@ function WorkoutPage({username, routine, begin, setBegin, nextSet, setNextSet, s
     let tagsArr = [];
     for (let i = 0; i < movements.length; i++){
       let currTags = [];
-      const group = liftData[2][movements[i]].group;
-      const region = liftData[2][movements[i]].region;
+      const group = staticData.movements[movements[i].movement].primary;
+      const bias = movements[i].bias;
       if (group !== ''){
         currTags.push(group);
       }
-      if (region !== "neutral") {
-        currTags.push(region);
+      if (bias !== 'n') {
+        let regionNotes = staticData.movements[movements[i]].variants[bias];
+    
+        if (regionNotes.length > 0){
+          tagsArr.push(regionNotes);
+        }
+    
+        let regionText = ''; 
+        if (group === 'chest' && bias === 'u') {
+          regionText = 'upper chest';
+        }   
+        if (group === 'chest' && bias === 'l') {
+          regionText = 'lower chest';
+        }   
+        if (group === 'back' && bias === 'u') {
+          regionText = 'upper back';
+        }   
+        if (group === 'back' && bias === 'l') {
+          regionText = 'lats';
+        }   
+        if (group === 'legs' && bias === 'q') {
+          regionText = 'quads';
+        }   
+        if (group === 'legs' && bias === 'h') {
+          regionText = 'hamstrings';
+        }   
+        tagsArr.push(regionText);
       }
       tagsArr.push(currTags);
     }
@@ -69,7 +96,7 @@ function WorkoutPage({username, routine, begin, setBegin, nextSet, setNextSet, s
       setLastRest(allSets[index].rest);
       setIndex(index + 1);
       setNextSet(allSets[index + 1]);
-      setSetNumber(allSets[index + 1].variant === allSets[index].variant && setNumber < numberOfSets? setNumber + 1 : 1);
+      setSetNumber(allSets[index + 1].num);
     } else {
       setFinished(true);
     }
@@ -95,9 +122,9 @@ function WorkoutPage({username, routine, begin, setBegin, nextSet, setNextSet, s
           <>
             <div className="lift-container">
               <button className={iconClasses[index]} onClick={() => changeDropdowns(index)}>
-                {icons[index]}
+                {(begin && finished) ? '': icons[index]}
               </button>
-              <div> {movement} </div>
+              <div> {movement.movement} </div>
               <div></div>
               <div className="tag-box">
                 {tagsArr[index].map((tag, index) => (
@@ -108,11 +135,11 @@ function WorkoutPage({username, routine, begin, setBegin, nextSet, setNextSet, s
               </div>
               <div></div>
               <Dropdown
-                show={dropdowns[index]}
-                sets={allSets.filter(set => set.variant === movement)}
-                reps={liftData[1][allSets.find(set => set.variant === movement).liftType - 1][0] + "-" + liftData[1][allSets.find(set => set.variant === movement).liftType - 1][1]}
+                show={(begin && finished) ? false: dropdowns[index]}
+                sets={allSets.filter(set => set.movement === movement.movement)}
+                reps={movement.lowerRep + ' - ' + movement.upperRep}
                 updateSets={() => {}}
-                movement={movement}
+                movement={movement.movement}
               />
             </div>
             <div className="center-div" style={{marginTop:'40px', marginBottom:'-20px'}}>
@@ -130,8 +157,8 @@ function WorkoutPage({username, routine, begin, setBegin, nextSet, setNextSet, s
   } else {
     return (
       <>
-      <SubButtons allSets={allSets} setAllSets={setAllSets} setNumber={setNumber} index={index} numberOfSets={numberOfSets} getNextSet={getNextSet} setIndex={setIndex} liftData={liftData} expIcon={expIcon}/>
-      <SetPage username={username} nextSet={nextSet} liftData={liftData} lastRest={lastRest} setNumber={setNumber} numberOfSets={numberOfSets} setLog={setLog} getNextSet={getNextSet} time={time} setRecents={setRecents} recents={recents}></SetPage>
+      <SubButtons allSets={allSets} setAllSets={setAllSets} setNumber={setNumber} index={index} numberOfSets={numberOfSets} getNextSet={getNextSet} setIndex={setIndex} expIcon={expIcon} movementsArr={movements}/>
+      <SetPage username={username} nextSet={nextSet} lastRest={lastRest} setNumber={setNumber} numberOfSets={numberOfSets} setLog={setLog} getNextSet={getNextSet} time={time} setRecents={setRecents} recents={recents} movements={movements}></SetPage>
       </>
     )
   }

@@ -3,16 +3,19 @@ import { useNavigate } from "react-router-dom";
 import SelectMany from '../../components/SelectMany.js';
 import ProgressBar from '../../components/ProgressBar.js';
 
-function AccesoriesPage({inputs, setInputs, index, routes, handleRestart}) {
+function AccesoriesPage({inputs, setInputs, index, routes}) {
   const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate('/time');
+  }
 
   const handleNext = () => {
     let accessories = options
     .map((entry, index) => choices[index] ? entry.toLowerCase() : null)
     .filter(entry => entry !== null);
-    console.log(accessories)
     let newInputs = {...inputs};
-    inputs.accessories = accessories;
+    newInputs.accessories = accessories;
     setInputs(newInputs);
     navigate('/chest')
   }
@@ -29,7 +32,7 @@ function AccesoriesPage({inputs, setInputs, index, routes, handleRestart}) {
       </div>
     </div>
     <div className="small-text-left" id="bottom-text">Select the accessory groups that you would like to train. These groups will be trained at the end of the workout if time allows for it. This part is optional.</div>
-    <ProgressBar index={index} routes={routes} handleNext={handleNext} handleRestart={handleRestart}></ProgressBar>
+    <ProgressBar index={index} routes={routes} handleNext={handleNext} handleBack={handleBack}></ProgressBar>
     </>
   )
 }

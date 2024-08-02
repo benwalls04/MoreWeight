@@ -4,16 +4,19 @@ import SelectMany from '../../components/SelectMany.js';
 import ProgressBar from '../../components/ProgressBar.js';
 import ErrorText from '../../components/ErrorText.js';
 
-function DaysPage({setInputs, inputs, index, routes, handleRestart}) {
+function DaysPage({setInputs, inputs, index, routes}) {
   const navigate = useNavigate();
 
   const [showError, setShowError] = useState(false);
   const errorText = "Please select at least three days to continue"
 
+  const handleBack = () => {
+    navigate('/experience')
+  }
+
   const handleNext = () => {
     if (choices.filter(choice => choice).length < 3){
       setShowError(true);
-      return;
     } else {
       let schedule = ["rest", "rest", "rest", "rest", "rest", "rest", "rest"];
       choices.forEach((choice, index) => {
@@ -23,6 +26,7 @@ function DaysPage({setInputs, inputs, index, routes, handleRestart}) {
       })
       let newInputs = inputs;
       newInputs.schedule = schedule;
+      newInputs.numDays = 7;
       navigate(routes[index + 1]);
       setInputs(newInputs)
     }
@@ -38,7 +42,7 @@ function DaysPage({setInputs, inputs, index, routes, handleRestart}) {
         <SelectMany options={options} choices={choices} setChoices={setChoices}></SelectMany>
       </div>
     </div>
-    <ProgressBar index={index} routes={routes} handleNext={handleNext} handleRestart={handleRestart}></ProgressBar>
+    <ProgressBar index={index} routes={routes} handleNext={handleNext} handleBack={handleBack}></ProgressBar>
     <ErrorText show={showError} text={errorText}></ErrorText>
     </>
   )

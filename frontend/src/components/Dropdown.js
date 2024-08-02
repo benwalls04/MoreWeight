@@ -7,6 +7,7 @@ const Dropdown = ({
   updateSets, 
   movement,
 }) => {
+
   const [errorText, setErrorText] = useState("Please enter a valid number.");
   const [showError, setShowError] = useState(false);
   

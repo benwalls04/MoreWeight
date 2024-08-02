@@ -1,25 +1,37 @@
 const mongoose = require('mongoose');
+const { accesoryGroups } = require('../src/staticData');
 const Schema = mongoose.Schema;
 
 // Define the set schema
 const Set = new Schema({
-  variant: { type: String, required: true },
+  movement: { type: String, required: true },
   RPE: { type: Number, required: true },
   rest: { type: Number, required: true },
-  liftType: { type: Number, required: true },
+  num: { type: Number, required: true}, 
+  lowerRep: { type: Number, required: true },
+  upperRep: { type: Number, required: true },
+})
+
+const Movement = new Schema({
+  movement: { type: String, required: true },
+  bias: { type: String, required: false },
+  lowerRep: { type: Number, required: true },
+  upperRep: { type: Number, required: true },
+  stimulus: { type: Number, required: false},
 })
 
 // Define the day schema 
 const Day = new Schema({
   title: { type: String, required: true },
-  movements: { type: [String], required: true },
-  allSets: [Set],
+  movements: { type: [Movement], required: true },
+  sets: [Set],
+  accessories: { type: [String], required: false },
 })
 
 // Define the Routine schema
 const Routine = new Schema({
   title: { type: String, required: true },
-  days: { type: [Day], required: true}, 
+  routine: { type: [Day], required: true}, 
 });
 
 // Define the User schema with an object of routines

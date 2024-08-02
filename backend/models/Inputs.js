@@ -6,7 +6,7 @@ const inputSchema = new mongoose.Schema({
     required: true
   },
   exp: {
-    type: Number,
+    type: String,
     required: true
   },
   style: {
@@ -19,6 +19,18 @@ const inputSchema = new mongoose.Schema({
   },
   time: {
     type: Number,
+    required: true
+  }, 
+  numDays: {
+    type: Number,
+    required: true
+  },
+  accessories: {
+    type: Array,
+    required: true
+  },
+  bias: {
+    type: Array,
     required: true
   }
 });

@@ -4,14 +4,20 @@ import SelectOne from '../../components/SelectOne.js';
 import ProgressBar from '../../components/ProgressBar.js';
 import ErrorText from '../../components/ErrorText.js';
 
-function VerticalPress({inputs, setInputs, index, routes, handleRestart}) {
+function VerticalPress({inputs, setInputs, index, routes}) {
   const navigate = useNavigate();
 
-  const [showError, setShowError] = useState(true);
+  const [showError, setShowError] = useState(false);
   const errorText = "Please choose one of the options to continue";
 
+  const handleBack = () => {
+    navigate('/horizontal-press');
+  }
+
   const handleNext = () => {
-    if (!showError) {
+    if (Array.isArray(choice) && choice.every((val) => !val)) {
+      setShowError(true);
+    } else {
       let newInputs = {...inputs};
       newInputs["vertical-press"] = choice.toLowerCase();
       setInputs(newInputs);
@@ -24,11 +30,11 @@ function VerticalPress({inputs, setInputs, index, routes, handleRestart}) {
     <>
     <div>
       <div className="div-container">
-        <h4> Which movement do you prefer? </h4>
+        <h3> Which movement do you prefer? </h3>
         <SelectOne options={options} setChoice={setChoice} id={"movement-button"} setShow={setShowError}></SelectOne>
       </div>
     </div>
-    <ProgressBar index={index} routes={routes} handleNext={handleNext} handleRestart={handleRestart}></ProgressBar>
+    <ProgressBar index={index} routes={routes} handleNext={handleNext} handleBack={handleBack}></ProgressBar>
     <ErrorText show={showError} text={errorText}></ErrorText>
     </>
   )

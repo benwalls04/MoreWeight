@@ -3,11 +3,11 @@ import FooterMenu from '../components/FooterMenu'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
-function SetPage({username, nextSet, liftData, setNumber, numberOfSets, setLog, getNextSet, time, setRecents, recents}) {
+function SetPage({username, nextSet, setNumber, numberOfSets, setLog, getNextSet, time, setRecents, recents}) {
 
-  const lowerBound = liftData[1][nextSet.liftType - 1][0];
-  const upperBound = liftData[1][nextSet.liftType - 1][1];
-  const notes = liftData[2][nextSet.variant].notes.split(">");
+  const lowerBound = nextSet.lowerRep
+  const upperBound = nextSet.upperRep
+  const notes = [];
 
   function getTimeStr(time) {
     let minutes = Math.floor(time);
@@ -17,8 +17,8 @@ function SetPage({username, nextSet, liftData, setNumber, numberOfSets, setLog, 
 
   const [entryText, setEntryText] = useState([0, 0, nextSet.RPE]);
   const getWeight = async () => {
-    const response = await axios.get('http://moreweight-api-v1.us-east-1.elasticbeanstalk.com/get-last', {
-      params: { username: username, movement: nextSet.variant, numberOfSets: numberOfSets }
+    const response = await axios.get('http://localhost:3001/get-last', {
+      params: { username: username, movement: nextSet.movement, numberOfSets: numberOfSets }
     });
     return [response.data.weight, response.data.reps];
   }
@@ -29,7 +29,7 @@ function SetPage({username, nextSet, liftData, setNumber, numberOfSets, setLog, 
       setEntryText([weight, reps, nextSet.RPE]);
     };
     fetchData();
-  }, [username, nextSet.variant, numberOfSets, nextSet.RPE]);
+  }, [username, nextSet.movement, numberOfSets, nextSet.RPE]);
 
   const handleChange = (e, index) => {
     let newEntryText = [...entryText];
@@ -42,24 +42,28 @@ function SetPage({username, nextSet, liftData, setNumber, numberOfSets, setLog, 
     let newEntryText = [...entryText];
     newEntryText[index] = text.target.value;
     newEntryIds[index] = 'track-input';
+
     setEntryIds(newEntryIds);
     setEntryText(newEntryText);
   }
 
   const logSet = async () => {
-    const response = await axios.post('http://moreweight-api-v1.us-east-1.elasticbeanstalk.com/log-set', {
+    const response = await axios.post('http://localhost:3001/log-set', {
       username: username,
-      movement: nextSet.variant,
+      movement: nextSet.movement,
       weight: entryText[0],
       reps: entryText[1],
       RPE: entryText[2],
     });
     setLog(response.data.log);
+
     const newRecents = [...recents];
-    const topIndex = newRecents.findIndex(entry => entry.title === nextSet.variant);
+    const topIndex = newRecents.findIndex(entry => entry === nextSet.movement);
     const topEntry = newRecents.splice(topIndex, 1)[0];
+
     newRecents.unshift(topEntry);
     setRecents(newRecents);
+    
     getNextSet();
     const [nextWeight, nextReps] = await getWeight();
     setEntryText([nextWeight, nextReps, nextSet.RPE]);
@@ -71,7 +75,7 @@ function SetPage({username, nextSet, liftData, setNumber, numberOfSets, setLog, 
   return (
     <div>
       <div className="flexbox-column" style={{marginTop: '30px'}}>
-        <h2>{nextSet.variant}</h2>
+        <h2>{nextSet.movement}</h2>
         <div className="center-grid" style={{width: '300px', marginBottom:'30px'}}>
           <div className="gray-button" id="set-info-tag">Set {setNumber}/{numberOfSets}</div>
           <div className="gray-button" id="set-info-tag">{lowerBound} - {upperBound} reps</div>

@@ -1,9 +1,9 @@
 import React from 'react'
 import FooterMenu from '../components/FooterMenu'
 import { useState, useEffect, useRef } from 'react'
-import axios from 'axios'
+import staticData from '../utils/staticData'
 
-function TrackPage({ recents, log, liftData }) {
+function TrackPage({ recents, log }) {
 
   const [searchText, setSearchText] = useState('Search')
   const [showSearch, setShowSearch] = useState(false);
@@ -54,7 +54,7 @@ function TrackPage({ recents, log, liftData }) {
 
   const handleChange = (e) => {
     setSearchText(e.target.value);
-    setLogShown(recents.filter(entry => entry.title.includes(e.target.value)));
+    setLogShown(recents.filter(entry => entry.includes(e.target.value)));
     setIcons(new Array(recents.length).fill('+'));
   }
 
@@ -64,7 +64,7 @@ function TrackPage({ recents, log, liftData }) {
     setChoices(newChoices);
     let newLogShown = [...logShown];
     newLogShown = recents.filter(entry => {
-      const entryGroup = liftData[2][entry.title].group;
+      const entryGroup = staticData.movements[entry].primary;
       const groupIndex = groups.includes(entryGroup) ? groups.indexOf(entryGroup) : 6;
       return newChoices[groupIndex];
     });
@@ -101,14 +101,14 @@ function TrackPage({ recents, log, liftData }) {
           </div>
 
           <div ref={sortRef} style={{ marginTop: '10px' }}>
-            <button className="gray-button" id="log-icon" onClick={() => setShowSorts(true)}> Sort by {sortText} </button>
+            <button className="gray-button" id="log-icon" onClick={() => setShowSorts(true)}> Sort by: {sortText} </button>
             <div id="sub-dropdown" style={{ display: showSorts ? 'grid' : 'none', position: 'absolute', top: '45px', left: '85px', width: '270px' }}>
             </div>
           </div>
 
         </div>
         <div className="center-div">
-          <div className="slant-button-grid" style={{ marginBottom: '0px', marginTop: '10px', maxWidth: '400px' }}>
+          <div className="slant-button-grid" style={{ width: '400px', marginBottom: '0px', marginTop: '10px', maxWidth: '400px' }}>
             {groups.slice(0, 4).map((group, index) => {
               return (
                 <button className="slant-button" style={{ backgroundColor: choices[index] ? 'rgb(255, 95, 95)' : 'rgb(25, 25, 25)', borderColor: choices[index] ? 'rgb(25, 25, 25)' : 'rgb(255, 95, 95)' }} onClick={() => handleFilter(index)}>{group}</button>
@@ -127,7 +127,7 @@ function TrackPage({ recents, log, liftData }) {
           </div>
         </div>
       </div>
-      <div style={{ paddingTop: '180px' }}>
+      <div style={{ paddingTop: '180px'}}>
         {logShown.map((movement, index) => {
           return (
             <div className="log-container">
@@ -135,40 +135,40 @@ function TrackPage({ recents, log, liftData }) {
                 <button className="expand-button" style={{ paddingRight: '10px', paddingLeft: '20px', marginTop: '-6px', height: '1px' }} onClick={() => { changeDropdown(index) }}>
                   {icons[index]}
                 </button>
-                <h5>{movement.title}</h5>
+                <h5>{movement}</h5>
               </div>
               <div className="flexbox-row" style={{ display: icons[index] === '+' ? '' : 'none' }}>
                 <div className="log-info">
                   <div>Date</div>
                   <div className="log-info-entry">{
-                    log[movement.title].length > 0 ? formatDate(log[movement.title][0].createdAt) : 'NA'
+                    log[movement].length > 0 ? formatDate(log[movement][0].createdAt) : 'NA'
                   }</div>
                 </div>
                 <div className="log-info">
                   <div>Weight</div>
                   <div className="log-info-entry">{
-                    log[movement.title].length > 0 ? log[movement.title][0].weight : 'NA'
+                    log[movement].length > 0 ? log[movement][0].weight : 'NA'
                   }</div>
                 </div>
                 <div className="log-info">
                   <div>Reps</div>
                   <div className="log-info-entry">{
-                    log[movement.title].length > 0 ? log[movement.title][0].reps : 'NA'
+                    log[movement].length > 0 ? log[movement][0].reps : 'NA'
                   }</div>
                 </div>
                 <div className="log-info">
                   <div>RPE</div>
                   <div className="log-info-entry">{
-                    log[movement.title].length > 0 ? log[movement.title][0].RPE : 'NA'
+                    log[movement].length > 0 ? log[movement][0].RPE : 'NA'
                   }</div>
                 </div>
               </div>
-              <div src={movement.imageURL} style={{ height: '230px', width: '100%', marginBottom: '10px', display: icons[index] === '+' ? 'none' : ''}}>
+              <div style={{ height: '230px', width: '100%', marginBottom: '10px', display: icons[index] === '+' ? 'none' : ''}}>
                   <div className="center-div" style={{paddingTop: '100px'}}>Graphs coming soon!</div>
               </div>
               <div style={{ maxHeight: '130px', overflowY: 'auto' }}>
                 <div style={{ display: icons[index] === '+' ? 'none' : 'grid', gridTemplateColumns: '1fr' }}>
-                  {log[movement.title].map((entry, i) => {
+                  {log[movement].map((entry, i) => {
                     return (
                       <div className="flexbox-row" style={{ marginBottom: '10px', marginTop: '5px' }}>
                         <div className="log-info">
