@@ -121,7 +121,7 @@ function SubButtons({allSets, setAllSets, setNumber, index, numberOfSets, getNex
     <div className="center-grid" style={{marginTop: '20px'}}>
       <button className="button" id={id} onClick={() => {if (setNumber === 1) {setShowSubs(true)}}}>Substitute</button>
       <button className="button" id={id} onClick={handleNext}>Do next</button>
-      <button className="button" id={id} onClick={handleEnd}>Send to end</button>
+      <button className="button" id={id} onClick={handleEnd}>Do last</button>
       <button className="button" id='sub-btn' onClick={getNextSet}> Skip Set </button>
     </div>
     <div ref={dropdownRef} className="center-grid "style={{position:'relative', width: '400px'}}>

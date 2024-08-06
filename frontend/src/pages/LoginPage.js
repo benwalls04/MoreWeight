@@ -15,10 +15,9 @@ function Login({setRoutine, setLog, setRecents, setUsername, setInputs}) {
     e.preventDefault();
     if (validInput(usernameText) && validInput(password)){
       try {
-        const response = await axios.get('http://localhost:3001/login', {
+        const response = await axios.get('http://moreweight-api-v1.us-east-1.elasticbeanstalk.com/login', {
           params: { username: usernameText, password: password }
         });
-        console.log(response.data)
         setRoutine(response.data.routine);
         setLog(response.data.log);
         setRecents(response.data.recents);
@@ -53,6 +52,7 @@ function Login({setRoutine, setLog, setRecents, setUsername, setInputs}) {
             type="text"
             id="username"
             value={usernameText}
+            style={{height: '50px', fontSize: '20px'}}
             onChange={(e) => setUsernameText(e.target.value)}
           />
         </div>
@@ -63,6 +63,7 @@ function Login({setRoutine, setLog, setRecents, setUsername, setInputs}) {
             type="password"
             id="password"
             value={password}
+            style={{height: '50px', fontSize: '20px'}}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>

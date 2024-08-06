@@ -31,9 +31,7 @@ function ExperiencePage({setInputs, inputs, index, routes, setExperience, handle
     <>
     <div>
       <div className="div-container">
-        <div className="center-div">
-          <h3> What is your experience level? </h3>
-        </div>
+        <h3> What is your experience level? </h3>
         <SelectOne options={options} setChoice={setChoice} setShow={setShowError}></SelectOne>
       </div>
     </div>

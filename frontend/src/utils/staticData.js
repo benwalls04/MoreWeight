@@ -9,10 +9,11 @@ const staticData = {
         "a": [9, 9, 9, 9]
       }, 
       "variants": {
-        n: '', 
-        u: 'incline',
+        neutral: 'flat', 
+        "upper chest": 'incline',
+        "lower chest": 'decline',
       }, 
-      biasOrder: ['n', 'n', 'u']
+      biasOrder: ['neutral', 'upper chest', 'lower chest']
     }, 
     "dumbell bench press": {
       "primary": "chest", 
@@ -23,11 +24,11 @@ const staticData = {
         "a": [8, 9, 9, 9]
       }, 
       "variants": {
-        n: '', 
-        u: 'incline',
-        l: '',
+        neutral: 'flat', 
+        "upper chest": 'incline',
+        "lower chest": 'decline',
       }, 
-      biasOrder: ['u', 'n', 'l']
+      biasOrder: ['upper chest', 'neutral', 'lower chest']
     }, 
     "smith machine bench press": {
       "primary": "chest", 
@@ -38,11 +39,11 @@ const staticData = {
         "a": [9, 9, 10, 10]
       }, 
       "variants": {
-        n: '', 
-        u: 'incline', 
-        l: 'decline', 
+        neutral: 'flat', 
+        "upper chest": 'incline', 
+        "lower chest": 'decline', 
       }, 
-      biasOrder: ['u', 'n', 'l']
+      biasOrder: ['upper chest', 'neutral', 'lower chest']
     }, 
     "machine chest press": {
       "primary": "chest", 
@@ -53,11 +54,11 @@ const staticData = {
         "a": [9, 9, 10, 10]
       }, 
       "variants": {
-        n: '', 
-        u: 'low-to-high', 
-        l: 'high-to-low', 
+        neutral: '', 
+        "upper chest": 'low-to-high', 
+        "lower chest": 'high-to-low', 
       }, 
-      biasOrder: ['u', 'n', 'l']
+      biasOrder: ['upper chest', 'neutral', 'lower chest']
     }, 
     "weighted dips": {
       "primary": "chest", 
@@ -68,9 +69,9 @@ const staticData = {
         "a": [8, 9, 9, 9]
       }, 
       "variants": {
-        l: '',
+        "lower chest": '',
       }, 
-      biasOrder: ['l', 'l', 'l']
+      biasOrder: ['lower chest', 'lower chest', 'lower chest']
     }, 
     "cable fly": {
       "primary": "chest", 
@@ -81,11 +82,11 @@ const staticData = {
         "a": [9, 9, 10, 11]
       }, 
       "variants": {
-        n: '',
-        u: 'low-to-high',
-        l: 'high-to-low',
+        neutral: '',
+        "upper chest": 'low-to-high',
+        "lower chest": 'high-to-low',
       }, 
-      biasOrder: ['l', 'n', 'u']
+      biasOrder: ['lower chest', 'neutral', 'upper chest']
     }, 
     "pec-dec fly": {
       "primary": "chest", 
@@ -96,9 +97,9 @@ const staticData = {
         "a": [9, 9, 10, 11]
       }, 
       "variants": {
-        n: ''
+        neutral: ''
       }, 
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "cable press": {
       "primary": "chest", 
@@ -109,11 +110,11 @@ const staticData = {
         "a": [9, 9, 10, 11]
       }, 
       "variants": {
-        n: '', 
-        u: 'low-to-high',
-        l: 'high-to-low',
+        neutral: '', 
+        "upper chest": 'low-to-high',
+        "lower chest": 'high-to-low',
       },
-      biasOrder: ['l', 'n', 'u']
+      biasOrder: ['lower chest', 'neutral', 'upper chest']
     }, 
     "lat pulldown": {
       "primary": "back", 
@@ -124,11 +125,11 @@ const staticData = {
         "a": [9, 9, 10, 11]
       }, 
       "variants": {
-        n: 'neutral grip', 
-        l: 'narrow grip', 
-        u: 'wide grip',
+        neutral: '', 
+        lats: 'narrow grip', 
+        "upper back": 'wide grip',
       }, 
-      biasOrder: ['n', 'l', 'u']
+      biasOrder: ['neutral', 'lats', 'upper back']
     }, 
     "pull ups": {
       "primary": "back", 
@@ -139,10 +140,10 @@ const staticData = {
         "a": [9, 9, 10, 10]
       }, 
       "variants": {
-        n: 'neutral grip',
-        l: 'underhand grip',
+        neutral: '',
+        lats: 'underhand grip',
       },
-      biasOrder: ['n', 'n', 'l']
+      biasOrder: ['neutral', 'neutral', 'lats']
     }, 
     "seated cable row": {
       "primary": "back", 
@@ -153,11 +154,11 @@ const staticData = {
         "a": [9, 9, 10, 11]
       }, 
       "variants": {
-        n: 'neutral grip',
-        u: 'wide grip', 
-        l: 'narrow grip',
+        neutral: '',
+        "upper back": 'wide grip', 
+        lats: 'narrow grip',
       },
-      biasOrder: ['u', 'l', 'n']
+      biasOrder: ['upper back', 'lats', 'neutral']
     }, 
     "machine row": {
       "primary": "back", 
@@ -168,11 +169,11 @@ const staticData = {
         "a": [9, 9, 10, 11]
       }, 
       "variants": {
-        n: 'neutral arm path', 
-        l: 'narrow arm path', 
-        u: 'wide arm path', 
+        neutral: '', 
+        lats: 'narrow arm path', 
+        "upper back": 'wide arm path', 
       },
-      biasOrder: ['l', 'n', 'u']
+      biasOrder: ['lats', 'neutral', 'upper back']
     }, 
     "machine pulldown": {
       "primary": "back",
@@ -183,11 +184,11 @@ const staticData = {
         "a": [9, 9, 10, 11]
       },
       "variants": {
-        n: 'neutral grip', 
-        l: 'narrow grip', 
-        u: 'wide grip',
+        neutral: '', 
+        lats: 'narrow grip', 
+        "upper back": 'wide grip',
       },
-      biasOrder: ['n', 'l', 'u']
+      biasOrder: ['neutral', 'lats', 'upper back']
     }, 
     "kneeling cable row": {
       "primary": "back",
@@ -198,9 +199,9 @@ const staticData = {
         "a": [9, 9, 10, 11]
       },
       "variants": {
-        l: '',
+        lats: '',
       },
-      biasOrder: ['l', 'l', 'l']
+      biasOrder: ['lats', 'lats', 'lats']
     }, 
     "t-bar row": {
       "primary": "back", 
@@ -211,11 +212,11 @@ const staticData = {
         "a": [9, 9, 10, 11]
       }, 
       "variants": {
-        n: 'neutral grip', 
-        l: 'narrow grip', 
-        u: 'wide grip', 
+        neutral: '', 
+        lats: 'narrow grip', 
+        "upper back": 'wide grip', 
       },
-      biasOrder: ['u', 'n', 'l']
+      biasOrder: ['upper back', 'neutral', 'lats']
     }, 
     "barbell row": {
       "primary": "back", 
@@ -226,11 +227,11 @@ const staticData = {
         "a": [9, 9, 9, 9]
       }, 
       "variants": {
-        n: 'neutral grip', 
-        l: 'narrow grip', 
-        u: 'wide grip',
+        neutral: '', 
+        lats: 'narrow grip', 
+        "upper back": 'wide grip',
       }, 
-      biasOrder: ['n', 'l', 'u']
+      biasOrder: ['neutral', 'lats', 'upper back']
     },  
     "lat pullover": {
       "primary": "back", 
@@ -241,9 +242,9 @@ const staticData = {
         "a": [9, 9, 10, 11]
       }, 
       "variants": {
-        l: ''
+        lats: ''
       },
-      biasOrder: ['l', 'l', 'l']
+      biasOrder: ['lats', 'lats', 'lats']
     }, 
     "reverse pec-dec fly": {
       "primary": "back", 
@@ -254,9 +255,9 @@ const staticData = {
         "a": [9, 9, 10, 11]
       }, 
       "variants": {
-        u: ''
+        "upper back": ''
       },
-      biasOrder: ['u', 'u', 'u']
+      biasOrder: ['upper back', 'upper back', 'upper back']
     }, 
     "face pulls": {
       "primary": "back",
@@ -267,9 +268,9 @@ const staticData = {
         "a": [9, 9, 10, 10]
       },
       "variants": {
-        u: ''
+        "upper back": ''
       },
-      biasOrder: ['u', 'u', 'u']
+      biasOrder: ['upper back', 'upper back', 'upper back']
     }, 
     "barbell squat": {
       "primary": "legs", 
@@ -280,9 +281,9 @@ const staticData = {
         "a": [9, 9, 9, 9]
       }, 
       "variants": {
-        q: ''
+        quads: ''
       },
-      biasOrder: ['q', 'q', 'q']
+      biasOrder: ['quads', 'quads', 'quads']
     }, 
     "hack squat": {
       "primary": "legs", 
@@ -293,9 +294,9 @@ const staticData = {
         "a": [9, 9, 10, 10]
       }, 
       "variants": {
-        q: ''
+        quads: ''
       },
-      biasOrder: ['q', 'q', 'q']
+      biasOrder: ['quads', 'quads', 'quads']
     }, 
     "smith machine squat": {
       "primary": "legs", 
@@ -306,9 +307,9 @@ const staticData = {
         "a": [9, 9, 10, 10]
       }, 
       "variants": {
-        q: ''
+        quads: ''
       },
-      biasOrder: ['q', 'q', 'q']
+      biasOrder: ['quads', 'quads', 'quads']
     }, 
     "bulgarian split squat": {
       "primary": "legs", 
@@ -320,11 +321,11 @@ const staticData = {
         "a": [9, 9, 10, 10]
       }, 
       "variants": {
-        q: 'far stance', 
-        n: '', 
-        h: 'close stance'
+        quads: 'far stance', 
+        neutral: '', 
+        hamstrings: 'close stance'
       },
-      biasOrder: ['h', 'n', 'q']
+      biasOrder: ['hamstrings', 'neutral', 'quads']
     }, 
     "front squat": {
       "primary": "legs",
@@ -335,9 +336,9 @@ const staticData = {
         "a": [9, 9, 9, 9]
       },
       "variants": {
-        q: ''
+        quads: ''
       },
-      biasOrder: ['q', 'q', 'q']
+      biasOrder: ['quads', 'quads', 'quads']
     }, 
     "barbell romanian deadlift": {
       "primary": "legs", 
@@ -348,9 +349,9 @@ const staticData = {
         "a": [9, 9, 9, 9]
       }, 
       "variants": {
-        h: ''
+        hamstrings: ''
       },
-      biasOrder: ['h', 'h', 'h']
+      biasOrder: ['hamstrings', 'hamstrings', 'hamstrings']
     }, 
     "dumbell romanian deadlift": {
       "primary": "legs", 
@@ -361,9 +362,9 @@ const staticData = {
         "a": [9, 9, 9, 9]
       }, 
       "variants": {
-        h: ''
+        hamstrings: ''
       },
-      biasOrder: ['h', 'h', 'h']
+      biasOrder: ['hamstrings', 'hamstrings', 'hamstrings']
     }, 
     "deadlift": {
       "primary": "legs", 
@@ -374,9 +375,9 @@ const staticData = {
         "a": [9, 9, 9, 9]
       }, 
       "variants": {
-        h: ''
+        hamstrings: ''
       }, 
-      biasOrder: ['h', 'h', 'h']
+      biasOrder: ['hamstrings', 'hamstrings', 'hamstrings']
     }, 
     "leg press": {
       "primary": "legs", 
@@ -387,10 +388,10 @@ const staticData = {
         "a": [9, 9, 9, 9]
       }, 
       "variants": {
-        q: 'low feet', 
-        n: 'high feet', 
+        quads: 'low foot', 
+        neutral: 'high foot', 
       },
-      biasOrder: ['n', 'q', 'q']
+      biasOrder: ['neutral', 'quads', 'quads']
     }, 
     "barbell hip thrust": {
       "primary": "legs",
@@ -401,9 +402,9 @@ const staticData = {
         "a": [9, 9, 9, 9]
       },
       "variants": {
-        h: ''
+        hamstrings: ''
       },
-      biasOrder: ['h', 'h', 'h']
+      biasOrder: ['hamstrings', 'hamstrings', 'hamstrings']
     }, 
     "leg extension": {
       "primary": "legs", 
@@ -414,9 +415,9 @@ const staticData = {
         "a": [9, 9, 10, 11]
       }, 
       "variants": {
-        q: ''
+        quads: ''
       },
-      biasOrder: ['q', 'q', 'q']
+      biasOrder: ['quads', 'quads', 'quads']
     }, 
     "leg curl": {
       "primary": "legs", 
@@ -427,9 +428,9 @@ const staticData = {
         "a": [9, 9, 10, 11]
       }, 
       "variants": {
-        h: ''
+        hamstrings: ''
       },
-      biasOrder: ['h', 'h', 'h']
+      biasOrder: ['hamstrings', 'hamstrings', 'hamstrings']
     }, 
     "adductor machine": {
       "primary": "legs",
@@ -440,9 +441,9 @@ const staticData = {
         "a": [9, 9, 10, 10]
       },
       "variants": {
-        n: ''
+        neutral: ''
       }, 
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "abductor machine": {
       "primary": "legs",
@@ -453,9 +454,9 @@ const staticData = {
         "a": [9, 9, 10, 10]
       },
       "variants": {
-        n: ''
+        neutral: ''
       }, 
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "military press": {
       "primary": "shoulders", 
@@ -466,9 +467,9 @@ const staticData = {
         "a": [9, 9, 9, 9]
       }, 
       "variants": {
-        n: ''
+        neutral: ''
       },
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "dumbell overhead press": {
       "primary": "shoulders", 
@@ -479,9 +480,9 @@ const staticData = {
         "a": [9, 9, 9, 9]
       }, 
       "variants": {
-        n: ''
+        neutral: ''
       },
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "smith machine overhead press": {
       "primary": "shoulders", 
@@ -492,9 +493,9 @@ const staticData = {
         "a": [9, 9, 10, 10]
       }, 
       "variants": {
-        n: ''
+        neutral: ''
       },
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "machine overhead press": {
       "primary": "shoulders", 
@@ -505,9 +506,9 @@ const staticData = {
         "a": [9, 9, 10, 10]
       }, 
       "variants": {
-        n: ''
+        neutral: ''
       },
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "cable front raise": {
       "primary": "shoulders", 
@@ -518,9 +519,9 @@ const staticData = {
         "a": [9, 9, 10, 11]
       }, 
       "variants": {
-        f: ''
+        neutral: ''
       }, 
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "dumbell front raise": {
       "primary": "shoulders", 
@@ -531,9 +532,9 @@ const staticData = {
         "a": [9, 9, 10, 10]
       }, 
       "variants": {
-        n: ''
+        neutral: ''
       }, 
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "cable lateral raise": {
       "primary": "shoulders", 
@@ -544,9 +545,9 @@ const staticData = {
         "a": [9, 9, 10, 11]
       }, 
       "variants": {
-        n: ''
+        neutral: ''
       }, 
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "dumbell lateral raise": {
       "primary": "shoulders", 
@@ -557,9 +558,9 @@ const staticData = {
         "a": [9, 9, 10, 11]
       }, 
       variants: {
-        n: ''
+        neutral: ''
       },
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "machine lateral raise": {
       "primary": "shoulders", 
@@ -570,9 +571,9 @@ const staticData = {
         "a": [9, 9, 10, 11]
       }, 
       variants: {
-        n: ''
+        neutral: ''
       },
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "dumbell curl": {
       "primary": "biceps", 
@@ -583,9 +584,9 @@ const staticData = {
         "a": [9, 9, 10, 11]
       }, 
       variants: {
-        n: ''
+        neutral: ''
       },
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "dumbell hammer curl": {
       "primary": "biceps",
@@ -596,9 +597,9 @@ const staticData = {
         "a": [9, 9, 10, 11]
       },
       variants: {
-        n: ''
+        neutral: ''
       },
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "incline dumbell curl": {
       "primary": "biceps",
@@ -609,9 +610,9 @@ const staticData = {
         "a": [9, 9, 10, 11]
       },
       variants: {
-        n: ''
+        neutral: ''
       },
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "cable curl": {
       "primary": "biceps", 
@@ -622,9 +623,9 @@ const staticData = {
         "a": [9, 9, 10, 11]
       }, 
       variants: {
-        n: ''
+        neutral: ''
       },
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "preacher curl": {
       "primary": "biceps", 
@@ -635,9 +636,9 @@ const staticData = {
         "a": [9, 9, 10, 11]
       },
       variants: {
-        n: ''
+        neutral: ''
       },
-      biasOrder: ['n', 'n', 'n'] 
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "incline curl": {
       "primary": "biceps", 
@@ -648,9 +649,9 @@ const staticData = {
         "a": [9, 9, 10, 11]
       }, 
       variants: {
-        n: ''
+        neutral: ''
       },
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "concentration curl": {
       "primary": "biceps", 
@@ -661,9 +662,9 @@ const staticData = {
         "a": [9, 9, 10, 11]
       }, 
       variants: {
-        n: ''
+        neutral: ''
       },
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "barbell curl": {
       "primary": "biceps", 
@@ -674,9 +675,9 @@ const staticData = {
         "a": [9, 9, 10, 11]
       }, 
       variants: {
-        n: ''
+        neutral: ''
       },
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "machine curl": {
       "primary": "biceps",
@@ -687,9 +688,9 @@ const staticData = {
         "a": [9, 9, 10, 11]
       }, 
       variants: {
-        n: ''
+        neutral: ''
       },
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "skullcrusher": {
       "primary": "triceps", 
@@ -700,9 +701,9 @@ const staticData = {
         "a": [9, 9, 9, 9]
       }, 
       variants: {
-        n: ''
+        neutral: ''
       },
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "tricep pushdown": {
       "primary": "triceps", 
@@ -713,9 +714,9 @@ const staticData = {
         "a": [9, 9, 10, 11]
       }, 
       variants: {
-        n: ''
+        neutral: ''
       },
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "cable overhead extension": {
       "primary": "triceps", 
@@ -726,9 +727,9 @@ const staticData = {
         "a": [9, 9, 9, 9]
       }, 
       variants: {
-        n: ''
+        neutral: ''
       },
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     },
     "crossbody extension": {
       "primary": "triceps", 
@@ -739,9 +740,9 @@ const staticData = {
         "a": [9, 9, 10, 10]
       }, 
       variants: {
-        n: ''
+        neutral: ''
       },
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     },
     "machine tricep extension": {
       "primary": "triceps",
@@ -752,9 +753,9 @@ const staticData = {
         "a": [9, 9, 10, 11]
       },
       variants: {
-        n: ''
+        neutral: ''
       },
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "machine lateral raise": {
       "primary": "side deltoids",
@@ -765,9 +766,9 @@ const staticData = {
         "a": [9, 9, 10, 10]
       },
       variants: {
-        n: ''
+        neutral: ''
       },
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "machine shrugs": {
       "primary": "traps",
@@ -778,9 +779,9 @@ const staticData = {
         "a": [9, 9, 10, 10]
       },
       variants: {
-        n: ''
+        neutral: ''
       },
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "smith machine shrugs": {
       "primary": "traps",
@@ -791,9 +792,9 @@ const staticData = {
         "a": [9, 9, 10, 10]
       },
       variants: {
-        n: ''
+        neutral: ''
       },
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "barbell shrugs": {
       "primary": "traps",
@@ -804,9 +805,9 @@ const staticData = {
         "a": [9, 9, 10, 10]
       },
       variants: {
-        n: ''
+        neutral: ''
       },
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "dumbell shrugs": {
       "primary": "traps",
@@ -817,9 +818,9 @@ const staticData = {
         "a": [9, 9, 10, 10]
       },
       variants: {
-        n: ''
+        neutral: ''
       },
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "cable rear delt fly": {
       "primary": "rear deltoids",
@@ -830,9 +831,9 @@ const staticData = {
         "a": [9, 9, 10, 10]
       },
       variants: {
-        n: ''
+        neutral: ''
       },
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "dumbell rear delt fly": {
       "primary": "rear deltoids",
@@ -843,9 +844,9 @@ const staticData = {
         "a": [9, 9, 10, 10]
       },
       variants: {
-        n: ''
+        neutral: ''
       },
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "barbell forearm curl": {
       "primary": "forearms",
@@ -856,9 +857,9 @@ const staticData = {
         "a": [9, 9, 10, 10]
       },
       variants: {
-        n: ''
+        nneutral: ''
       },
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "cable forearm curl": {
       "primary": "forearms",
@@ -869,9 +870,9 @@ const staticData = {
         "a": [9, 9, 10, 10]
       },
       variants: {
-        n: ''
+        neutral: ''
       },
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "machine calf raise": {
       "primary": "calves",
@@ -882,9 +883,9 @@ const staticData = {
         "a": [9, 9, 10, 10]
       },
       variants: {
-        n: ''
+        neutral: ''
       },
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "smith machine calf raise": {
       "primary": "calves",
@@ -895,9 +896,9 @@ const staticData = {
         "a": [9, 9, 10, 10]
       },
       variants: {
-        n: ''
+        neutral: ''
       },
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "barbell calf raise": {
       "primary": "calves",
@@ -907,9 +908,9 @@ const staticData = {
         "i": [8, 9, 9, 10],
         "a": [9, 9, 10, 10]
       },
-      biasOrder: ['n', 'n', 'n'],
+      biasOrder: ['neutral', 'neutral', 'neutral'],
       variants: {
-        n: ''
+        neutral: ''
       },
     }, 
     "dumbell calf raise": {
@@ -921,9 +922,9 @@ const staticData = {
         "a": [9, 9, 10, 10]
       },
       variants: {
-        n: ''
+        neutral: ''
       },
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "cable crunch": {
       "primary": "abs",
@@ -934,9 +935,9 @@ const staticData = {
         "a": [8, 8, 8, 8]
       },
       variants: {
-        n: ''
+        neutral: ''
       },
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "dumbell side bend": {
       "primary": "abs",
@@ -947,9 +948,9 @@ const staticData = {
         "a": [8, 8, 8, 8]
       },
       variants: {
-        n: ''
+        neutral: ''
       },
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "weighted leg raise": {
       "primary": "abs",
@@ -960,9 +961,9 @@ const staticData = {
         "a": [8, 8, 8, 8]
       },
       variants: {
-        n: ''
+        neutral: ''
       },
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
     "weighted situps": {
       "primary": "abs",
@@ -973,9 +974,9 @@ const staticData = {
         "a": [8, 8, 8, 8]
       },
       variants: {
-        n: ''
+        neutral: ''
       },
-      biasOrder: ['n', 'n', 'n']
+      biasOrder: ['neutral', 'neutral', 'neutral']
     }, 
   }, 
   begginerMovements: ["barbell bench press", "dumbell bench press", "machine chest press", "pec-dec fly", "lat pulldown", "seated cable row", "machine row", "reverse pec-dec fly", "barbell squat", "hack squat", "leg press", "machine leg press", "leg extension", "seated leg curl", "lying leg curl", "dumbell overhead press", "dumbell front raise", "dumbell lateral raise", "dumbell curl", "cable curl", "preacher curl", "tricep pushdown", "machine tricep extension"],   

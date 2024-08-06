@@ -16,6 +16,7 @@ const WorkoutInfo = ({
   moveUp,
   moveDown,
   changeMovement,
+  changeBias
 }) => {
 
   const movementInfo = staticData.movements;
@@ -36,6 +37,17 @@ const WorkoutInfo = ({
     return options;
   }
 
+  const handleBias = (index) => {
+    if (tagsSelect[index] === false){
+      const newBias = tags[index];
+      let newTagsSelect = new Array(tagsSelect.length).fill(false);
+      newTagsSelect[index] = true;
+      setTagsSelect(newTagsSelect);
+      changeBias(movement, newBias);
+      setBiasText(movementInfo[movement].variants[newBias]);
+    }
+  }
+
   const handleChange = (e) => {
     setSubText(e.target.value.toLowerCase());
     setSubOptions(getSubOptions(e.target.value, movement));
@@ -47,40 +59,58 @@ const WorkoutInfo = ({
     }, 100);
   }
 
-  const group = movement === "new movement"? '': movementInfo[movement].primary;
-  const bias = movement === "new movement"? 'neutral': movementObj.bias;
-  const tags = [];
-  if (group !== ''){
-    tags.push(group);
-  }
-  if (bias !== 'n' && movement !== 'new movement') {
-    let regionNotes = movementInfo[movement].variants[bias];
+  useEffect(() => {
+    if (movement === "new movement"){
+      setShowSubs(true);
+    }
+  }, [movement])
 
-    if (regionNotes.length > 0){
-      tags.push(regionNotes);
+  const bias = movement === "new movement"? 'neutral': movementObj.bias;
+  const initBiasText = () => {
+    if (movement === "new movement"){
+      return '';
+    } else {
+      return movementInfo[movement].variants[bias];
+    }
+  }
+  const [biasText, setBiasText] = useState(initBiasText());
+  useEffect(() => {
+    setBiasText(initBiasText());
+  }, [bias])
+
+  const initTags = () => {
+    let tags = [];
+
+    if (movement !== "new movement"){
+      movementInfo[movement].biasOrder.forEach(icon => {
+        if (!tags.includes(icon)){
+          tags.push(icon)
+        }
+      } )
+      if (tags.length === 1 && tags[0] === 'neutral'){
+        tags = [movementInfo[movement].primary];
+      }
     }
 
-    let regionText = ''; 
-    if (group === 'chest' && bias === 'u') {
-      regionText = 'upper chest';
-    }   
-    if (group === 'chest' && bias === 'l') {
-      regionText = 'lower chest';
-    }   
-    if (group === 'back' && bias === 'u') {
-      regionText = 'upper back';
-    }   
-    if (group === 'back' && bias === 'l') {
-      regionText = 'lats';
-    }   
-    if (group === 'legs' && bias === 'q') {
-      regionText = 'quads';
-    }   
-    if (group === 'legs' && bias === 'h') {
-      regionText = 'hamstrings';
-    }   
-    tags.push(regionText);
+    return tags
   }
+
+  const [tags, setTags] = useState(initTags());
+  useEffect(() => {
+    setTags(initTags());
+  }, [biasText, movement]);
+
+  const initTagsSelect = () => { 
+    if (tags.length === 1){
+      return [false];
+    } else {
+      return tags.map(tag => tag === bias);
+    }
+  }
+  const [tagsSelect, setTagsSelect] = useState(initTagsSelect()); 
+  useEffect(() => {
+    setTagsSelect(initTagsSelect());
+  }, [tags]);
 
   let icon = showDropdown? "-": "+";
   let iconClass = showDropdown? "close-button": "expand-button";
@@ -96,12 +126,14 @@ const WorkoutInfo = ({
   return (
     <>
     <div className="lift-container">
-      <button className={iconClass} onClick={() => changeDropdowns(movement)}>
+      <div></div>
+      <div className="small-text-left" style={{marginBottom: '-8px', marginLeft: '4px', zIndex: '2', fontStyle:'italic'}}>{biasText}</div>
+      <button className={iconClass} style={{marginBottom: '5px'}} onClick={() => changeDropdowns(movement)}>
         {icon}
       </button>
       <div className="flexbox-row">
         <div style={{width: '78%'}}>
-            <input type="text" value={subText} onClick={() => setShowSubs(true)} onChange={handleChange}     onBlur={handleBlur} className="movement-title">
+            <input type="text" value={subText} onChange={handleChange} onClick={() => setShowSubs(true)} onBlur={handleBlur} className="movement-title">
             </input>
         </div>
         <div style={{fontSize: '12px', marginTop: '8px', paddingLeft: '10px'}}>
@@ -119,9 +151,9 @@ const WorkoutInfo = ({
       <div></div>
       <div className="tag-box">
         {tags.map((tag, index) => (
-          <div key={index} className="tag">
+          <button key={index} className={tagsSelect[index]? 'tag-select': 'tag'} onClick={() => handleBias(index)}>
             {tag}
-          </div>
+          </button>
         ))}
       </div>
       <div></div>
@@ -135,13 +167,16 @@ const WorkoutInfo = ({
     </div>
     <div className="center-div">
       <div className="slant-button-grid" id="edit-button-grid">
+        <button id="edit-button" onClick={() => setShowSubs(true)}>
+          <img src="/media/footer-icons/change-icon.png" style={{width: '20px'}}></img>
+        </button>
         <button id="edit-button" onClick={() => addMovement(movement)}>+</button>
         <button id="edit-button" onClick={() => removeMovement(movement)}>-</button>
         <button id="edit-button" onClick={() => moveUp(movement)}>
           <img src="/media/footer-icons/up-icon.png" style={{width: '20px'}}></img>
         </button>
         <button id="edit-button" onClick={() => moveDown(movement)}>
-        <img src="media/footer-icons/down-icon.png" style={{width: '20px'}}></img>
+          <img src="/media/footer-icons/down-icon.png" style={{width: '20px'}} ></img>
         </button>
       </div>
     </div>

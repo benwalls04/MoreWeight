@@ -71,13 +71,9 @@ function App() {
 
   useEffect(() => {
     setTime(lastRest);
-  }, [lastRest])
+  }, [setNumber])
   
   const inputRoutes = ['/experience', '/days', '/bias', '/injuries', '/base', '/split', '/style', '/sets', '/time', '/accessories', '/chest', '/back', '/legs', '/shoulders', '/biceps', '/triceps', '/horizontal-press', '/vertical-press', '/horizontal-pull', '/vertical-pull', '/knee-flexion', '/hip-extension', '/sign-up', 'loading']
-
-  const handleRestart = () => {
-    setInputData({});
-  }
   
   const [selections, setSelections] = useState([]);
 

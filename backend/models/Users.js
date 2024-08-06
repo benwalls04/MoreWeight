@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 // Define the set schema
 const Set = new Schema({
   movement: { type: String, required: true },
+  bias: { type: String, required: true },
   RPE: { type: Number, required: true },
   rest: { type: Number, required: true },
   num: { type: Number, required: true}, 

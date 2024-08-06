@@ -6,6 +6,7 @@ const Users = require('../models/Users')
 
 // insert to database 
 router.post("/", async (req, res) => {
+
   const routineObj = req.body.routine;
   const username = req.body.username;
   const routine = routineObj.routine;

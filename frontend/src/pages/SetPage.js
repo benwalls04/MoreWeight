@@ -2,6 +2,7 @@ import React from 'react'
 import FooterMenu from '../components/FooterMenu'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import staticData from '../utils/staticData'
 
 function SetPage({username, nextSet, setNumber, numberOfSets, setLog, getNextSet, time, setRecents, recents}) {
 
@@ -17,7 +18,7 @@ function SetPage({username, nextSet, setNumber, numberOfSets, setLog, getNextSet
 
   const [entryText, setEntryText] = useState([0, 0, nextSet.RPE]);
   const getWeight = async () => {
-    const response = await axios.get('http://localhost:3001/get-last', {
+    const response = await axios.get('http://moreweight-api-v1.us-east-1.elasticbeanstalk.com/get-last', {
       params: { username: username, movement: nextSet.movement, numberOfSets: numberOfSets }
     });
     return [response.data.weight, response.data.reps];
@@ -48,7 +49,7 @@ function SetPage({username, nextSet, setNumber, numberOfSets, setLog, getNextSet
   }
 
   const logSet = async () => {
-    const response = await axios.post('http://localhost:3001/log-set', {
+    const response = await axios.post('http://moreweight-api-v1.us-east-1.elasticbeanstalk.com/log-set', {
       username: username,
       movement: nextSet.movement,
       weight: entryText[0],
@@ -74,7 +75,8 @@ function SetPage({username, nextSet, setNumber, numberOfSets, setLog, getNextSet
 
   return (
     <div>
-      <div className="flexbox-column" style={{marginTop: '30px'}}>
+      <div className="flexbox-column" style={{marginTop: '20px'}}>
+        <div style={{marginBottom: '-10px', minHeight: '20px'}}>{staticData.movements[nextSet.movement].variants[nextSet.bias]}</div>
         <h2>{nextSet.movement}</h2>
         <div className="center-grid" style={{width: '300px', marginBottom:'30px'}}>
           <div className="gray-button" id="set-info-tag">Set {setNumber}/{numberOfSets}</div>

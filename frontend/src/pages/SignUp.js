@@ -4,6 +4,7 @@ import ErrorText from '../components/ErrorText';
 import axios from "axios";
 
 function SignUp({inputData, setRoutine, username, setUsername}) {
+
   
   const navigate = useNavigate();
 
@@ -48,6 +49,7 @@ function SignUp({inputData, setRoutine, username, setUsername}) {
             type="text"
             id="username"
             value={username}
+            style={{height: '50px', fontSize: '20px'}}
             onChange={(e) => setUsername(e.target.value)}
           />
         </div>
@@ -58,6 +60,7 @@ function SignUp({inputData, setRoutine, username, setUsername}) {
             type="password"
             id="password"
             value={password}
+            style={{height: '50px', fontSize: '20px'}}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>

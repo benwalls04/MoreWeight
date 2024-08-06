@@ -29,7 +29,6 @@ function getRoutine( inputData ){
 
   routine.organizeSets();
 
-
   routine.getAllSets();
 
   routine.fitTimeFrame(inputData.time, inputData.accessories);

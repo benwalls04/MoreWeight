@@ -10,10 +10,6 @@ function getSplits( inputData ){
   splits.generateSplits(schedule, [], bias, 7, 7 - schedule.filter(day => day === "lift").length);
 
   splits.selection = [];
-
-  function filterNonEmptyArrays(arrays) {
-    return arrays.filter(arr => Array.isArray(arr) && arr.length > 0);
-  }
   
   // Define your objects
   const aObj = {

@@ -29,7 +29,7 @@ function StylePage({inputs, setInputs, index, routes, lastSplits, setLastSplits}
     <>
     <div>
       <div className="div-container">
-        <h1> What is your training goal? </h1>
+        <h2> What is your training goal? </h2>
         <Slider minLabel="size" maxLabel="strength" value={value} setValue={setValue}></Slider>
       </div>
     </div>

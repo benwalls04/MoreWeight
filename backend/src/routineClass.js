@@ -120,8 +120,8 @@ class RoutineClass {
           const movementStim = RoutineClass.getMovementStim(RPESeq, stimVars[lowerRep]);
 
           stimCount += movementStim;
-          let biasIcon = 'n' 
-          if (!movementInfo.biasOrder.includes('n')) {
+          let biasIcon = 'neutral' 
+          if (!movementInfo.biasOrder.includes('neutral')) {
             biasIcon = movementInfo.biasOrder[0];
           }
 
@@ -285,7 +285,7 @@ class RoutineClass {
           const addedMovement = movementOrders[type].filter(movement => !minMovements.map(entry => entry.movement).includes(movement))[0];
   
           const RPESeq = movementInfos[addedMovement].sequences[this.expIcon].slice(this.numSets * -1);
-          const biasIcon = movementInfos[addedMovement].biasOrder.includes('n')? 'n': movementInfos[addedMovement].biasOrder[0];
+          const biasIcon = movementInfos[addedMovement].biasOrder.includes('neutral')? 'neutral': movementInfos[addedMovement].biasOrder[0];
 
           const added = {
             movement: addedMovement,
@@ -336,13 +336,13 @@ class RoutineClass {
     for (let i = 0; i < 3; i++){
       const group = groupNames[i];
       const val = i === 0? chestVal: i === 1? backVal: legsVal;
-      let icon = 'n';
+      let icon = 'neutral';
       if (i === 0){
-        icon = val > 50? 'u': val < 50? 'l': 'n'; 
+        icon = val > 50? 'upper chest': val < 50? 'lower chest': 'neutral'; 
       } else if (i === 1){
-        icon = val > 50? 'u': val < 50? 'l': 'n'; 
+        icon = val > 50? 'upper back': val < 50? 'lats': 'neutral'; 
       } else {
-        icon = val > 50? 'q': val < 50? 'h': 'n';
+        icon = val > 50? 'quads': val < 50? 'hamstrings': 'neutral';
       }
 
       let totalMovements = 0;
@@ -359,7 +359,7 @@ class RoutineClass {
       
       for (let j = 0; j < 3 && currRatio < targetRatio; j++) {
         this.routine.forEach((day, dayIndex) => {
-          if (this.split[dayIndex].includes(group) && icon !== 'n'){
+          if (this.split[dayIndex].includes(group) && icon !== 'neutral'){
             
             let movements = day.movements.filter(movement => movementInfos[movement.movement].primary === group);
 
@@ -556,7 +556,7 @@ class RoutineClass {
           totalTime += restAdded;
           movements.push({
             movement: movement,
-            bias: 'n',
+            bias: 'neutral',
             RPE: RPESeq,
             lowerRep: 10,
             upperRep: 14,
@@ -564,6 +564,7 @@ class RoutineClass {
           RPESeq.forEach((entry, n) => {
             allSets.push({
               movement: movement,
+              bias: 'neutral', 
               RPE: entry,  
               rest: restTimes[4][entry - 7], 
               lowerRep: 10, 

@@ -6,9 +6,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const EditPage = ({ routineObj, setRoutine, username, expIcon, numberOfSets, setLog, setRecents}) => {
-
-  console.log(routineObj)
-
   const routine = routineObj.routine;
   const movementInfo = staticData.movements;
   const restTimes = staticData.restTimes;
@@ -83,7 +80,7 @@ const EditPage = ({ routineObj, setRoutine, username, expIcon, numberOfSets, set
 
     movements.splice(movements.findIndex(entry => entry.movement === movement) + 1, 0, {
       movement: "new movement", 
-      bias: 'n',
+      bias: 'neutral',
       RPE: [0, 0, 0],
       lowerRep: 0, 
       upperRep: 0,
@@ -111,7 +108,7 @@ const EditPage = ({ routineObj, setRoutine, username, expIcon, numberOfSets, set
       movements[index] = movements[index - 1];
       movements[index - 1] = temp;
 
-      const allSetsIndex = sets.findIndex(set => set.variant === movement)
+      const allSetsIndex = sets.findIndex(set => set.movement === movement)
       const removed = sets.splice(allSetsIndex, numberOfSets);
       removed.forEach((set, indx) => {
         sets.splice(allSetsIndex - numberOfSets + indx, 0, set)
@@ -156,12 +153,13 @@ const EditPage = ({ routineObj, setRoutine, username, expIcon, numberOfSets, set
     const RPESeq = movementInfo[newMovement].sequences[updatedRoutine.expIcon];
     const lowerRep = oldMovement.movement === "new movement"? 8 : oldMovement.lowerRep;
     const upperRep = oldMovement.movement === "new movement"? 12: oldMovement.upperRep;
+    const newBias = movementInfo[newMovement].biasOrder.includes(oldMovement.bias)? oldMovement.bias : movementInfo[newMovement].biasOrder.includes('neutral')? 'neutral': movementInfo[newMovement].biasOrder[0];
 
     // update movements array
     // FIXME: stimulus is not accurate 
     movements[movements.findIndex(entry => entry.movement === oldMovement.movement)] = {
       movement: newMovement, 
-      bias: movementInfo[newMovement].biasOrder.includes(oldMovement.bias)? oldMovement.bias : movementInfo[newMovement].biasOrder.includes('n')? 'n': movementInfo[newMovement].biasOrder[0],
+      bias: newBias,
       RPE: RPESeq, 
       lowerRep: lowerRep,
       upperRep: upperRep,
@@ -176,7 +174,7 @@ const EditPage = ({ routineObj, setRoutine, username, expIcon, numberOfSets, set
     for (let i = firstIndex; i < sets.length; i++){
       if (sets[i].movement === oldMovement.movement){
         sets[i] = {
-          movement: newMovement, RPE: RPESeq[count], rest: restTimes[lowerRep / 2 - 1][RPESeq[count] - 7], num: count + 1
+          movement: newMovement, RPE: RPESeq[count], rest: restTimes[lowerRep / 2 - 1][RPESeq[count] - 7], num: count + 1, bias: newBias, lowerRep: lowerRep, upperRep: upperRep
         }
         count++;
       }
@@ -185,6 +183,27 @@ const EditPage = ({ routineObj, setRoutine, username, expIcon, numberOfSets, set
 
     setShowSubs(false);
     setSubText(newMovement);
+    setRoutine(updatedRoutine);
+  }
+
+  const changeBias = (movement, bias) => {
+    const updatedRoutine = {...routineObj};
+    let movements = updatedRoutine.routine[dayIndex].movements;
+    let sets = updatedRoutine.routine[dayIndex].sets;
+
+    movements[movements.findIndex(entry => entry.movement === movement)].bias = bias;
+    updatedRoutine.routine[dayIndex].movements = movements;
+
+    const firstIndex = findFirstIndex(sets, "movement", movement);
+    let count = 0;
+    for (let i = firstIndex; i < sets.length; i++){
+      if (sets[i].movement === movement){
+        sets[i].bias = bias;
+        count++;
+      }
+    }
+    updatedRoutine.routine[dayIndex].sets = sets;
+
     setRoutine(updatedRoutine);
   }
 
@@ -205,13 +224,15 @@ const EditPage = ({ routineObj, setRoutine, username, expIcon, numberOfSets, set
   }
 
   const handleSubmit = async () => {
-    await axios.post('http://localhost:3001/set-routine', {routine: {title: routineObj.title, routine: routine}, username: username}).then(response => {
-      setLog(response.data.movements);
-      setRecents(response.data.recents);
-      navigate('/profile');
-    }).catch(error => {
-      console.log("error setting routine");
-    })
+    if (routineObj.routine.every(day => !day.movements.some(entry => entry.movement === "new movement"))){
+      await axios.post('http://localhost:3001/set-routine', {routine: {title: routineObj.title, routine: routine}, username: username}).then(response => {
+        setLog(response.data.movements);
+        setRecents(response.data.recents);
+        navigate('/profile');
+      }).catch(error => {
+        console.log("error setting routine");
+      })
+    }
   }
 
   return (
@@ -239,6 +260,7 @@ const EditPage = ({ routineObj, setRoutine, username, expIcon, numberOfSets, set
           moveUp={moveUp}
           moveDown={moveDown}
           changeMovement={changeMovement}
+          changeBias={changeBias}
         />
       ))}
       <button id="submit-footer" className="button" onClick={handleSubmit}> Done Editing </button>

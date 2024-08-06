@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 require('dotenv').config();
-const { GridFSBucket } = require('mongodb');
 const port = process.env.PORT || 3001;
 
 const app = express();

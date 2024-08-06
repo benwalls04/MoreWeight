@@ -171,6 +171,7 @@ button:focus{
 }
 #movement-button{
   height: 70px;
+  width: 45%;
   max-width: 47%;
 }
 .button-container{
@@ -251,7 +252,6 @@ button:focus{
   background-color:rgb(25, 25, 25);
   border: none;
   width: 100%;
-  border: 1px, dotted, rgb(70, 70, 70);
   border-radius: 4px;
 }
 #sub-dropdown{
@@ -277,17 +277,24 @@ button:focus{
 .tag-box{
   display: flex;
 }
-.tag{
+.tag, .tag-select{
+  color: white;
   font-size: 12px;
-  border: solid 1px rgb(120, 120, 120);
-  background-color: rgb(120, 120, 120);
-  border-radius: 6px;
+  border-radius: 10px;
   margin-left: 4px;
   margin-right: 4px;
   padding-top: 2px;
   padding-bottom: 2px;
   padding-right: 6px;
   padding-left: 6px;
+}
+.tag{
+  border: solid 1px rgb(120, 120, 120);
+  background-color: rgb(120, 120, 120);
+}
+.tag-select{
+  border: solid 1px rgb(255, 95, 95);
+  background-color: rgb(255, 95, 95);
 }
 .expand-button, .close-button{
   padding: 0;
@@ -417,7 +424,7 @@ button:focus{
 #split-grid{
   display: grid;
   grid-template-columns: 1fr 1fr;
-  height: auto;
+  height: 350px;
   padding: 10px;
 }
 #split-header{
@@ -451,9 +458,10 @@ button:focus{
   text-align: left;
 }
 #day-grid{
-  height: auto;
+  height: 90%;
   display: grid;
   grid-template-columns: 1fr;
+  padding-bottom: 10px;
 }
 #day-grid-row{
   height: auto;
@@ -464,6 +472,9 @@ button:focus{
   border-width: 1px;
   border-style: none;
   border-color: rgb(255, 95, 95);
+}
+#day-grid-entry{
+  height: 22px;
 }
 #restricted-button-container{
   display: grid;

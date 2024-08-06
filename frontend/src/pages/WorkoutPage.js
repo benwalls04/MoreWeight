@@ -36,34 +36,7 @@ function WorkoutPage({username, routineObj, begin, setBegin, nextSet, setNextSet
       if (group !== ''){
         currTags.push(group);
       }
-      if (bias !== 'n') {
-        let regionNotes = staticData.movements[movements[i]].variants[bias];
-    
-        if (regionNotes.length > 0){
-          tagsArr.push(regionNotes);
-        }
-    
-        let regionText = ''; 
-        if (group === 'chest' && bias === 'u') {
-          regionText = 'upper chest';
-        }   
-        if (group === 'chest' && bias === 'l') {
-          regionText = 'lower chest';
-        }   
-        if (group === 'back' && bias === 'u') {
-          regionText = 'upper back';
-        }   
-        if (group === 'back' && bias === 'l') {
-          regionText = 'lats';
-        }   
-        if (group === 'legs' && bias === 'q') {
-          regionText = 'quads';
-        }   
-        if (group === 'legs' && bias === 'h') {
-          regionText = 'hamstrings';
-        }   
-        tagsArr.push(regionText);
-      }
+      currTags.push(bias)
       tagsArr.push(currTags);
     }
     return tagsArr;

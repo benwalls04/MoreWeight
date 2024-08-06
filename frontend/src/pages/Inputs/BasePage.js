@@ -26,7 +26,7 @@ function BasePage({setInputs, inputs, index, routes }) {
       if (Array.isArray(newSplits.selection[0])){
           navigate("/loading")
           let newInputs = {... inputs}
-          const response = await axios.post('http://localhost:3001/partition', { splits: newSplits.selection });
+          const response = await axios.post('http://moreweight-api-v1.us-east-1.elasticbeanstalk.com/partition', { splits: newSplits.selection });
           newSplits.selection = response.data;
           newInputs.splits = newSplits;
           newInputs.base = sampleTitles[key];
@@ -53,12 +53,12 @@ function BasePage({setInputs, inputs, index, routes }) {
         <div className="center-div">
           <h3>Which split type do you prefer?</h3>
         </div>
-      <div id="split-grid">
+      <div id="split-grid" style={{height: splits.selection.length > 2? '400px': '200px'}}>
         {splits.selection.map((table, index) => {
           const [key, value] = Object.entries(table)[0];
           return (
             <button key={index} id={ids[index]} onClick={() => handleClick(index)}>
-              <h4>{sampleTitles[key]}</h4>
+              <h4 style={{paddingTop: '10px'}}>{sampleTitles[key]}</h4>
               <div id="split-textbox">
                 Includes: 
                 {getSampleLines(key).map((line, index) => (

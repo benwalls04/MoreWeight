@@ -89,15 +89,17 @@ function SplitPage({ inputs, setInputs, index, routes, initSelection, lastSplits
     <>
     <div>
       <div className="div-container">
-        <h3>Which routine do you prefer?</h3>
+        <div className="center-div">
+          <h3>Which routine do you prefer?</h3>
+        </div>
         <div id="split-grid">
           {choices.map((choice, i) => (
             <button key={i} id={ids[i]} onClick={() => handleClick(i)}>
-              <h5>{getTitle(inputs.base, choice[0])}</h5>
+              <div style={{fontSize: '14px', height: '10%', paddingTop: '10px'}}>{getTitle(inputs.base, choice[0])}</div>
               <div id="day-grid">
                 {choice[0].map((day, j) => (
                   <div id="day-grid-row" key={j}>
-                    <div id="day-grid-entry" className="small-text-left">day {j + 1}</div>
+                    <div id="day-grid-entry" className="small-text-left">day {j + 1}: </div>
                     <div id="day-grid-entry" className="small-text-left">{day}</div>
                   </div>
                 ))}
