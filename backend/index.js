@@ -39,7 +39,7 @@ app.use('/submit-features', featuresRouter);
 const staticRouter = require('./routes/Static');
 app.use('/static', staticRouter);
 
-mongoose.connect('mongodb+srv://benwalls2004:Bg053104!@cluster0.rlvzg1f.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+mongoose.connect('SECRET_KEY')
 
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
